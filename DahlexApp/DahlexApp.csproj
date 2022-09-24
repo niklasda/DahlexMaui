@@ -47,4 +47,8 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\DahlexApp.Logic\DahlexApp.Logic.csproj" />
+	</ItemGroup>
+
 </Project>
