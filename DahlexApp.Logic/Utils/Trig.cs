@@ -1,7 +1,4 @@
-﻿//using System;
-using Size = System.Drawing.Size;
-//using System.Drawing;
-using DahlexApp.Logic.Models;
+﻿using DahlexApp.Logic.Models;
 
 namespace DahlexApp.Logic.Utils
 {

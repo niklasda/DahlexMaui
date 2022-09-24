@@ -1,5 +1,4 @@
 ﻿using Size = System.Drawing.Size;
-//using System.Drawing;
 using DahlexApp.Logic.Interfaces;
 using DahlexApp.Logic.Models;
 
@@ -37,7 +36,7 @@ namespace DahlexApp.Logic.Settings
             var settings = new GameSettings(_canvasSize);
 
             IPreferencesService prf = new PreferencesService();
-            string playerName = prf.LoadPreference(key1);
+            string playerName = prf.LoadPreference(Key1);
             if (string.IsNullOrEmpty(playerName))
             {
                 settings.PlayerName = "Dr. Who";
@@ -47,7 +46,7 @@ namespace DahlexApp.Logic.Settings
                 settings.PlayerName = playerName;
             }
 
-            string lessSound = prf.LoadPreference(key2);
+            string lessSound = prf.LoadPreference(Key2);
             
             bool.TryParse(lessSound, out bool less);
 
@@ -56,14 +55,14 @@ namespace DahlexApp.Logic.Settings
             return settings;
         }
 
-        private readonly string key1 = "SettingsName";
-        private readonly string key2 = "SettingsMute";
+        private const string Key1 = "SettingsName";
+        private const string Key2 = "SettingsMute";
 
         public void SaveLocalSettings(GameSettings settings)
         {
             IPreferencesService prf = new PreferencesService();
-            prf.SavePreference(key1, settings.PlayerName);
-            prf.SavePreference(key2, settings.LessSound.ToString());
+            prf.SavePreference(Key1, settings.PlayerName);
+            prf.SavePreference(Key2, settings.LessSound.ToString());
         }
     }
 }

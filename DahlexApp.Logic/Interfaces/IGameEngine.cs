@@ -1,7 +1,4 @@
-﻿//using System;
-using System.Drawing;
-using Size = System.Drawing.Size;
-using DahlexApp.Logic.Models;
+﻿using DahlexApp.Logic.Models;
 using Point = System.Drawing.Point;
 
 namespace DahlexApp.Logic.Interfaces

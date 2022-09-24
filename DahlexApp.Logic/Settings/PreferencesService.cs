@@ -1,5 +1,4 @@
 ﻿using DahlexApp.Logic.Interfaces;
-//using Xamarin.Essentials;
 
 namespace DahlexApp.Logic.Settings
 {

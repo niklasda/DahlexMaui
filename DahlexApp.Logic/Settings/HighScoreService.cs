@@ -1,10 +1,6 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Drawing;
-using Size = System.Drawing.Size;
+﻿using Size = System.Drawing.Size;
 using DahlexApp.Logic.Interfaces;
 using DahlexApp.Logic.Models;
-//using Newtonsoft.Json;
 using System.Text.Json;
 
 namespace DahlexApp.Logic.Settings
@@ -19,7 +15,7 @@ namespace DahlexApp.Logic.Settings
             _scores = LoadLocalHighScores();
         }
 
-        private readonly string key = "HighScores";
+        private const string Key = "HighScores";
 
         private readonly IPreferencesService _preferences;
         private List<HighScore> _scores;//= new List<HighScore>();
@@ -53,7 +49,7 @@ namespace DahlexApp.Logic.Settings
         {
             try
             {
-                var hsList = _preferences.LoadPreference(key);
+                var hsList = _preferences.LoadPreference(Key);
                 //var settings = ApplicationData.Current.LocalSettings;
                 // string highScores = settings.Values["HighScores"].ToString();
                 //  byte[] bytes = new byte[0];// = Encoding.Unicode.GetBytes(highScores.ToCharArray());
@@ -86,8 +82,8 @@ namespace DahlexApp.Logic.Settings
 
         public void SaveLocalHighScores()
         {
-            string output = JsonSerializer.Serialize<List<HighScore>>(_scores);
-            _preferences.SavePreference(key, output);
+            string output = JsonSerializer.Serialize(_scores);
+            _preferences.SavePreference(Key, output);
             // var serializer = new DataContractSerializer(typeof(List<HighScore>));
             //var sb = new StringBuilder();
             //using (var writer = XmlWriter.Create(sb))

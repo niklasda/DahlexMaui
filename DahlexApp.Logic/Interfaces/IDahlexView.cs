@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-using DahlexApp.Logic.Game;
-using Size = System.Drawing.Size;
+﻿using DahlexApp.Logic.Game;
 using DahlexApp.Logic.Models;
 using Point = System.Drawing.Point;
 

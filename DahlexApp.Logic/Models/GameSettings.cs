@@ -1,5 +1,4 @@
 ﻿using Size = System.Drawing.Size;
-//using System.Drawing;
 
 namespace DahlexApp.Logic.Models
 {

@@ -1,5 +1,4 @@
-﻿
-namespace DahlexApp.Logic.Interfaces
+﻿namespace DahlexApp.Logic.Interfaces
 {
     public interface IGameState
     {

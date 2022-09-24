@@ -1,6 +1,4 @@
-﻿//using System;
-using System.Drawing;
-using Size = System.Drawing.Size;
+﻿using Size = System.Drawing.Size;
 using System.Text;
 using DahlexApp.Logic.Interfaces;
 using DahlexApp.Logic.Models;
