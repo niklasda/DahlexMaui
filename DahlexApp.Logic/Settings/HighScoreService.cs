@@ -64,6 +64,11 @@ namespace DahlexApp.Logic.Settings
 
                 // _scores = (List<HighScore>)serializer.ReadObject(new MemoryStream(bytes));
 
+                if (_scores == null)
+                {
+                    _scores = new List<HighScore>();
+                }
+
                 if (_scores.Count == 0)
                 {
                     _scores.Add(new HighScore("Niklas (Beat me, I wanna be last)", 1, 1, 1, 1, DateTime.Now.AddMinutes(-3), new Size(12, 12)));
@@ -74,7 +79,7 @@ namespace DahlexApp.Logic.Settings
             }
             catch
             {
-                _scores.Clear();
+                //_scores.Clear();
             }
 
             return _scores;
