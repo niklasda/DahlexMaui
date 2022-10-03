@@ -1,4 +1,6 @@
-﻿namespace DahlexApp;
+﻿using DahlexApp.Views;
+
+namespace DahlexApp;
 
 public partial class MainPage : ContentPage
 {
@@ -17,6 +19,8 @@ public partial class MainPage : ContentPage
 			CounterBtn.Text = $"Clicked {count} time";
 		else
 			CounterBtn.Text = $"Clicked {count} times";
+        
+        Navigation.PushAsync(new NewPage1());
 
 		SemanticScreenReader.Announce(CounterBtn.Text);
 	}

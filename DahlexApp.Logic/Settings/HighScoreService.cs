@@ -56,7 +56,7 @@ namespace DahlexApp.Logic.Settings
 
                 if (!string.IsNullOrEmpty(hsList))
                 {
-                    _scores = JsonSerializer.Deserialize<List<HighScore>>(hsList);
+                    _scores = JsonSerializer.Deserialize<List<HighScore>>(hsList) ?? new List<HighScore>();
                     //_scores = JsonConvert.DeserializeObject<List<HighScore>>(hsList);
                 }
 
@@ -64,10 +64,10 @@ namespace DahlexApp.Logic.Settings
 
                 // _scores = (List<HighScore>)serializer.ReadObject(new MemoryStream(bytes));
 
-                if (_scores == null)
-                {
-                    _scores = new List<HighScore>();
-                }
+                //if (_scores == null)
+                //{
+                //    _scores = new List<HighScore>();
+                //}
 
                 if (_scores.Count == 0)
                 {
@@ -103,7 +103,7 @@ namespace DahlexApp.Logic.Settings
 
         private class HighScoreComparer : IComparer<HighScore>
         {
-            public int Compare(HighScore x, HighScore y)
+            public int Compare(HighScore? x, HighScore? y)
             {
                 if (x == null && y == null)
                 {
@@ -117,7 +117,7 @@ namespace DahlexApp.Logic.Settings
                 {
                     return -1;
                 }
-                int cmp = y.Score.CompareTo(x.Score);
+                int cmp = y!.Score.CompareTo(x!.Score);
                 if (cmp == 0)
                 {
                     return x.GameDuration.CompareTo(y.GameDuration);

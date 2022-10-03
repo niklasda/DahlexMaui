@@ -4,6 +4,12 @@ namespace DahlexApp.Logic.Models
 {
     public class GameState : IGameState
     {
+        public GameState(string message)
+        {
+            TheBoard = "";
+            Message = message;
+        }
+
         public int Level { get; set; }
 
         public int MoveCount { get; set; }

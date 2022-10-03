@@ -38,6 +38,7 @@ namespace DahlexApp.Logic.Game
 
             _boardSize = _settings.BoardSize;
             _squareSize = _settings.SquareSize;
+            _board = new BoardMatrix(Size.Empty);
         }
 
         public GameStatus Status { get; private set; }
@@ -92,7 +93,7 @@ namespace DahlexApp.Logic.Game
         /// <returns></returns>
         public IGameState GetState(TimeSpan elapsed)
         {
-            IGameState state = new GameState();
+            IGameState state = new GameState(_tail);
             state.Level = CurrentLevel;
             state.MoveCount = _moveCount;
             state.BombCount = _bombCount;

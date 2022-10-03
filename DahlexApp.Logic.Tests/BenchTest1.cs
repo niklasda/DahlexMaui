@@ -14,15 +14,17 @@ namespace DahlexApp.Logic.Tests
         private MD5 md5 = MD5.Create();
         private byte[] data;
 
-        [Params(1000, 10000)]
-        public int N;
-
-        [GlobalSetup]
-        public void Setup()
+      // [GlobalSetup]  
+       public BenchTest1()
         {
             data = new byte[N];
             new Random(42).NextBytes(data);
         }
+
+        [Params(1000, 10000)]
+        public int N;
+
+       
 
         [Fact]
         public void Test1()

@@ -58,7 +58,7 @@ namespace DahlexApp.Logic.Game
         }
         public void ResetPosition(int x, int y)
         {
-            _positions[x, y] = null;
+            _positions[x, y] = BoardPosition.Empty;
         }
         public int GetPositionHeight()
         {
@@ -83,7 +83,7 @@ namespace DahlexApp.Logic.Game
         }
         public void ResetTempPosition(int x, int y)
         {
-            _tempPositions[x, y] = null;
+            _tempPositions[x, y] = new BoardPosition(PieceType.None,"");
         }
         public Point GetProfessorFromTemp()
         {
@@ -96,15 +96,15 @@ namespace DahlexApp.Logic.Game
             {
                 for (int y = 0; y < _boardSize.Height; y++)
                 {
-                    if (bps[x,y] != null)
-                    {
+                    //if (bps[x,y] != null)
+                    //{
                         BoardPosition cp = bps[x,y];
 
                         if (cp.Type == PieceType.Professor)
                         {
                             return new Point(x, y);
                         }
-                    }
+                    //}
                 }
             }
 
