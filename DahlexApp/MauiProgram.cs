@@ -1,4 +1,6 @@
-﻿namespace DahlexApp;
+﻿using DahlexApp.Views;
+
+namespace DahlexApp;
 
 public static class MauiProgram
 {
@@ -13,6 +15,10 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 
-		return builder.Build();
+        builder.Services.AddSingleton<MainPage>();
+
+        builder.Services.AddTransient<NewPage1>();
+
+        return builder.Build();
 	}
 }

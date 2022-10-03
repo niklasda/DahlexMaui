@@ -51,4 +51,17 @@
 	  <ProjectReference Include="..\DahlexApp.Logic\DahlexApp.Logic.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Views\Board\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Views\How\NewPage1.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\How\HowPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>
