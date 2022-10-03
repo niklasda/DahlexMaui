@@ -20,7 +20,7 @@ namespace DahlexApp.Logic.Game
         private int _teleportCount;
         private int _robotCount;
         private int _moveCount;
-        private string _tail;
+        private string _tail = string.Empty;
 
         private readonly Size _boardSize; // number of squares
         private readonly Size _squareSize; // in pixels
