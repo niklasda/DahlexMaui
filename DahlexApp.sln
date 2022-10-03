@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DahlexApp", "DahlexApp\Dahl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DahlexApp.Logic", "DahlexApp.Logic\DahlexApp.Logic.csproj", "{B78ECB92-CEB1-4432-A78C-386E69BCF3E7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DahlexApp.Logic.Tests", "DahlexApp.Logic.Tests\DahlexApp.Logic.Tests.csproj", "{D47D1033-C8A0-44D7-A8F2-4524F3882FE8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{B78ECB92-CEB1-4432-A78C-386E69BCF3E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B78ECB92-CEB1-4432-A78C-386E69BCF3E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B78ECB92-CEB1-4432-A78C-386E69BCF3E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D47D1033-C8A0-44D7-A8F2-4524F3882FE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D47D1033-C8A0-44D7-A8F2-4524F3882FE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D47D1033-C8A0-44D7-A8F2-4524F3882FE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D47D1033-C8A0-44D7-A8F2-4524F3882FE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
