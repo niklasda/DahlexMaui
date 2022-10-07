@@ -1,4 +1,5 @@
 ﻿using DahlexApp.Views;
+using DahlexApp.Views.How;
 
 namespace DahlexApp;
 

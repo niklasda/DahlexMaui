@@ -1,23 +1,34 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using DahlexApp.Logic.Settings;
 
 namespace DahlexApp.Views.How
 {
-    public class HowViewModel 
+    public class HowViewModel : ObservableObject
     {
-        public HowViewModel()
+        public HowViewModel(IHighScoreService score)
         {
-          //  _dispatcher = dispatcher;
-
-         //   BackCommand = new MvxCommand(() => { _ = Task.Run(async () => await navigationService.Close(this)); });
+            //  _dispatcher = dispatcher;
+            _score = score;
+            //  INavigation navigation = App.Current.MainPage.Navigation;
+            //   BackCommand = new MvxCommand(() => { _ = Task.Run(async () => await navigationService.Close(this)); });
             CloseImage = ImageSource.FromResource("DahlexApp.Assets.Images.Close.png");
 
+            Title = "How";
+            PlayerName = "nIX";
+            IsMuted = false;
 
-      //      AwaitKt Shell.Current.GoToAsync();
+            BackCommand = new RelayCommand(() => { _ = Task.Run(() => Navigation.PopAsync()); });
+
+            //      AwaitKt Shell.Current.GoToAsync();
         }
 
-        //private readonly IMvxMainThreadAsyncDispatcher _dispatcher;
 
+        //private readonly IMvxMainThreadAsyncDispatcher _dispatcher;
+        private IHighScoreService _score;
 
         //public override void Prepare()
         //{
@@ -30,6 +41,23 @@ namespace DahlexApp.Views.How
 
         //    // do the heavy work here
         //}
+
+        protected INavigation Navigation
+        {
+            get
+            {
+                INavigation? navigation = Application.Current?.MainPage?.Navigation;
+                if (navigation is not null)
+                    return navigation;
+                else
+                {
+                    //This is not good!
+                    if (Debugger.IsAttached)
+                        Debugger.Break();
+                    throw new Exception();
+                }
+            }
+        }
 
         public ObservableCollection<HowItemViewModel> HowToPages { get; } = new ObservableCollection<HowItemViewModel>();
 
@@ -51,7 +79,7 @@ namespace DahlexApp.Views.How
             // 
     //    }
 
-       // public IMvxCommand BackCommand { get; set; }
+        public IRelayCommand BackCommand { get; set; }
 
         public ImageSource CloseImage { get; set; }
 
@@ -59,7 +87,7 @@ namespace DahlexApp.Views.How
         public string Title
         {
             get => _title;
-            set => _title = value;
+            set => SetProperty(ref _title, value) ;
         }
 
         private string _playerName;

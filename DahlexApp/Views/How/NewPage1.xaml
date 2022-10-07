@@ -3,10 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:DahlexApp.Views.How"
              x:Class="DahlexApp.Views.NewPage1"
+             x:DataType="local:HowViewModel"
              Title="NewPage1">
-    <ContentPage.BindingContext>
-        <local:HowViewModel />
-    </ContentPage.BindingContext>
 
 
     <Grid >
@@ -16,7 +14,9 @@
             <Frame HeightRequest="80" BackgroundColor="{StaticResource ListItemBackgroundColor}" Padding="0" Margin="-1,-2,-1,0" BorderColor="Black" HasShadow="True">
                 <Grid>
                     <Frame Padding="10" Margin="0,0,10,0" BackgroundColor="Transparent" HorizontalOptions="End" VerticalOptions="Center"  >
-                        <Image HeightRequest="20" WidthRequest="20" Aspect="AspectFit" Source="{Binding CloseImage}" />
+                        <!--<Image HeightRequest="20" WidthRequest="20" Aspect="AspectFit" Source="{Binding CloseImage}" />-->
+                        <Label Text="{Binding Title}" Style="{StaticResource TitleStyle}" />
+
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding BackCommand}"></TapGestureRecognizer>
                         </Frame.GestureRecognizers>
