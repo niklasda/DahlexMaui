@@ -1,5 +1,8 @@
 ﻿using DahlexApp.Views;
 ﻿using CommunityToolkit.Maui;
+using DahlexApp.Logic.Interfaces;
+using DahlexApp.Logic.Settings;
+using DahlexApp.Views.How;
 
 namespace DahlexApp;
 
@@ -18,8 +21,14 @@ public static class MauiProgram
 			});
 
         builder.Services.AddSingleton<MainPage>();
+		builder.Services.AddTransient<NewPage1>();
 
-        builder.Services.AddTransient<NewPage1>();
+        
+        builder.Services.AddSingleton<IPreferencesService, PreferencesService>();
+        builder.Services.AddSingleton<IHighScoreService, HighScoreService>();
+        builder.Services.AddTransient<HowViewModel>();
+        builder.Services.AddTransient<HowViewModel>();
+
 
         return builder.Build();
 	}

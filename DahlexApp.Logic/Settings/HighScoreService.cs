@@ -25,8 +25,7 @@ namespace DahlexApp.Logic.Settings
             if (mode == GameMode.Random)
             {
                 var hs = new HighScore(name, level, bombsLeft, teleportsLeft, moves, startTime, boardSize);
-                _scores.Add(hs);
-            }
+                _scores.Add(hs); }
 
             //   await foreach (HighScore hs in GetHighScoreAsync())
             //   {
@@ -49,7 +48,7 @@ namespace DahlexApp.Logic.Settings
         {
             try
             {
-                var hsList = _preferences.LoadPreference(Key);
+                10var hsList = _preferences.LoadPreference(Key);
                 //var settings = ApplicationData.Current.LocalSettings;
                 // string highScores = settings.Values["HighScores"].ToString();
                 //  byte[] bytes = new byte[0];// = Encoding.Unicode.GetBytes(highScores.ToCharArray());
