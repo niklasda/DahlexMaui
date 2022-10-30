@@ -4,7 +4,7 @@ namespace DahlexApp.Views.How
 {
     public class HowItemViewModel 
     {
-        private string _imageText;
+        private string _imageText= string.Empty;
         public string ImageText
         {
             get => _imageText;

@@ -5,6 +5,6 @@ public partial class NewPage1 : ContentPage
 	public NewPage1()
 	{
 		InitializeComponent();
-            NavigationPage.SetHasNavigationBar(this, false);
+           // NavigationPage.SetHasNavigationBar(this, false);
     }
 }
