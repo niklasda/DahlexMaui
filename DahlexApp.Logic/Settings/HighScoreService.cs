@@ -48,7 +48,7 @@ namespace DahlexApp.Logic.Settings
         {
             try
             {
-                10var hsList = _preferences.LoadPreference(Key);
+                var hsList = _preferences.LoadPreference(Key);
                 //var settings = ApplicationData.Current.LocalSettings;
                 // string highScores = settings.Values["HighScores"].ToString();
                 //  byte[] bytes = new byte[0];// = Encoding.Unicode.GetBytes(highScores.ToCharArray());
