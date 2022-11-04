@@ -54,7 +54,6 @@
 	  <None Remove="Resources\Images\launcher_foreground.png" />
 	  <None Remove="Resources\Images\Screen1_1280.png" />
 	  <None Remove="Resources\Images\Screen2_1280.png" />
-	  <None Remove="Resources\Images\Screen4_1280.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -81,11 +80,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Resources\Images\Screens\" />
 	  <Folder Include="Services\" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiImage Include="Resources\Images\Screens\screen4_1280.png" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -28,18 +28,12 @@ namespace DahlexApp.Views.How
             ImageSource image; 
             Assembly assembly = GetType().GetTypeInfo().Assembly;
 
-            var names = assembly.GetManifestResourceNames();
-            
-            using (Stream stream = assembly.GetManifestResourceStream("DahlexApp.Resources.Images.screen2_1280.png"))
-            {
-                 image = ImageSource.FromStream(()=>stream);
-            }
 
             HowToPages.Clear();
-                HowToPages.Add(new HowItemViewModel { ImageText = "Simple", ImageSource = ImageSource.FromResource("DahlexApp.Properties.Resources.resources.screen1_1280.png") });
-                HowToPages.Add(new HowItemViewModel { ImageText = "Simple", ImageSource = ImageSource.FromFile("screen1_1280.png") });
-                HowToPages.Add(new HowItemViewModel { ImageText = "Who is who", ImageSource = ImageSource.FromResource("screen2_1280.png") });
-                HowToPages.Add(new HowItemViewModel { ImageText = "Busy", ImageSource = ImageSource.FromResource("DahlexApp.Resources.Images.Screens.screen4_1280.png") });
+               // HowToPages.Add(new HowItemViewModel { ImageText = "Simple", ImageSource = ImageSource.FromResource("DahlexApp.Properties.Resources.resources.screen1_1280.png") });
+                HowToPages.Add(new HowItemViewModel { ImageText = "Simple", ImageSource = ImageSource.FromFile("screen4_1280.png") });
+                HowToPages.Add(new HowItemViewModel { ImageText = "Who is who", ImageSource = ImageSource.FromFile("screen2_1280.png") });
+               HowToPages.Add(new HowItemViewModel { ImageText = "Busy", ImageSource = ImageSource.FromFile("screen4_1280.png") });
             //      AwaitKt Shell.Current.GoToAsync();
         }
 

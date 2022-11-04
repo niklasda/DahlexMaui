@@ -33,7 +33,7 @@
                     <CarouselView.ItemTemplate  >
                         <DataTemplate x:DataType="local:HowItemViewModel">
                             <StackLayout Orientation="Vertical" VerticalOptions="Center" Spacing="15">
-                                <Image Source="{Binding ImageSource}" HeightRequest="00" WidthRequest="100" ></Image>
+                                <Image Source="{Binding ImageSource}" HeightRequest="1000" ></Image>
                                 <Label Text="{Binding ImageText}" Style="{StaticResource SubtitleStyle}" ></Label>
                             </StackLayout>
 
