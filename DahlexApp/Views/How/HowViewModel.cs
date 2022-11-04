@@ -1,15 +1,17 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Reflection;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DahlexApp.Logic.Services;
 using DahlexApp.Logic.Settings;
 
 namespace DahlexApp.Views.How
 {
     public class HowViewModel : ObservableObject
     {
-        public HowViewModel(IHighScoreService score)
+        public HowViewModel(IHighScoreService score, INavigationService navigationService)
         {
             //  _dispatcher = dispatcher;
             _score = score;
@@ -21,8 +23,23 @@ namespace DahlexApp.Views.How
             PlayerName = "nIX";
             IsMuted = false;
 
-            BackCommand = new RelayCommand(() => { _ = Task.Run(() => Navigation.PopAsync()); });
+            BackCommand = new AsyncRelayCommand( navigationService.NavigateBack);
 
+            ImageSource image; 
+            Assembly assembly = GetType().GetTypeInfo().Assembly;
+
+            var names = assembly.GetManifestResourceNames();
+            
+            using (Stream stream = assembly.GetManifestResourceStream("DahlexApp.Resources.Images.screen2_1280.png"))
+            {
+                 image = ImageSource.FromStream(()=>stream);
+            }
+
+            HowToPages.Clear();
+                HowToPages.Add(new HowItemViewModel { ImageText = "Simple", ImageSource = ImageSource.FromResource("DahlexApp.Properties.Resources.resources.screen1_1280.png") });
+                HowToPages.Add(new HowItemViewModel { ImageText = "Simple", ImageSource = ImageSource.FromFile("screen1_1280.png") });
+                HowToPages.Add(new HowItemViewModel { ImageText = "Who is who", ImageSource = ImageSource.FromResource("screen2_1280.png") });
+                HowToPages.Add(new HowItemViewModel { ImageText = "Busy", ImageSource = ImageSource.FromResource("DahlexApp.Resources.Images.Screens.screen4_1280.png") });
             //      AwaitKt Shell.Current.GoToAsync();
         }
 
@@ -42,23 +59,8 @@ namespace DahlexApp.Views.How
         //    // do the heavy work here
         //}
 
-        protected INavigation Navigation
-        {
-            get
-            {
-                INavigation? navigation = Application.Current?.MainPage?.Navigation;
-                if (navigation is not null)
-                    return navigation;
-                else
-                {
-                    //This is not good!
-                    if (Debugger.IsAttached)
-                        Debugger.Break();
-                    throw new Exception();
-                }
-            }
-        }
-
+         
+     
         public ObservableCollection<HowItemViewModel> HowToPages { get; } = new ObservableCollection<HowItemViewModel>();
 
 //        public override void ViewAppeared()
@@ -79,7 +81,7 @@ namespace DahlexApp.Views.How
             // 
     //    }
 
-        public IRelayCommand BackCommand { get; set; }
+        public IAsyncRelayCommand BackCommand { get; set; }
 
         public ImageSource CloseImage { get; set; }
 
@@ -94,14 +96,14 @@ namespace DahlexApp.Views.How
         public string PlayerName
         {
             get => _playerName;
-            set => _playerName = value;
+            set => SetProperty(ref _playerName, value);
         }
 
         private bool _isMuted;
         public bool IsMuted
         {
             get => _isMuted;
-            set => _isMuted = value;
+            set => SetProperty(ref _isMuted, value);
         }
     }
 }

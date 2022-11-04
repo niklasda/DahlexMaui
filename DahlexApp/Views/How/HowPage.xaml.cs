@@ -3,9 +3,9 @@ using DahlexApp.Views.How;
 
 namespace DahlexApp.Views;
 
-public partial class NewPage1 : ContentPage
+public partial class HowPage : ContentPage
 {
-	public NewPage1()
+	public HowPage()
 	{
 		InitializeComponent();
 

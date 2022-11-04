@@ -1,8 +1,12 @@
 ﻿//using Xamarin.Forms;
 
+using CommunityToolkit.Mvvm.ComponentModel;
+using JetBrains.Annotations;
+
 namespace DahlexApp.Views.How
 {
-    public class HowItemViewModel 
+  //  [UsedImplicitly]
+    public class HowItemViewModel : ObservableObject
     {
         private string _imageText= string.Empty;
         public string ImageText

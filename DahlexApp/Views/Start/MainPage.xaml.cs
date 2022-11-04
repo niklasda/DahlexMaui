@@ -1,14 +1,16 @@
 ﻿using DahlexApp.Views;
 using DahlexApp.Views.How;
 
-namespace DahlexApp;
+namespace DahlexApp.Views.Start;
+
 
 public partial class MainPage : ContentPage
 {
 	int count = 0;
 
-	public MainPage()
-	{
+	public MainPage(MainViewModel vm)
+    {
+        BindingContext = vm;
 		InitializeComponent();
 	}
 
@@ -21,9 +23,9 @@ public partial class MainPage : ContentPage
 		else
 			CounterBtn.Text = $"Clicked {count} times";
         
-        Navigation.PushAsync(new NewPage1());
+       // Navigation.PushAsync(new HowPage());
 
-		SemanticScreenReader.Announce(CounterBtn.Text);
+//		SemanticScreenReader.Announce(CounterBtn.Text);
 	}
 }
 

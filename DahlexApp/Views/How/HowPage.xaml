@@ -2,9 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:DahlexApp.Views.How"
-             x:Class="DahlexApp.Views.NewPage1"
+             x:Class="DahlexApp.Views.HowPage"
              x:DataType="local:HowViewModel"
-             Title="NewPage1">
+             Title="HowPage">
 
 
     <Grid >
@@ -33,7 +33,7 @@
                     <CarouselView.ItemTemplate  >
                         <DataTemplate x:DataType="local:HowItemViewModel">
                             <StackLayout Orientation="Vertical" VerticalOptions="Center" Spacing="15">
-                                <Image Source="{Binding ImageSource}"  ></Image>
+                                <Image Source="{Binding ImageSource}" HeightRequest="00" WidthRequest="100" ></Image>
                                 <Label Text="{Binding ImageText}" Style="{StaticResource SubtitleStyle}" ></Label>
                             </StackLayout>
 

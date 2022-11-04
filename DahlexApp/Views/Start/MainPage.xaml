@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DahlexApp.MainPage">
+             xmlns:start="clr-namespace:DahlexApp.Views.Start"
+             x:Class="DahlexApp.Views.Start.MainPage"
+             x:DataType="start:MainViewModel">
 
     <ScrollView>
         <VerticalStackLayout
@@ -32,7 +34,8 @@
                 x:Name="CounterBtn"
                 Text="Click me"
                 SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
+                
+                Command="{Binding HowCommand}"
                 HorizontalOptions="Center" />
 
         </VerticalStackLayout>
