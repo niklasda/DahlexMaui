@@ -3,7 +3,7 @@ using DahlexApp.Views.How;
 
 namespace DahlexApp.Views;
 
-public partial class HowPage : ContentPage
+public partial class HowPage 
 {
 	public HowPage()
 	{

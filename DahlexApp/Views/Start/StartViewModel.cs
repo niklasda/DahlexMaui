@@ -13,42 +13,28 @@ using DahlexApp.Views.Settings;
 //using MvvmCross.ViewModels;
 //using Xamarin.Forms;
 
-namespace DahlexApp.Views.Start
-{
-    public class MainViewModel : ObservableObject
+namespace DahlexApp.Views.Start;
+
+    public class StartViewModel : ObservableObject
     {
-        public MainViewModel(INavigationService navigationService)
+        public StartViewModel(INavigationService navigationService)
         {
            // _navigationService = navigationService;
 
             Title = "Dahlex";
 
-            LogoImageSource = ImageSource.FromResource("DahlexApp.Assets.Images.Tile300.png"); // 42x42
+            LogoImageSource = ImageSource.FromFile("tile300.png"); // 42x42
 
-            HowCommand = new AsyncRelayCommand(async () => await navigationService.NavigateToPage<HowPage>()
-                
-            //Application.Current.MainPage.DisplayAlert("Dahlex","Coming SoOon","Ok");
-            );
+            HowCommand = new AsyncRelayCommand(async () => await navigationService.NavigateToPage<HowPage>());
 
-            //GotoBoardCommand = new RelayCommand(() =>
+         //   GotoBoardCommand = new AsyncRelayCommand(async () => await navigationService.NavigateToPage<BoardPage>(new GameModeModel { SelectedGameMode = GameMode.Random }));
+            
 
-            //    _ = Task.Run(async () => await navigationService.NavigateToPage<BoardPage>(new GameModeModel { SelectedGameMode = GameMode.Random }))
-            //);
+         //   GotoTutorialCommand = new AsyncRelayCommand(async () => await navigationService.NavigateToPage<BoardPageCampaign>(new GameModeModel { SelectedGameMode = GameMode.Campaign }));
 
-            //GotoTutorialCommand = new Command(() =>
+            GotoSettingsCommand = new AsyncRelayCommand(async () => await navigationService.NavigateToPage<SettingsPage>());
 
-            //    _ = Task.Run(async () => await navigationService.NavigateToPage<BoardPageCampaign>(new GameModeModel { SelectedGameMode = GameMode.Campaign }))
-            //);
-
-            //GotoSettingsCommand = new Command(() =>
-
-            //    _ = Task.Run(async () => await navigationService.NavigateToPage<SettingsPage>())
-            //);
-
-            //GotoScoresCommand = new Command(() =>
-
-            //    _ = Task.Run(async () => await navigationService.NavigateToPage<ScoresPage>())
-            //);
+            GotoScoresCommand = new AsyncRelayCommand(async () => await navigationService.NavigateToPage<ScoresPage>());
         }
 
         //private readonly IMvxNavigationService _navigationService;
@@ -85,4 +71,3 @@ namespace DahlexApp.Views.Start
             set => SetProperty(ref _title, value);
         }
     }
-}

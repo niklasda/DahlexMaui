@@ -7,46 +7,60 @@
 //using Xamarin.Forms;
 //using Size = System.Drawing.Size;
 
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using DahlexApp.Logic.Models;
+using DahlexApp.Logic.Services;
+using DahlexApp.Logic.Settings;
+
 namespace DahlexApp.Views.Settings;
-/*{
-    public class SettingsViewModel : MvxViewModel
+
+    public class SettingsViewModel : ObservableObject
     {
 
-        public SettingsViewModel(IMvxNavigationService navigationService)
+        public SettingsViewModel(INavigationService navigationService)
         {
-            BackCommand = new MvxCommand(() => _ = Task.Run(async () => await navigationService.Close(this)));
-            CloseImage = ImageSource.FromResource("DahlexApp.Assets.Images.Close.png");
+            BackCommand = new AsyncRelayCommand(navigationService.NavigateBack);
+            CloseImage = ImageSource.FromFile("close.png");
 
 
             Title = "Settings";
-        }
 
-        public override void Prepare()
-        {
-            // first callback. Initialize parameter-agnostic stuff here
-        }
-
-        public override async Task Initialize()
-        {
-            await base.Initialize();
-
-            // do the heavy work here
-
-            SettingsManager sm = new SettingsManager(new Size(0,0));
+            SettingsManager sm = new SettingsManager(new System.Drawing.Size(0, 0));
+            
             var gs = sm.LoadLocalSettings();
             ProfName = gs.PlayerName;
             IsMuted = gs.LessSound;
-        }
+    }
 
-        public override void ViewDisappeared()
-        {
-            base.ViewDisappeared();
 
-            SettingsManager sm = new SettingsManager(new Size(0, 0));
-            sm.SaveLocalSettings(new GameSettings(new Size(0,0) ){PlayerName = ProfName, LessSound = IsMuted});
-        }
 
-        public IMvxCommand BackCommand { get; set; }
+    //public override void Prepare()
+    //{
+    //    // first callback. Initialize parameter-agnostic stuff here
+    //}
+
+    //public override async Task Initialize()
+    //{
+    //    await base.Initialize();
+
+    //    // do the heavy work here
+
+    //    SettingsManager sm = new SettingsManager(new Size(0,0));
+    //    var gs = sm.LoadLocalSettings();
+    //    ProfName = gs.PlayerName;
+    //    IsMuted = gs.LessSound;
+    //}
+
+    //public override void ViewDisappeared()
+    //{
+    //    base.ViewDisappeared();
+
+    //    SettingsManager sm = new SettingsManager(new Size(0, 0));
+    //    sm.SaveLocalSettings(new GameSettings(new Size(0,0) ){PlayerName = ProfName, LessSound = IsMuted});
+    //}
+
+    public IAsyncRelayCommand BackCommand { get; set; }
 
         public ImageSource CloseImage { get; set; }
 
@@ -71,5 +85,3 @@ namespace DahlexApp.Views.Settings;
             set => SetProperty(ref _isMuted, value);
         }
     }
-}
-*/

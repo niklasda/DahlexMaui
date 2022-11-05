@@ -50,10 +50,25 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="Resources\Images\Screens\**" />
+	  <Compile Remove="Resources\Images\Screens\**" />
+	  <EmbeddedResource Remove="Resources\Images\Screens\**" />
+	  <MauiCss Remove="Resources\Images\Screens\**" />
+	  <MauiImage Remove="Resources\Images\Screens\**" />
+	  <MauiXaml Remove="Resources\Images\Screens\**" />
+	  <None Remove="Resources\Images\Screens\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Resources\Images\Close.png" />
 	  <None Remove="Resources\Images\icon.png" />
 	  <None Remove="Resources\Images\launcher_foreground.png" />
 	  <None Remove="Resources\Images\Screen1_1280.png" />
 	  <None Remove="Resources\Images\Screen2_1280.png" />
+	  <None Remove="Resources\Images\Tile300.png" />
+	  <None Remove="Resources\Raw\bomb.wav" />
+	  <None Remove="Resources\Raw\heap.wav" />
+	  <None Remove="Resources\Raw\tele.wav" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -77,10 +92,15 @@
 	  <MauiXaml Update="Views\How\HowPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Scores\ScoresPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Settings\SettingsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Resources\Images\Screens\" />
 	  <Folder Include="Services\" />
 	</ItemGroup>
 
@@ -92,6 +112,9 @@
 	  </Compile>
 	  <Compile Update="Views\How\HowPage.xaml.cs">
 	    <DependentUpon>HowPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\Start\StartPage.xaml.cs">
+	    <DependentUpon>StartPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 

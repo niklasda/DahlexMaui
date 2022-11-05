@@ -17,7 +17,7 @@ namespace DahlexApp.Views.How
             _score = score;
             //  INavigation navigation = App.Current.MainPage.Navigation;
             //   BackCommand = new MvxCommand(() => { _ = Task.Run(async () => await navigationService.Close(this)); });
-            CloseImage = ImageSource.FromResource("DahlexApp.Assets.Images.Close.png");
+            CloseImage = ImageSource.FromFile("close.png");
 
             Title = "How";
             PlayerName = "nIX";
@@ -25,8 +25,8 @@ namespace DahlexApp.Views.How
 
             BackCommand = new AsyncRelayCommand( navigationService.NavigateBack);
 
-            ImageSource image; 
-            Assembly assembly = GetType().GetTypeInfo().Assembly;
+           // ImageSource image; 
+         //   Assembly assembly = GetType().GetTypeInfo().Assembly;
 
 
             HowToPages.Clear();
