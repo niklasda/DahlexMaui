@@ -9,9 +9,9 @@ public partial class HowPage
 	{
 		InitializeComponent();
 
-        var vm = Ioc.Default.GetRequiredService<HowViewModel>();
+      //  var vm = Ioc.Default.GetRequiredService<HowViewModel>();
 
-        BindingContext = vm;
+      //  BindingContext = vm;
         //    NavigationPage.SetHasNavigationBar(this, false);
     }
 }

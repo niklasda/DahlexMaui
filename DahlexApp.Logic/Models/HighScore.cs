@@ -1,10 +1,9 @@
-﻿using Size = System.Drawing.Size;
-
+﻿
 namespace DahlexApp.Logic.Models
 {
     public class HighScore
     {
-        public HighScore(string name, int level, int bombsLeft, int teleportsLeft, int moves, DateTime startTime, Size boardSize)
+        public HighScore(string name, int level, int bombsLeft, int teleportsLeft, int moves, DateTime startTime, IntSize boardSize)
         {
             Name = name;
             Score = level;
@@ -32,7 +31,7 @@ namespace DahlexApp.Logic.Models
 
         public TimeSpan GameDuration { get; set; }
 
-        public Size BoardSize { get; }
+        public IntSize BoardSize { get; }
 
         public string Content
         {

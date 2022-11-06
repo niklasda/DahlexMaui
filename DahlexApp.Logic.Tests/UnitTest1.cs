@@ -1,25 +1,25 @@
-using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Running;
 using System.Security.Cryptography;
-using Xunit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DahlexApp.Logic.Tests
 {
+    [TestClass]
     public class UnitTest1
     {
 
-        [Fact]
+        [TestMethod]
+
         public void Test1()
         {
         }
 
-        [Theory]
-        [InlineData(3)]
-        [InlineData(5)]
-        [InlineData(6)]
+        [DataTestMethod]
+        [DataRow(3)]
+        [DataRow(5)]
+        [DataRow(6)]
         public void MyFirstTheory(int value)
         {
-            Assert.True(IsOdd(value));
+            Assert.IsTrue(IsOdd(value));
         }
 
         bool IsOdd(int value)

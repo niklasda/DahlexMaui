@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                 xmlns:local="clr-namespace:DahlexApp.Views.Board"
+                 x:Class="DahlexApp.Views.Board.BoardPage"
+                 x:DataType="local:BoardViewModel"
+                
+                 Title="{Binding Title}"
+                 BackgroundColor="{StaticResource PrimaryBackgroundColor}">
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="150" />
+    </Grid.RowDefinitions>
+
+    <AbsoluteLayout BackgroundColor="{StaticResource PrimaryBackgroundColor}">
+      <AbsoluteLayout WidthRequest="{Binding ShortestDimension}" BackgroundColor="Transparent" x:Name="TheBoard">
+
+        <!--<AbsoluteLayout.GestureRecognizers>
+          <PanGestureRecognizer PanUpdated="PanGestureRecognizer_OnPanUpdated" ></PanGestureRecognizer>
+        </AbsoluteLayout.GestureRecognizers>-->
+      </AbsoluteLayout>
+
+      <AbsoluteLayout WidthRequest="{Binding ShortestDimension}" HeightRequest="{Binding HeightDimension}" BackgroundColor="Transparent" x:Name="TheOverBoard">
+
+        <!--<Image Source="{Binding PlanetImageSource}" x:Name="TheProfx" Aspect="AspectFit" AbsoluteLayout.LayoutBounds="0.2,0.1,0.1,0.1" IsVisible="False" >
+          <Image.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding ClickedTheProfCommand}"></TapGestureRecognizer>
+          </Image.GestureRecognizers>
+        </Image>
+        <Image Source="{Binding HeapImageSource}" x:Name="TheHeapx" Aspect="AspectFit" AbsoluteLayout.LayoutBounds="0.3,0.1,0.1,0.1" InputTransparent="True"  IsVisible="False">
+          <Image.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding ClickedTheHeapCommand}"></TapGestureRecognizer>
+          </Image.GestureRecognizers>
+        </Image>
+        <Image Source="{Binding Robot1ImageSource}" x:Name="TheRobotx" Aspect="AspectFit" AbsoluteLayout.LayoutBounds="0.4,0.1,0.1,0.1"   IsVisible="False">
+          <Image.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding ClickedTheRobotCommand}"></TapGestureRecognizer>
+          </Image.GestureRecognizers>
+        </Image>-->
+
+          <!--<AbsoluteLayout.GestureRecognizers>
+        <SwipeGestureRecognizer Direction="Left,Up,Right,Down" Swiped="SwipeGestureRecognizer_OnSwiped"></SwipeGestureRecognizer>
+          <PanGestureRecognizer PanUpdated="PanGestureRecognizer_OnPanUpdated" ></PanGestureRecognizer>
+        </AbsoluteLayout.GestureRecognizers>-->
+
+      </AbsoluteLayout>
+    </AbsoluteLayout>
+
+    <StackLayout Grid.Row="1" Orientation="Vertical" Padding="5,10,5,10" Spacing="8"  BackgroundColor="DimGray">
+
+      <StackLayout Orientation="Horizontal" Padding="0,5,0,5" Spacing="8">
+        <Label Text="{Binding TimerText}" Style="{StaticResource SubtitleStyle}"></Label>
+
+        <Label Text="{Binding InfoText}" Style="{StaticResource SubtitleStyle}" LineBreakMode="TailTruncation" ></Label>
+      </StackLayout>
+
+      <StackLayout Orientation="Horizontal" Padding="0" Spacing="7" HorizontalOptions="CenterAndExpand">
+        <Button Text="Start" Command="{Binding StartGameCommand}" Style="{StaticResource SmallButtonStyle}" IsEnabled="{Binding CanStart}" />
+
+        <Button Text="Next"  Command="{Binding NextLevelCommand}" Style="{StaticResource SmallButtonStyle}" IsEnabled="{Binding CanNext}" />
+
+        <Button Text="{Binding BombText}" Command="{Binding BombCommand}" Style="{StaticResource SmallButtonStyle}" IsEnabled="{Binding CanBomb}" />
+
+        <Button Text="{Binding TeleText}" Command="{Binding TeleCommand}" Style="{StaticResource SmallButtonStyle}" IsEnabled="{Binding CanTele}" />
+      </StackLayout>
+
+      <StackLayout Orientation="Horizontal" Padding="0,5,0,5" Spacing="8">
+        <Label Text="{Binding InfoText1}" Style="{StaticResource SubtitleStyle}"></Label>
+        <Label Text="{Binding InfoText2}" Style="{StaticResource SubtitleStyle}"></Label>
+
+      </StackLayout>
+    </StackLayout>
+  </Grid>
+
+</ContentPage>

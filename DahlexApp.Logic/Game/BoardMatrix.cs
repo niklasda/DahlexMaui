@@ -1,7 +1,5 @@
 ﻿using DahlexApp.Logic.Interfaces;
 using DahlexApp.Logic.Models;
-using Point = System.Drawing.Point;
-using Size = System.Drawing.Size;
 
 namespace DahlexApp.Logic.Game
 {
@@ -10,9 +8,9 @@ namespace DahlexApp.Logic.Game
         private BoardPosition[,] _positions;
         private readonly BoardPosition[,] _tempPositions;
 
-        private readonly Size _boardSize;
+        private readonly IntSize _boardSize;
 
-        public BoardMatrix(Size pBoardSize)
+        public BoardMatrix(IntSize pBoardSize)
         {
             _boardSize = pBoardSize;
             
@@ -68,7 +66,7 @@ namespace DahlexApp.Logic.Game
         {
             return _boardSize.Width;
         }
-        public Point GetProfessor()
+        public IntPoint GetProfessor()
         {
             return GetProfessor(_positions);            
         }
@@ -85,12 +83,12 @@ namespace DahlexApp.Logic.Game
         {
             _tempPositions[x, y] = new BoardPosition(PieceType.None,"");
         }
-        public Point GetProfessorFromTemp()
+        public IntPoint GetProfessorFromTemp()
         {
             return GetProfessor(_tempPositions);
         }
 
-        private Point GetProfessor(BoardPosition[,] bps)
+        private IntPoint GetProfessor(BoardPosition[,] bps)
         {
             for (int x = 0; x < _boardSize.Width; x++)
             {
@@ -102,13 +100,13 @@ namespace DahlexApp.Logic.Game
 
                         if (cp.Type == PieceType.Professor)
                         {
-                            return new Point(x, y);
+                            return new IntPoint(x, y);
                         }
                     //}
                 }
             }
 
-            return new Point(-1, -1);
+            return new IntPoint(-1, -1);
         }
     }
 }

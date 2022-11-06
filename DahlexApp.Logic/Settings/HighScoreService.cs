@@ -1,5 +1,4 @@
-﻿using Size = System.Drawing.Size;
-using DahlexApp.Logic.Interfaces;
+﻿using DahlexApp.Logic.Interfaces;
 using DahlexApp.Logic.Models;
 using System.Text.Json;
 
@@ -20,7 +19,7 @@ namespace DahlexApp.Logic.Settings
         private readonly IPreferencesService _preferences;
         private List<HighScore> _scores;//= new List<HighScore>();
 
-        public void AddHighScore(GameMode mode, string name, int level, int bombsLeft, int teleportsLeft, int moves, DateTime startTime, Size boardSize)
+        public void AddHighScore(GameMode mode, string name, int level, int bombsLeft, int teleportsLeft, int moves, DateTime startTime, IntSize boardSize)
         {
             if (mode == GameMode.Random)
             {
@@ -70,7 +69,7 @@ namespace DahlexApp.Logic.Settings
 
                 if (_scores.Count == 0)
                 {
-                    _scores.Add(new HighScore("Niklas (Beat me, I wanna be last)", 1, 1, 1, 1, DateTime.Now.AddMinutes(-3), new Size(12, 12)));
+                    _scores.Add(new HighScore("Niklas (Beat me, I wanna be last)", 1, 1, 1, 1, DateTime.Now.AddMinutes(-3), new IntSize(12, 12)));
                 }
 
                 _scores.Sort(new HighScoreComparer());

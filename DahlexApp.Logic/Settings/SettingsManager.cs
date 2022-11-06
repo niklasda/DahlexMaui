@@ -1,5 +1,4 @@
-﻿using Size = System.Drawing.Size;
-using DahlexApp.Logic.Interfaces;
+﻿using DahlexApp.Logic.Interfaces;
 using DahlexApp.Logic.Models;
 
 namespace DahlexApp.Logic.Settings
@@ -7,9 +6,9 @@ namespace DahlexApp.Logic.Settings
     public class SettingsManager : ISettingsManager
     {
         //private static bool _hasAlreadyRun;
-        private readonly Size _canvasSize;
+        private readonly IntSize _canvasSize;
 
-        public SettingsManager(Size canvasSize)
+        public SettingsManager(IntSize canvasSize)
         {
             _canvasSize = canvasSize;
         }

@@ -1,10 +1,8 @@
-﻿using Size = System.Drawing.Size;
-using System.Text;
+﻿using System.Text;
 using DahlexApp.Logic.Interfaces;
 using DahlexApp.Logic.Models;
 using DahlexApp.Logic.Settings;
 using DahlexApp.Logic.Utils;
-using Point = System.Drawing.Point;
 
 namespace DahlexApp.Logic.Game
 {
@@ -22,8 +20,8 @@ namespace DahlexApp.Logic.Game
         private int _moveCount;
         private string _tail = string.Empty;
 
-        private readonly Size _boardSize; // number of squares
-        private readonly Size _squareSize; // in pixels
+        private readonly IntSize _boardSize; // number of squares
+        private readonly IntSize _squareSize; // in pixels
         private int _maxLevel;
         private IBoard _board;
         private DateTime _startTime;
@@ -38,7 +36,7 @@ namespace DahlexApp.Logic.Game
 
             _boardSize = _settings.BoardSize;
             _squareSize = _settings.SquareSize;
-            _board = new BoardMatrix(Size.Empty);
+            _board = new BoardMatrix(IntSize.Empty);
         }
 
         public GameStatus Status { get; private set; }
@@ -50,7 +48,7 @@ namespace DahlexApp.Logic.Game
             get { return CurrentLevel >= _maxLevel; }
         }
 
-        public void StartGame(GameMode mode)
+        public async Task StartGame(GameMode mode)
         {
             _startTime = DateTime.Now;
             Status = GameStatus.LevelOngoing;
@@ -72,18 +70,18 @@ namespace DahlexApp.Logic.Game
                 _maxLevel = Campaign1.Boards.Length - 1;
             }
 
-            InitNewLevel(CurrentLevel);
+            await InitNewLevel(CurrentLevel);
         }
 
         /// <summary>
         /// Continue game from tombstone, called after setState
         /// </summary>
-        public void ContinueGame(GameMode mode)
+        public async Task ContinueGame(GameMode mode)
         {
             _gameMode = mode;
             _startTime = DateTime.Now; // todo put in state
 
-            InitOldLevel(CurrentLevel);
+            await InitOldLevel(CurrentLevel);
         }
 
         /// <summary>
@@ -182,7 +180,7 @@ namespace DahlexApp.Logic.Game
             _board.TheBoard = b;
         }
 
-        public void StartNextLevel()
+        public async Task StartNextLevel()
         {
             if (CurrentLevel == _maxLevel)
             {
@@ -197,7 +195,7 @@ namespace DahlexApp.Logic.Game
                 Status = GameStatus.LevelOngoing;
                 CurrentLevel++;
 
-                InitNewLevel(CurrentLevel);
+                await InitNewLevel(CurrentLevel);
             }
         }
 
@@ -205,7 +203,7 @@ namespace DahlexApp.Logic.Game
         /// Called from StartGame and startNextLevel
         /// </summary>
         /// <param name="thisLevel"></param>
-        private void InitNewLevel(int thisLevel)
+        private async Task InitNewLevel(int thisLevel)
         {
             _bombCount++;
             _teleportCount++;
@@ -227,14 +225,14 @@ namespace DahlexApp.Logic.Game
                 CreateHeaps(thisLevel);
             }
 
-            Redraw(true);
+            await Redraw(true);
         }
 
         /// <summary>
         /// Called from continueGame
         /// </summary>
         /// <param name="thisLevel"></param>
-        private void InitOldLevel(int thisLevel)
+        private async Task InitOldLevel(int thisLevel)
         {
             if (_board == null) // i.e. not restored from tombstone
             {
@@ -249,12 +247,12 @@ namespace DahlexApp.Logic.Game
                 _robotCount = _board.GetRobotCount();
             }
 
-            Redraw(true);
+            await Redraw(true);
         }
 
         private void CreateProfessor()
         {
-            Point profPos = GetFreePosition();
+            IntPoint profPos = GetFreePosition();
             BoardPosition pPos = BoardPosition.CreateProfessorBoardPosition();
             _board.SetPosition(profPos.X, profPos.Y, pPos);
         }
@@ -264,7 +262,7 @@ namespace DahlexApp.Logic.Game
             RemoveOldPieces(PieceType.Heap);  // todo why, and why heaps
             for (int i = 0; i < count; i++)
             {
-                Point robotPos = GetFreePosition();
+                IntPoint robotPos = GetFreePosition();
                 BoardPosition rPos = BoardPosition.CreateRobotBoardPosition(i);
                 _board.SetPosition(robotPos.X, robotPos.Y, rPos);
             }
@@ -275,7 +273,7 @@ namespace DahlexApp.Logic.Game
             RemoveOldPieces(PieceType.Heap); // todo why
             for (int i = 0; i < count; i++)
             {
-                Point robotPos = GetFreePosition();
+                IntPoint robotPos = GetFreePosition();
                 BoardPosition rPos = BoardPosition.CreateHeapBoardPosition(i);
                 _board.SetPosition(robotPos.X, robotPos.Y, rPos);
             }
@@ -300,19 +298,19 @@ namespace DahlexApp.Logic.Game
             }
         }
 
-        private Point GetFreePosition()
+        private IntPoint GetFreePosition()
         {
-            Point p;
+            IntPoint p;
             do
             {
                 p = Randomizer.GetRandomPosition(_boardSize.Width, _boardSize.Height);
             }
             while (_board.GetPosition(p.X, p.Y) != null);
 
-            return new Point(p.X, p.Y);
+            return new IntPoint(p.X, p.Y);
         }
 
-        public void MoveHeapsToTemp()
+        public async Task MoveHeapsToTemp()
         {
             for (int x = 0; x < _board.GetPositionWidth(); x++)
             {
@@ -324,16 +322,16 @@ namespace DahlexApp.Logic.Game
 
                         if (cp.Type == PieceType.Heap)
                         {
-                            Point point = new Point(x, y);
+                            IntPoint point = new IntPoint(x, y);
 
-                            MoveCharacter(point, point, 10); // todo  doesn't move
+                            await MoveCharacter(point, point, 10); // todo  doesn't move
                         }
                     }
                 }
             }
         }
 
-        private void MoveCharacter(Point oldPosition, Point newPosition, uint millis)
+        private async Task MoveCharacter(IntPoint oldPosition, IntPoint newPosition, uint millis)
         {
             BoardPosition oldBp = _board.GetPosition(oldPosition.X, oldPosition.Y);
             BoardPosition newBp = _board.GetTempPosition(newPosition.X, newPosition.Y);
@@ -341,15 +339,15 @@ namespace DahlexApp.Logic.Game
             if (newBp == null || newBp.Type == PieceType.None)
             {
                 _board.SetTempPosition(newPosition.X, newPosition.Y, oldBp);
-                _boardView.Animate(oldBp, oldPosition, newPosition, millis);
+                await _boardView.Animate(oldBp, oldPosition, newPosition, millis);
                 _boardView.AddLineToLog($"M. {oldBp.Type} to {newPosition}");
             }
             else if (oldBp.Type == PieceType.Robot && newBp.Type == PieceType.Robot)
             {
                 _boardView.AddLineToLog($"Robot-robot collision on {newPosition}");
-                _boardView.Animate(oldBp, oldPosition, newPosition, millis);
+                await _boardView.Animate(oldBp, oldPosition, newPosition, millis);
 
-                _boardView.PlaySound(Sound.Crash);
+                await _boardView.PlaySound(Sound.Crash);
                 _boardView.ChangeImage(newBp);
                 newBp.ConvertToHeap();
                 _robotCount -= 2;
@@ -361,9 +359,9 @@ namespace DahlexApp.Logic.Game
             else if (oldBp.Type == PieceType.Robot && newBp.Type == PieceType.Heap)
             {
                 _boardView.AddLineToLog($"Robot-heap collision on {newPosition}");
-                _boardView.Animate(oldBp, oldPosition, newPosition, millis);
+                await _boardView.Animate(oldBp, oldPosition, newPosition, millis);
 
-                _boardView.PlaySound(Sound.Crash);
+                await _boardView.PlaySound(Sound.Crash);
                 _boardView.ChangeImage(newBp);
 
                 newBp.ConvertToHeap();
@@ -376,9 +374,9 @@ namespace DahlexApp.Logic.Game
             else if (oldBp.Type == PieceType.Robot && newBp.Type == PieceType.Professor)
             {
                 _boardView.AddLineToLog($"Robot killed professor on {newPosition}");
-                _boardView.Animate(oldBp, oldPosition, newPosition, millis);
+                await _boardView.Animate(oldBp, oldPosition, newPosition, millis);
 
-                _boardView.PlaySound(Sound.Crash);
+                await _boardView.PlaySound(Sound.Crash);
 
                 newBp.ConvertToHeap();
                 Status = GameStatus.GameLost;
@@ -387,9 +385,9 @@ namespace DahlexApp.Logic.Game
             else if (oldBp.Type == PieceType.Professor && newBp.Type == PieceType.Robot)
             {
                 _boardView.AddLineToLog($"Professor hit robot on {newPosition}");
-                _boardView.Animate(oldBp, oldPosition, newPosition, millis);
+                await _boardView.Animate(oldBp, oldPosition, newPosition, millis);
 
-                _boardView.PlaySound(Sound.Crash);
+                await _boardView.PlaySound(Sound.Crash);
 
                 newBp.ConvertToHeap();
                 Status = GameStatus.GameLost;
@@ -403,13 +401,13 @@ namespace DahlexApp.Logic.Game
             }
         }
 
-        public Point GetProfessorCoordinates()
+        public IntPoint GetProfessorCoordinates()
         {
-            Point pos = GetProfessor(false);
+            IntPoint pos = GetProfessor(false);
             return pos;
         }
 
-        private Point GetProfessor(bool fromTemp)
+        private IntPoint GetProfessor(bool fromTemp)
         {
             if (fromTemp)
             {
@@ -421,10 +419,10 @@ namespace DahlexApp.Logic.Game
             }
         }
 
-        public bool MoveProfessorToTemp(MoveDirection dir)
+        public async Task<bool> MoveProfessorToTemp(MoveDirection dir)
         {
-            Point oldProfessorPosition = GetProfessor(false);
-            Point newProfessorPosition = oldProfessorPosition;
+            IntPoint oldProfessorPosition = GetProfessor(false);
+            IntPoint newProfessorPosition = oldProfessorPosition;
 
             if (dir == MoveDirection.North)
             {
@@ -496,7 +494,7 @@ namespace DahlexApp.Logic.Game
 
             if (!oldProfessorPosition.Equals(newProfessorPosition) || (dir == MoveDirection.None))
             {
-                MoveCharacter(oldProfessorPosition, newProfessorPosition, 250); // no guid needed, prof has own storyboard
+                await MoveCharacter(oldProfessorPosition, newProfessorPosition, 250); // no guid needed, prof has own storyboard
                 _moveCount++;
                 return true;
             }
@@ -504,9 +502,9 @@ namespace DahlexApp.Logic.Game
             return false;
         }
 
-        public void MoveRobotsToTemp()
+        public async Task MoveRobotsToTemp()
         {
-            Point prof = GetProfessor(true);
+            IntPoint prof = GetProfessor(true);
             //var guid = Guid.NewGuid();
 
             for (int x = 0; x < _board.GetPositionWidth(); x++)
@@ -516,14 +514,14 @@ namespace DahlexApp.Logic.Game
                     if (_board.GetPosition(x, y) != null)
                     {
                         BoardPosition cp = _board.GetPosition(x, y);
-                        var current = new Point(x, y);
+                        var current = new IntPoint(x, y);
 
                         if (cp.Type == PieceType.Robot)
                         {
-                            var diff = new Point(Math.Sign(prof.X - current.X), Math.Sign(prof.Y - current.Y));
-                            var newPoint = new Point(current.X + diff.X, current.Y + diff.Y);
+                            var diff = new IntPoint(Math.Sign(prof.X - current.X), Math.Sign(prof.Y - current.Y));
+                            var newPoint = new IntPoint(current.X + diff.X, current.Y + diff.Y);
 
-                            MoveCharacter(current, newPoint, 250);
+                            await MoveCharacter(current, newPoint, 250);
                         }
                     }
                 }
@@ -531,7 +529,7 @@ namespace DahlexApp.Logic.Game
             //_boardView.StartTheRobots(guid);
         }
 
-        public void CommitTemp()
+        public async Task CommitTemp()
         {
             for (int x = 0; x < _board.GetPositionWidth(); x++)
             {
@@ -544,7 +542,7 @@ namespace DahlexApp.Logic.Game
                 }
             }
 
-            Redraw(false);
+            await Redraw(false);
         }
 
         public void AddHighScore(bool maxLevel)
@@ -566,27 +564,27 @@ namespace DahlexApp.Logic.Game
             // });
         }
 
-        private void Redraw(bool clear)
+        private async Task Redraw(bool clear)
         {
             if (clear)
             {
-                _boardView?.Clear(true);
+                _boardView.Clear(true);
 
 
                 //_boardView?.DrawLines();
-                _boardView?.DrawBoard(_board, _squareSize.Width, _squareSize.Height);
+                await _boardView.DrawBoard(_board, _squareSize.Width, _squareSize.Height);
             }
             _boardView?.ShowStatus(CurrentLevel, _bombCount, _teleportCount, _robotCount, _moveCount, _maxLevel);
         }
 
-        public bool BlowBomb()
+        public async Task<bool> BlowBomb()
         {
             int robotCountBefore = _robotCount;
             //Guid roundId = Guid.NewGuid();
 
             if (_bombCount > 0)
             {
-                Point prof = GetProfessor(false);
+                IntPoint prof = GetProfessor(false);
 
                 for (int x = Math.Max(prof.X - 1, 0); x <= Math.Min(prof.X + 1, _boardSize.Width - 1); x++)
                 {
@@ -599,7 +597,7 @@ namespace DahlexApp.Logic.Game
                             if (bp.Type == PieceType.Robot)
                             {
                                 _boardView.AddLineToLog($"Bombing robot {x} {y}");
-                                _boardView.Animate(bp, new Point(x, y), new Point(x, y), 250);
+                                await _boardView.Animate(bp, new IntPoint(x, y), new IntPoint(x, y), 250);
 
                                 //_boardView.RemoveRobotAnimation(bp);
 
@@ -628,16 +626,16 @@ namespace DahlexApp.Logic.Game
             return false;
         }
 
-        public bool DoTeleport()
+        public async Task<bool> DoTeleport()
         {
             if (_teleportCount > 0)
             {
-                Point oldProfPos = GetProfessor(false);
-                Point newProfPos = GetFreePosition();
+                IntPoint oldProfPos = GetProfessor(false);
+                IntPoint newProfPos = GetFreePosition();
 
                 _boardView.AddLineToLog(string.Format("T. from {0} to {1}", oldProfPos.ToString(), newProfPos.ToString()));
 
-                MoveCharacter(oldProfPos, newProfPos, 1500);
+                await MoveCharacter(oldProfPos, newProfPos, 1500);
                 _moveCount++;
                 _teleportCount--;
                 return true;

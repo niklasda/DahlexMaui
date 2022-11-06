@@ -1,16 +1,15 @@
-﻿using Size = System.Drawing.Size;
-
+﻿
 namespace DahlexApp.Logic.Models
 {
     //[DataContract]
     public class GameSettings
     {
-        public GameSettings(Size canvasSize)
+        public GameSettings(IntSize canvasSize)
         {
             _canvasSize = canvasSize;
         }
 
-        private readonly Size _canvasSize;
+        private readonly IntSize _canvasSize;
 
         //   [DataMember]
         public string PlayerName { get; set; } = "Dr. Who";
@@ -22,13 +21,13 @@ namespace DahlexApp.Logic.Models
         /// Number of squares on the board
         /// </summary>
         //   [IgnoreDataMember]
-        public Size BoardSize
+        public IntSize BoardSize
         {
             get
             {
                 int h = (_canvasSize.Height / SquareSize.Height);
                 int w = (_canvasSize.Width / SquareSize.Width);
-                return new Size(w, h);
+                return new IntSize(w, h);
             }
         }
 
@@ -38,19 +37,19 @@ namespace DahlexApp.Logic.Models
         /// The size of the squares on the board, TODO with or without margin ???
         /// </summary>
      //   [IgnoreDataMember]
-        public readonly Size SquareSize = new Size(37, 37); // image size 42 x 42
+        public readonly IntSize SquareSize = new IntSize(37, 37); // image size 42 x 42
 
         /// <summary>
         /// The offset to apply to get the images inside the squares
         /// </summary>
     //    [IgnoreDataMember]
-        public readonly Point ImageOffset = new Point(1, 1); // w, h
+        public readonly IntPoint ImageOffset = new IntPoint(1, 1); // w, h
 
         /// <summary>
         /// The distance between squares
         /// </summary>
     //    [IgnoreDataMember]
-        public readonly Point LineWidth = new Point(0, 0);
+        public readonly IntPoint LineWidth = new IntPoint(0, 0);
 
         //[IgnoreDataMember]
         //public bool IsFirstRun;

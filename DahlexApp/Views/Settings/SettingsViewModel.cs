@@ -26,7 +26,7 @@ namespace DahlexApp.Views.Settings;
 
             Title = "Settings";
 
-            SettingsManager sm = new SettingsManager(new System.Drawing.Size(0, 0));
+            SettingsManager sm = new SettingsManager(new IntSize(0, 0));
             
             var gs = sm.LoadLocalSettings();
             ProfName = gs.PlayerName;

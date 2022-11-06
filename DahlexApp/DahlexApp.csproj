@@ -82,6 +82,7 @@
 	    <PrivateAssets>all</PrivateAssets>
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
+	  <PackageReference Include="Plugin.Maui.Audio" Version="0.1.0-preview2" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -89,6 +90,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\Board\BoardPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\How\HowPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

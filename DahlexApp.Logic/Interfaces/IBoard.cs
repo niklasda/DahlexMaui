@@ -1,5 +1,5 @@
 ﻿using DahlexApp.Logic.Game;
-using Point = System.Drawing.Point;
+using DahlexApp.Logic.Models;
 
 namespace DahlexApp.Logic.Interfaces
 {
@@ -10,11 +10,11 @@ namespace DahlexApp.Logic.Interfaces
         void ResetPosition(int x, int y);
         int GetPositionHeight();
         int GetPositionWidth();
-        Point GetProfessor();
+        IntPoint GetProfessor();
         BoardPosition GetTempPosition(int x, int y);
         void SetTempPosition(int x, int y, BoardPosition pos);
         void ResetTempPosition(int x, int y);
-        Point GetProfessorFromTemp();
+        IntPoint GetProfessorFromTemp();
         BoardPosition[,] TheBoard { get; set; }
         int GetRobotCount();
     }

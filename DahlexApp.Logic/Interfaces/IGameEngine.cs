@@ -1,5 +1,4 @@
 ﻿using DahlexApp.Logic.Models;
-using Point = System.Drawing.Point;
 
 namespace DahlexApp.Logic.Interfaces
 {
@@ -11,12 +10,12 @@ namespace DahlexApp.Logic.Interfaces
 
         int CurrentLevel { get; }
 
-        void StartGame(GameMode mode);
+        Task StartGame(GameMode mode);
 
         /// <summary>
         /// Continue game from tombstone, called after setState
         /// </summary>
-        void ContinueGame(GameMode mode);
+        Task ContinueGame(GameMode mode);
 
         /// <summary>
         /// Gather state to save to tombstone
@@ -31,21 +30,21 @@ namespace DahlexApp.Logic.Interfaces
         /// <param name="state"></param>
         void SetState(IGameState state);
 
-        void StartNextLevel();
+        Task StartNextLevel();
 
-        void MoveHeapsToTemp();
+        Task MoveHeapsToTemp();
 
-        bool MoveProfessorToTemp(MoveDirection dir);
+        Task<bool> MoveProfessorToTemp(MoveDirection dir);
 
-        void MoveRobotsToTemp();
+        Task MoveRobotsToTemp();
 
-        void CommitTemp();
+        Task CommitTemp();
 
-        bool BlowBomb();
+        Task<bool> BlowBomb();
 
-        bool DoTeleport();
+        Task<bool> DoTeleport();
 
-        Point GetProfessorCoordinates();
+        IntPoint GetProfessorCoordinates();
 
         void AddHighScore(bool maxLevel);
     }

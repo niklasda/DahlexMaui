@@ -28,6 +28,7 @@ namespace DahlexApp.Views.How
            // ImageSource image; 
          //   Assembly assembly = GetType().GetTypeInfo().Assembly;
 
+            //MainThread.BeginInvokeOnMainThread();
 
             HowToPages.Clear();
                // HowToPages.Add(new HowItemViewModel { ImageText = "Simple", ImageSource = ImageSource.FromResource("DahlexApp.Properties.Resources.resources.screen1_1280.png") });
