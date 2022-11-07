@@ -3,51 +3,50 @@ using DahlexApp.Logic.Services;
 
 namespace DahlexApp.Views.Board;
 
-    public partial class BoardPage : IBoardPage 
+public partial class BoardPage : IBoardPage
+{
+    public BoardPage(BoardViewModel vm)
     {
-        public BoardPage(BoardViewModel vm)
-        {
-            BindingContext = vm;
-            InitializeComponent();
-            Shell.SetNavBarIsVisible(this, false);
+        BindingContext = vm;
+        InitializeComponent();
+        Shell.SetNavBarIsVisible(this, false);
 
 
 
         vm.TheAbsBoard = TheBoard;
-            vm.TheAbsOverBoard = TheOverBoard;
-        }
+        vm.TheAbsOverBoard = TheOverBoard;
+    }
 
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
 
-        protected override void OnDisappearing()
+        if (BindingContext is BoardViewModel vm)
         {
-            base.OnDisappearing();
+            vm.OnDisappearing();
+        }
+    }
 
+
+    //protected override void OnViewModelSet()
+    //{
+    //    base.OnViewModelSet();
+
+    //    ViewModel.TheAbsBoard = TheBoard;
+    //    ViewModel.TheAbsOverBoard = TheOverBoard;
+    //}
+    public GameMode StartGameMode
+    {
+
+        set
+        {
             if (BindingContext is BoardViewModel vm)
             {
-                  vm.OnDisappearing();
-            }
-        }
+                vm.StartGameMode = value;
 
 
-        //protected override void OnViewModelSet()
-        //{
-        //    base.OnViewModelSet();
-
-        //    ViewModel.TheAbsBoard = TheBoard;
-        //    ViewModel.TheAbsOverBoard = TheOverBoard;
-        //}
-        public GameMode StartGameMode
-        {
-            
-            set
-            {
-                if (BindingContext is BoardViewModel vm)
-                {
-                    vm.StartGameMode = value;
-                   
-
-                    vm.OnAppearing().GetAwaiter().GetResult();
-                }
+                vm.OnAppearing().GetAwaiter().GetResult();
             }
         }
     }
+}

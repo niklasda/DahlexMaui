@@ -9,44 +9,44 @@ using DahlexApp.Views.Settings;
 
 namespace DahlexApp.Views.Start;
 
-    public class StartViewModel : ObservableObject
+public class StartViewModel : ObservableObject
+{
+
+    public StartViewModel(INavigationService navigationService)
     {
+        _title = string.Empty;
+        Title = "Dahlex";
 
-        public StartViewModel(INavigationService navigationService)
-        {
-            _title = string.Empty;
-            Title = "Dahlex";
+        LogoImageSource = ImageSource.FromFile("tile300.png"); // 42x42
 
-            LogoImageSource = ImageSource.FromFile("tile300.png"); // 42x42
+        HowCommand = new AsyncRelayCommand(async () =>
+            await navigationService.NavigateToPage<HowPage>());
 
-            HowCommand = new AsyncRelayCommand(async () =>
-                await navigationService.NavigateToPage<HowPage>());
-
-            GotoBoardCommand = new AsyncRelayCommand(async () => await navigationService.NavigateToBoardPage<BoardPage>(new GameModeModel { SelectedGameMode = GameMode.Random }));
-            
-
-            GotoTutorialCommand = new AsyncRelayCommand(async () => await navigationService.NavigateToBoardPage<BoardPage>(new GameModeModel { SelectedGameMode = GameMode.Campaign }));
-
-            GotoSettingsCommand = new AsyncRelayCommand(async () => await navigationService.NavigateToPage<SettingsPage>());
-
-            GotoScoresCommand = new AsyncRelayCommand(async () => await navigationService.NavigateToPage<ScoresPage>());
-        }
-    
-
-        public ImageSource LogoImageSource { get; set; }
-
-        public IAsyncRelayCommand HowCommand { get; }
-        public IAsyncRelayCommand GotoBoardCommand { get; }
-        public IAsyncRelayCommand GotoTutorialCommand { get; }
-        public IAsyncRelayCommand GotoSettingsCommand { get; }
-        public IAsyncRelayCommand GotoScoresCommand { get; }
+        GotoBoardCommand = new AsyncRelayCommand(async () => await navigationService.NavigateToBoardPage<BoardPage>(new GameModeModel { SelectedGameMode = GameMode.Random }));
 
 
+        GotoTutorialCommand = new AsyncRelayCommand(async () => await navigationService.NavigateToBoardPage<BoardPage>(new GameModeModel { SelectedGameMode = GameMode.Campaign }));
 
-        private string _title;
-        public string Title
-        {
-            get => _title;
-            set => SetProperty(ref _title, value);
-        }
+        GotoSettingsCommand = new AsyncRelayCommand(async () => await navigationService.NavigateToPage<SettingsPage>());
+
+        GotoScoresCommand = new AsyncRelayCommand(async () => await navigationService.NavigateToPage<ScoresPage>());
     }
+
+
+    public ImageSource LogoImageSource { get; set; }
+
+    public IAsyncRelayCommand HowCommand { get; }
+    public IAsyncRelayCommand GotoBoardCommand { get; }
+    public IAsyncRelayCommand GotoTutorialCommand { get; }
+    public IAsyncRelayCommand GotoSettingsCommand { get; }
+    public IAsyncRelayCommand GotoScoresCommand { get; }
+
+
+
+    private string _title;
+    public string Title
+    {
+        get => _title;
+        set => SetProperty(ref _title, value);
+    }
+}
