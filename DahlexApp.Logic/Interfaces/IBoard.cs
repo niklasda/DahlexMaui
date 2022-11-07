@@ -1,8 +1,8 @@
 ﻿using DahlexApp.Logic.Game;
 using DahlexApp.Logic.Models;
 
-namespace DahlexApp.Logic.Interfaces
-{
+namespace DahlexApp.Logic.Interfaces;
+
     public interface IBoard
     {
         BoardPosition GetPosition(int x, int y);
@@ -18,4 +18,3 @@ namespace DahlexApp.Logic.Interfaces
         BoardPosition[,] TheBoard { get; set; }
         int GetRobotCount();
     }
-}

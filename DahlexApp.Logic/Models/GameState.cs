@@ -1,7 +1,7 @@
 ﻿using DahlexApp.Logic.Interfaces;
 
-namespace DahlexApp.Logic.Models
-{
+namespace DahlexApp.Logic.Models;
+
     public class GameState : IGameState
     {
         public GameState(string message)
@@ -28,4 +28,3 @@ namespace DahlexApp.Logic.Models
 
         public string Message { get; set; }
     }
-}

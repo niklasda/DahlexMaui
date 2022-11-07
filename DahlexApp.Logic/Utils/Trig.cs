@@ -1,7 +1,7 @@
 ﻿using DahlexApp.Logic.Models;
 
-namespace DahlexApp.Logic.Utils
-{
+namespace DahlexApp.Logic.Utils;
+
     public static class Trig
     {
         private const int DeltaLimit = 42;
@@ -62,4 +62,3 @@ namespace DahlexApp.Logic.Utils
             return MoveDirection.Ignore;
         }
     }
-}

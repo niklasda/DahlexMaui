@@ -4,7 +4,8 @@
              xmlns:local="clr-namespace:DahlexApp.Views.How"
              x:Class="DahlexApp.Views.How.HowPage"
              x:DataType="local:HowViewModel"
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource PrimaryBackgroundColor}">
 
 
     <Grid >
@@ -27,13 +28,13 @@
             </Frame>
 
 
-            <StackLayout  Orientation="Vertical" Padding="15">
+            <StackLayout  Orientation="Vertical" Padding="15"  >
 
-                <CarouselView ItemsSource="{Binding HowToPages}"  IndicatorView="IndicatorView" >
+                <CarouselView ItemsSource="{Binding HowToPages}"  Loop="False"  IndicatorView="IndicatorView"  >
                     <CarouselView.ItemTemplate  >
                         <DataTemplate x:DataType="local:HowItemViewModel">
-                            <StackLayout Orientation="Vertical" VerticalOptions="Center" Spacing="15">
-                                <Image Source="{Binding ImageSource}" HeightRequest="1000" ></Image>
+                            <StackLayout Orientation="Vertical" VerticalOptions="Start" Spacing="15">
+                                <Image Source="{Binding ImageSource}" HeightRequest="900" ></Image>
                                 <Label Text="{Binding ImageText}" Style="{StaticResource SubtitleStyle}" ></Label>
                             </StackLayout>
 

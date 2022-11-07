@@ -7,7 +7,7 @@ public partial class HowPage
 	{
         BindingContext = vm;
 		InitializeComponent();
-        //NavigationPage.SetHasNavigationBar(this, false);
+        Shell.SetNavBarIsVisible(this, false);
 
     }
 }

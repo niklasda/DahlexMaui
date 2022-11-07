@@ -1,5 +1,5 @@
-﻿namespace DahlexApp.Logic.Game
-{
+﻿namespace DahlexApp.Logic.Game;
+
     public static class Campaign1
     {
         // w=11 x h=13
@@ -111,4 +111,3 @@
             "Try the teleportation"
           };
     }
-}

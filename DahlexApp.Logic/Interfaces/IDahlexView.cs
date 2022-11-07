@@ -2,8 +2,8 @@
 using DahlexApp.Logic.Models;
 
 
-namespace DahlexApp.Logic.Interfaces
-{
+namespace DahlexApp.Logic.Interfaces;
+
     public interface IDahlexView
     {
         void AddLineToLog(string log);
@@ -26,4 +26,3 @@ namespace DahlexApp.Logic.Interfaces
 
         void ChangeImage(BoardPosition bp);
     }
-}

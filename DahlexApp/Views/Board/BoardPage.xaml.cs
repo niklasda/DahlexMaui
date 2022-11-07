@@ -9,10 +9,11 @@ namespace DahlexApp.Views.Board;
         {
             BindingContext = vm;
             InitializeComponent();
-            //NavigationPage.SetHasNavigationBar(this, false);
+            Shell.SetNavBarIsVisible(this, false);
 
 
-            vm.TheAbsBoard = TheBoard;
+
+        vm.TheAbsBoard = TheBoard;
             vm.TheAbsOverBoard = TheOverBoard;
         }
 

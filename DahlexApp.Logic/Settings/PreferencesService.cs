@@ -1,7 +1,7 @@
 ﻿using DahlexApp.Logic.Interfaces;
 
-namespace DahlexApp.Logic.Settings
-{
+namespace DahlexApp.Logic.Settings;
+
     public class PreferencesService : IPreferencesService
     {
         public void RemovePreference(string key)
@@ -20,4 +20,3 @@ namespace DahlexApp.Logic.Settings
             return value;
         }
     }
-}

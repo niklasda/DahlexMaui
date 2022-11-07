@@ -1,7 +1,7 @@
 ﻿using DahlexApp.Logic.Models;
 
-namespace DahlexApp.Logic.Game
-{
+namespace DahlexApp.Logic.Game;
+
     public class BoardPosition
     {
         public bool IsNew { get; set; }
@@ -46,4 +46,3 @@ namespace DahlexApp.Logic.Game
             //TODO re-imp
         }
     }
-}

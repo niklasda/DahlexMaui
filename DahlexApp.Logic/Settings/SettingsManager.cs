@@ -1,8 +1,8 @@
 ﻿using DahlexApp.Logic.Interfaces;
 using DahlexApp.Logic.Models;
 
-namespace DahlexApp.Logic.Settings
-{
+namespace DahlexApp.Logic.Settings;
+
     public class SettingsManager : ISettingsManager
     {
         //private static bool _hasAlreadyRun;
@@ -64,4 +64,3 @@ namespace DahlexApp.Logic.Settings
             prf.SavePreference(Key2, settings.LessSound.ToString());
         }
     }
-}

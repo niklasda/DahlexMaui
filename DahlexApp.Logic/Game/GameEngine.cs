@@ -4,8 +4,8 @@ using DahlexApp.Logic.Models;
 using DahlexApp.Logic.Settings;
 using DahlexApp.Logic.Utils;
 
-namespace DahlexApp.Logic.Game
-{
+namespace DahlexApp.Logic.Game;
+
     public class GameEngine : IGameEngine
     {
         private readonly IDahlexView _boardView;
@@ -644,4 +644,3 @@ namespace DahlexApp.Logic.Game
             return false;
         }
     }
-}

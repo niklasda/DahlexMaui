@@ -1,7 +1,7 @@
 ﻿using DahlexApp.Logic.Models;
 
-namespace DahlexApp.Logic.Utils
-{
+namespace DahlexApp.Logic.Utils;
+
     public static class Randomizer
     {
         private static readonly Random Randy = new Random(DateTime.Now.Millisecond);
@@ -64,4 +64,3 @@ namespace DahlexApp.Logic.Utils
             return string.Empty;
         }
     }
-}

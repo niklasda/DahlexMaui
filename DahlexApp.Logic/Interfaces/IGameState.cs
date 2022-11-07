@@ -1,5 +1,5 @@
-﻿namespace DahlexApp.Logic.Interfaces
-{
+﻿namespace DahlexApp.Logic.Interfaces;
+
     public interface IGameState
     {
         int Level { get; set; }
@@ -21,4 +21,3 @@
         //[IgnoreDataMember]
         string Message { get; set; }
     }
-}

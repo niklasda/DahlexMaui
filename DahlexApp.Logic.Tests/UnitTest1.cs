@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace DahlexApp.Logic.Tests
-{
+namespace DahlexApp.Logic.Tests;
+
     [TestClass]
     public class UnitTest1
     {
@@ -26,4 +26,3 @@ namespace DahlexApp.Logic.Tests
             return value % 2 == 1;
         }
     }
-}

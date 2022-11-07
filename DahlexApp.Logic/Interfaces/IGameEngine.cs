@@ -1,7 +1,7 @@
 ﻿using DahlexApp.Logic.Models;
 
-namespace DahlexApp.Logic.Interfaces
-{
+namespace DahlexApp.Logic.Interfaces;
+
     public interface IGameEngine
     {
         bool AreThereNoMoreLevels { get; }
@@ -48,4 +48,3 @@ namespace DahlexApp.Logic.Interfaces
 
         void AddHighScore(bool maxLevel);
     }
-}

@@ -1,6 +1,6 @@
 ﻿
-namespace DahlexApp.Logic.Models
-{
+namespace DahlexApp.Logic.Models;
+
     //[DataContract]
     public class GameSettings
     {
@@ -59,4 +59,3 @@ namespace DahlexApp.Logic.Models
             get { return (BoardSize.Width * BoardSize.Height) / 4 + 10; }
         }
     }
-}

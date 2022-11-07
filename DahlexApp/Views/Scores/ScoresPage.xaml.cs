@@ -8,6 +8,7 @@ namespace DahlexApp.Views.Scores;
         {
             BindingContext = vm;
             InitializeComponent();
+            Shell.SetNavBarIsVisible(this, false);
             //NavigationPage.SetHasNavigationBar(this, false);
 
         }

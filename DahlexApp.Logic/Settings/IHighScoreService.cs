@@ -1,7 +1,7 @@
 ﻿using DahlexApp.Logic.Models;
 
-namespace DahlexApp.Logic.Settings
-{
+namespace DahlexApp.Logic.Settings;
+
     // todo why was score 0
     public interface IHighScoreService
     {
@@ -10,4 +10,3 @@ namespace DahlexApp.Logic.Settings
         void SaveLocalHighScores();
     }
 
-}

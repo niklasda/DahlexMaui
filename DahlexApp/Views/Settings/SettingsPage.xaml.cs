@@ -1,11 +1,12 @@
 ﻿
 namespace DahlexApp.Views.Settings;
 
-    public partial class SettingsPage 
+public partial class SettingsPage 
+{
+    public SettingsPage(SettingsViewModel vm)
     {
-        public SettingsPage(SettingsViewModel vm)
-        {
-            BindingContext = vm;
-            InitializeComponent();
-        }
+        BindingContext = vm;
+        InitializeComponent();
+        Shell.SetNavBarIsVisible(this, false);
     }
+}

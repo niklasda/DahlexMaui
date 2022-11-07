@@ -1,5 +1,5 @@
-﻿namespace DahlexApp.Logic.Models
-{
+﻿namespace DahlexApp.Logic.Models;
+
     public enum GameMode { Random, Campaign };
 
     public enum Sound { Bomb, Teleport, Crash };
@@ -10,4 +10,3 @@
 
     public enum GameStatus { BeforeStart, LevelOngoing, LevelComplete, GameWon, GameLost, GameStarted };
 
-}

@@ -1,8 +1,8 @@
 ﻿using DahlexApp.Logic.Interfaces;
 using DahlexApp.Logic.Models;
 
-namespace DahlexApp.Logic.Game
-{
+namespace DahlexApp.Logic.Game;
+
     public sealed class BoardMatrix : IBoard
     {
         private BoardPosition[,] _positions;
@@ -109,4 +109,3 @@ namespace DahlexApp.Logic.Game
             return new IntPoint(-1, -1);
         }
     }
-}

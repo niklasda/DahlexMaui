@@ -2,8 +2,8 @@
 using DahlexApp.Logic.Models;
 using System.Text.Json;
 
-namespace DahlexApp.Logic.Settings
-{
+namespace DahlexApp.Logic.Settings;
+
     public class HighScoreService : IHighScoreService
     {
 
@@ -127,4 +127,3 @@ namespace DahlexApp.Logic.Settings
             }
         }
     }
-}

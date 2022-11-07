@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 
-namespace DahlexApp.Logic.Logger
-{
+namespace DahlexApp.Logic.Logger;
+
     public static class GameLogger
     {
        // private static string _theLog = string.Empty;
@@ -23,4 +23,3 @@ namespace DahlexApp.Logic.Logger
             //TheLog = log;
         }
     }
-}

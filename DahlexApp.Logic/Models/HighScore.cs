@@ -1,6 +1,6 @@
 ﻿
-namespace DahlexApp.Logic.Models
-{
+namespace DahlexApp.Logic.Models;
+
     public class HighScore
     {
         public HighScore(string name, int level, int bombsLeft, int teleportsLeft, int moves, DateTime startTime, IntSize boardSize)
@@ -53,4 +53,3 @@ namespace DahlexApp.Logic.Models
             return Content;
         }
     }
-}
