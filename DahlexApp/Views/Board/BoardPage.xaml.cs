@@ -24,10 +24,19 @@ namespace DahlexApp.Views.Board
         {
             base.OnAppearing();
 
-            if (BindingContext is BoardViewModel vm)
-            {
-                vm.OnAppearing().GetAwaiter().GetResult();
-            }
+           
+        }
+
+        
+
+        protected override void OnNavigatedTo(NavigatedToEventArgs args)
+        {
+            base.OnNavigatedTo(args);
+
+            // if (BindingContext is BoardViewModel vm)
+            //{
+            //    vm.OnAppearing().GetAwaiter().GetResult();
+            //}
         }
 
         protected override void OnDisappearing()
@@ -56,6 +65,10 @@ namespace DahlexApp.Views.Board
                 if (BindingContext is BoardViewModel vm)
                 {
                     vm.StartGameMode = value;
+                    vm.TheAbsBoard = TheBoard;
+                    vm.TheAbsOverBoard = TheOverBoard;
+
+                    vm.OnAppearing().GetAwaiter().GetResult();
                 }
             }
         }

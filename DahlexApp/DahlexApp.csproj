@@ -61,8 +61,13 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Images\Close.png" />
+	  <None Remove="Resources\Images\heap_02.png" />
 	  <None Remove="Resources\Images\icon.png" />
 	  <None Remove="Resources\Images\launcher_foreground.png" />
+	  <None Remove="Resources\Images\planet_01.png" />
+	  <None Remove="Resources\Images\robot_04.png" />
+	  <None Remove="Resources\Images\robot_05.png" />
+	  <None Remove="Resources\Images\robot_06.png" />
 	  <None Remove="Resources\Images\Screen1_1280.png" />
 	  <None Remove="Resources\Images\Screen2_1280.png" />
 	  <None Remove="Resources\Images\Tile300.png" />

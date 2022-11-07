@@ -89,8 +89,12 @@ namespace DahlexApp.Views.Board;
 
             TeleCommand = new AsyncRelayCommand(DoTeleport);
 
+
+          //  OnAppearing().GetAwaiter().GetResult();
         }
 
+
+    
 
         private async Task DoTeleport()
         {
@@ -638,7 +642,7 @@ namespace DahlexApp.Views.Board;
                                 imgName = cp.ImageName;
                                 // Robot2ImageSource = ImageSource.FromResource("DahlexApp.Assets.Images.heap_02.png");
                                 boardImage.AutomationId = imgName;
-                                boardImage.Source = ImageSource.FromResource("DahlexApp.Assets.Images.heap_02.png");
+                                boardImage.Source = ImageSource.FromFile("heap_02.png");
                                 TheAbsOverBoard.Children.Add(boardImage);
 
                                 await Animate(cp, new IntPoint(0, 0), new IntPoint(x, y), 250);
@@ -663,7 +667,7 @@ namespace DahlexApp.Views.Board;
 
                                 //boardImage.SetValue(BindablePropertyKey.FrameworkElement.NameProperty, imgName);
                                 boardImage.AutomationId = imgName;
-                                boardImage.Source = ImageSource.FromResource("DahlexApp.Assets.Images.planet_01.png");
+                                boardImage.Source = ImageSource.FromFile("planet_01.png");
                                 TheAbsOverBoard.Children.Add(boardImage);
                                 //boardImage = pic;
                                 //AddImage(imgName, boardImage, pt, cp);
@@ -678,8 +682,8 @@ namespace DahlexApp.Views.Board;
                                 AbsoluteLayout.SetLayoutFlags(boardImage, AbsoluteLayoutFlags.None);
 
                                 imgName = cp.ImageName;
-                                string name = Randomizer.GetRandomFromSet("DahlexApp.Assets.Images.robot_04.png", "DahlexApp.Assets.Images.robot_05.png", "DahlexApp.Assets.Images.robot_06.png");
-                                boardImage.Source = ImageSource.FromResource(name);
+                                string name = Randomizer.GetRandomFromSet("robot_04.png", "robot_05.png", "robot_06.png");
+                                boardImage.Source = ImageSource.FromFile(name);
                                 boardImage.AutomationId = imgName;
                                 //                         boardImage.Source = LoadImage(name);
                                 TheAbsOverBoard.Children.Add(boardImage);

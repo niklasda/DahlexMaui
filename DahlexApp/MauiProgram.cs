@@ -8,6 +8,7 @@ using DahlexApp.Logic.Services;
 using DahlexApp.Views.Board;
 using DahlexApp.Views.Scores;
 using DahlexApp.Views.Settings;
+using Plugin.Maui.Audio;
 
 namespace DahlexApp;
 
@@ -35,6 +36,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<INavigationService, NavigationService>();
         builder.Services.AddSingleton<IPreferencesService, PreferencesService>();
         builder.Services.AddSingleton<IHighScoreService, HighScoreService>();
+        builder.Services.AddSingleton<IAudioManager>(AudioManager.Current);
 
         builder.Services.AddTransient<StartViewModel>();
         builder.Services.AddTransient<HowViewModel>();
