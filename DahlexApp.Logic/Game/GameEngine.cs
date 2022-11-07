@@ -18,7 +18,7 @@ namespace DahlexApp.Logic.Game
         private int _teleportCount;
         private int _robotCount;
         private int _moveCount;
-        private string _tail = string.Empty;
+        private string _tail;
 
         private readonly IntSize _boardSize; // number of squares
         private readonly IntSize _squareSize; // in pixels
@@ -29,6 +29,7 @@ namespace DahlexApp.Logic.Game
 
         public GameEngine(GameSettings settings, IDahlexView boardViewModel, IHighScoreService highScoreManager)
         {
+            _tail = string.Empty;
             _boardView = boardViewModel;
             _highScoreManager = highScoreManager;
             //          _highScoreManager = highScoreManager;
@@ -633,7 +634,7 @@ namespace DahlexApp.Logic.Game
                 IntPoint oldProfPos = GetProfessor(false);
                 IntPoint newProfPos = GetFreePosition();
 
-                _boardView.AddLineToLog(string.Format("T. from {0} to {1}", oldProfPos.ToString(), newProfPos.ToString()));
+                _boardView.AddLineToLog($"T. from {oldProfPos} to {newProfPos}");
 
                 await MoveCharacter(oldProfPos, newProfPos, 1500);
                 _moveCount++;

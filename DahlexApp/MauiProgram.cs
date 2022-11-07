@@ -1,5 +1,4 @@
-﻿using DahlexApp.Views;
-using CommunityToolkit.Maui;
+﻿using CommunityToolkit.Maui;
 using DahlexApp.Logic.Interfaces;
 using DahlexApp.Logic.Settings;
 using DahlexApp.Views.How;

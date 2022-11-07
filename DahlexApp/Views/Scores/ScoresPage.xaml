@@ -15,7 +15,7 @@
       <Frame HeightRequest="80" BackgroundColor="{StaticResource ListItemBackgroundColor}" Padding="0" Margin="-1,-2,-1,0" BorderColor="Black" HasShadow="True">
         <Grid>
           <Frame Padding="10" Margin="0,0,10,0" BackgroundColor="Transparent" HorizontalOptions="End" VerticalOptions="Center"  >
-                        <Image HeightRequest="20" WidthRequest="20" Aspect="AspectFit" Source="close.png" />
+                        <Image HeightRequest="20" WidthRequest="20" Aspect="AspectFit" Source="{Binding CloseImage}" />
             <Frame.GestureRecognizers>
               <TapGestureRecognizer Command="{Binding BackCommand}"></TapGestureRecognizer>
             </Frame.GestureRecognizers>

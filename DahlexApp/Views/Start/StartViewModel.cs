@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using System.Windows.Input;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DahlexApp.Logic.Models;
 using DahlexApp.Logic.Services;
@@ -8,12 +6,6 @@ using DahlexApp.Views.Board;
 using DahlexApp.Views.How;
 using DahlexApp.Views.Scores;
 using DahlexApp.Views.Settings;
-using Plugin.Maui.Audio;
-
-//using MvvmCross.Commands;
-//using MvvmCross.Navigation;
-//using MvvmCross.ViewModels;
-//using Xamarin.Forms;
 
 namespace DahlexApp.Views.Start;
 
@@ -22,13 +14,13 @@ namespace DahlexApp.Views.Start;
 
         public StartViewModel(INavigationService navigationService)
         {
-
+            _title = string.Empty;
             Title = "Dahlex";
 
             LogoImageSource = ImageSource.FromFile("tile300.png"); // 42x42
 
             HowCommand = new AsyncRelayCommand(async () =>
-                await navigationService.NavigateToPage<HowPage>();
+                await navigationService.NavigateToPage<HowPage>());
 
             GotoBoardCommand = new AsyncRelayCommand(async () => await navigationService.NavigateToBoardPage<BoardPage>(new GameModeModel { SelectedGameMode = GameMode.Random }));
             
@@ -43,21 +35,6 @@ namespace DahlexApp.Views.Start;
 
         public ImageSource LogoImageSource { get; set; }
 
-        // todo add base model with navigation etc
-
-
-        //public override void Prepare()
-        //{
-        //    // first callback. Initialize parameter-agnostic stuff here
-        //}
-
-        //public override async Task Initialize()
-        //{
-        //    await base.Initialize();
-
-        //    // do the heavy work here
-        //}
-
         public IAsyncRelayCommand HowCommand { get; }
         public IAsyncRelayCommand GotoBoardCommand { get; }
         public IAsyncRelayCommand GotoTutorialCommand { get; }
@@ -66,7 +43,7 @@ namespace DahlexApp.Views.Start;
 
 
 
-        private string _title = string.Empty;
+        private string _title;
         public string Title
         {
             get => _title;

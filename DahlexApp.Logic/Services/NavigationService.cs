@@ -5,7 +5,7 @@ namespace DahlexApp.Logic.Services;
 
 public interface IBoardPage
 {
-    GameModeModel StartGameMode { set; }
+    GameMode StartGameMode { set; }
 }
 
 public interface INavigationService
@@ -59,7 +59,7 @@ public class NavigationService : INavigationService
         var page = ResolvePage<T>();
         if (page is not null)
         {
-            page.StartGameMode = mode;
+            page.StartGameMode = mode.SelectedGameMode;
             return Navigation.PushAsync(page, true);
         }
 

@@ -1,13 +1,5 @@
-﻿//using System.Linq;
-//using System.Threading.Tasks;
-//using DahlexApp.Logic.Settings;
-//using MvvmCross.Base;
-//using MvvmCross.Commands;
-//using MvvmCross.Navigation;
-//using MvvmCross.ViewModels;
-//using Xamarin.Forms;
-
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DahlexApp.Logic.Services;
@@ -27,12 +19,13 @@ namespace DahlexApp.Views.Scores;
             BackCommand = new AsyncRelayCommand( navigationService.NavigateBack);
             CloseImage = ImageSource.FromFile("close.png");
 
+           // _title = string.Empty;
             Title = "Scores";
 
             HighScoreList.Clear();
 
             var scoreList = _scores.LoadLocalHighScores();
-            var scoreItems = scoreList.Select(_ => new ScoreItemViewModel { Title = _.Content });
+            var scoreItems = scoreList.Select(_ => new ScoreItemViewModel(_.Content));
 
             foreach (var scoreItemViewModel in scoreItems)
             {
@@ -63,10 +56,11 @@ namespace DahlexApp.Views.Scores;
         public ImageSource CloseImage { get; set; }
 
 
-        private string _title = string.Empty;
+        private string _title;
         public string Title
         {
             get => _title;
+        [MemberNotNull(nameof(_title))]
             set => SetProperty(ref _title, value);
         }
 

@@ -55,7 +55,7 @@ namespace DahlexApp.Logic.Utils
 
         public static string GetRandomFromSet(params string[] names)
         {
-            if (names != null && names.Length > 0)
+            if (names?.Length > 0)
             {
                 int index = Randy.Next(0, names.Length); // upper limit is non-inclusive
                 return names[index];

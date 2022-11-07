@@ -94,15 +94,15 @@ namespace DahlexApp.Logic.Game
             {
                 for (int y = 0; y < _boardSize.Height; y++)
                 {
-                    //if (bps[x,y] != null)
-                    //{
+                    if (bps[x,y] != null)
+                    {
                         BoardPosition cp = bps[x,y];
 
                         if (cp.Type == PieceType.Professor)
                         {
                             return new IntPoint(x, y);
                         }
-                    //}
+                    }
                 }
             }
 

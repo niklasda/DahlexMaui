@@ -1,13 +1,4 @@
-﻿//using System.Threading.Tasks;
-//using DahlexApp.Logic.Models;
-//using DahlexApp.Logic.Settings;
-//using MvvmCross.Commands;
-//using MvvmCross.Navigation;
-//using MvvmCross.ViewModels;
-//using Xamarin.Forms;
-//using Size = System.Drawing.Size;
-
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DahlexApp.Logic.Models;
 using DahlexApp.Logic.Services;
@@ -23,48 +14,50 @@ namespace DahlexApp.Views.Settings;
             BackCommand = new AsyncRelayCommand(navigationService.NavigateBack);
             CloseImage = ImageSource.FromFile("close.png");
 
-
+            _title = string.Empty;
             Title = "Settings";
 
             SettingsManager sm = new SettingsManager(new IntSize(0, 0));
+
+            _profName = "";
             
             var gs = sm.LoadLocalSettings();
             ProfName = gs.PlayerName;
             IsMuted = gs.LessSound;
-    }
+        }
 
 
 
-    //public override void Prepare()
-    //{
-    //    // first callback. Initialize parameter-agnostic stuff here
-    //}
+        //public override void Prepare()
+        //{
+        //    // first callback. Initialize parameter-agnostic stuff here
+        //}
 
-    //public override async Task Initialize()
-    //{
-    //    await base.Initialize();
+        //public override async Task Initialize()
+        //{
+        //    await base.Initialize();
 
-    //    // do the heavy work here
+        //    // do the heavy work here
 
-    //    SettingsManager sm = new SettingsManager(new Size(0,0));
-    //    var gs = sm.LoadLocalSettings();
-    //    ProfName = gs.PlayerName;
-    //    IsMuted = gs.LessSound;
-    //}
+        //    SettingsManager sm = new SettingsManager(new Size(0,0));
+        //    var gs = sm.LoadLocalSettings();
+        //    ProfName = gs.PlayerName;
+        //    IsMuted = gs.LessSound;
+        //}
 
-    //public override void ViewDisappeared()
-    //{
-    //    base.ViewDisappeared();
+        //public override void ViewDisappeared()
+        //{
+        //    base.ViewDisappeared();
 
-    //    SettingsManager sm = new SettingsManager(new Size(0, 0));
-    //    sm.SaveLocalSettings(new GameSettings(new Size(0,0) ){PlayerName = ProfName, LessSound = IsMuted});
-    //}
+        //    SettingsManager sm = new SettingsManager(new Size(0, 0));
+        //    sm.SaveLocalSettings(new GameSettings(new Size(0,0) ){PlayerName = ProfName, LessSound = IsMuted});
+        //}
 
-    public IAsyncRelayCommand BackCommand { get; set; }
+        public IAsyncRelayCommand BackCommand { get; set; }
 
         public ImageSource CloseImage { get; set; }
 
-        private string _title = string.Empty;
+        private string _title;
         public string Title
         {
             get => _title;

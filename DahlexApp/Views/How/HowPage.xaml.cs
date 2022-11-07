@@ -1,7 +1,5 @@
-using CommunityToolkit.Mvvm.DependencyInjection;
-using DahlexApp.Views.How;
 
-namespace DahlexApp.Views;
+namespace DahlexApp.Views.How;
 
 public partial class HowPage 
 {
@@ -9,9 +7,7 @@ public partial class HowPage
 	{
         BindingContext = vm;
 		InitializeComponent();
+        //NavigationPage.SetHasNavigationBar(this, false);
 
-        //var vm = Ioc.Default.GetRequiredService<HowViewModel>();
-
-        //    NavigationPage.SetHasNavigationBar(this, false);
     }
 }

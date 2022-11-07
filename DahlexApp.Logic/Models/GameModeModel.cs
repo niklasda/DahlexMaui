@@ -17,6 +17,11 @@
         public int X { get; set; }
         public int Y { get; set; }
         public static IntPoint Empty => new IntPoint(0, 0);
+
+        public override string ToString()
+        {
+            return $"x:{X}, y:{Y}";
+        }
     }
 
     public class IntSize
@@ -30,5 +35,10 @@
         public int Width { get; set; }
         public int Height { get; set; }
         public static IntSize Empty => new IntSize(0, 0);
+
+        public override string ToString()
+        {
+            return $"w:{Width}, h:{Height}";
+        }
     }
 }

@@ -1,8 +1,4 @@
-﻿
-using System.Diagnostics;
-using System.Reflection;
-using System.Reflection.Metadata.Ecma335;
-using System.Timers;
+﻿using System.Diagnostics;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -20,23 +16,33 @@ using Plugin.Maui.Audio;
 
 namespace DahlexApp.Views.Board;
 //{
-    public class BoardViewModel : ObservableObject /*MvxViewModel<GameModeModel>*/, IDahlexView, IBoardPage
+    public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     {
 
         public BoardViewModel(IHighScoreService hsm, IAudioManager audio)
         {
             _settings = GetSettings();
             _ge = new GameEngine(_settings, this, hsm);
-     //   Toast
-       //     _toast = toast;
-        //    _dispatcher = dispatcher;
-        _audio = audio;
-            Title = "Play";
+            //   Toast
+            //     _toast = toast;
+            //    _dispatcher = dispatcher;
+            _audio = audio;
             // w411 h660
             //ShortestDimension = Math.Min((int)Application.Current.MainPage.Width, (int)Application.Current.MainPage.Height);
 
-            ClickedTheProfCommand = new AsyncRelayCommand<Point>(async (p) =>
-                await PerformRound(MoveDirection.None));
+            //StartGameMode = new GameModeModel()
+
+            _title = "";
+            _timerText = "0s";
+            _bombText = "B";
+            _teleText = "T";
+            _infoText = "";
+            _infoText1 = "Level:";
+            _infoText2 = "Dahlex:";
+
+            Title = "Play";
+
+            ClickedTheProfCommand = new AsyncRelayCommand<Point>(async (p) => await PerformRound(MoveDirection.None));
             
 
             StartGameCommand = new AsyncRelayCommand(async () =>
@@ -280,10 +286,10 @@ namespace DahlexApp.Views.Board;
         private readonly GameSettings _settings;
         // private readonly IGameService _gs;
         private readonly IGameEngine _ge;
-        private GameMode StartMode => StartGameMode.SelectedGameMode;
+        public GameMode StartGameMode { private get; set; }
 
-        public GameModeModel StartGameMode { private get; set; }
-        // private readonly IToastPopUp _toast;
+    //  public GameModeModel StartGameMode { private get; set; }
+    // private readonly IToastPopUp _toast;
     //private readonly IMvxMainThreadAsyncDispatcher _dispatcher;
 
     public IAsyncRelayCommand BombCommand { get; }
@@ -421,7 +427,7 @@ namespace DahlexApp.Views.Board;
 
             if (_ge.Status == GameStatus.BeforeStart)
             {
-                await _ge.StartGame(StartMode);
+                await _ge.StartGame(StartGameMode);
 
             }
 
@@ -468,14 +474,14 @@ namespace DahlexApp.Views.Board;
         private int _tempX;
         private int _tempY;
 
-        private void Pan_PanUpdated(object sender, PanUpdatedEventArgs e)
+        private void Pan_PanUpdated(object? sender, PanUpdatedEventArgs e)
         {
             
 
-            PanPanUpdated(sender,e).GetAwaiter().GetResult();
+            PanPanUpdated(sender, e).GetAwaiter().GetResult();
         }
 
-        private async Task PanPanUpdated(object sender, PanUpdatedEventArgs e)
+        private async Task PanPanUpdated(object? sender, PanUpdatedEventArgs e)
         {
             if (e.StatusType == GestureStatus.Started)
             {
@@ -790,8 +796,8 @@ namespace DahlexApp.Views.Board;
             {
 
 
-                int nLeft = (int)newPos.X * (_settings.SquareSize.Width);
-                int nTop = (int)newPos.Y * (_settings.SquareSize.Height);
+                int nLeft = newPos.X * (_settings.SquareSize.Width);
+                int nTop = newPos.Y * (_settings.SquareSize.Height);
 
                 if (bp.Type == PieceType.Professor)
                 {
@@ -799,21 +805,21 @@ namespace DahlexApp.Views.Board;
                     IView i = TheAbsOverBoard.Children.First(z => z.AutomationId == bp.ImageName);
                     VisualElement img = (VisualElement)i;
 
-                    await img.TranslateTo(nLeft, nTop, millis);
+                  //  await img.TranslateTo(nLeft, nTop, millis);
 
                 }
                 else if (bp.Type == PieceType.Robot)
                 {
                     var i = TheAbsOverBoard.Children.First(z => z.AutomationId == bp.ImageName);
                     VisualElement img = (VisualElement)i;
-                    await img.TranslateTo(nLeft, nTop, millis);
+                  //  await img.TranslateTo(nLeft, nTop, millis);
 
                 }
                 else if (bp.Type == PieceType.Heap)
                 {
                     var i = TheAbsOverBoard.Children.First(z => z.AutomationId == bp.ImageName);
                     VisualElement img = (VisualElement)i;
-                    await img.TranslateTo(nLeft, nTop, 0);
+                  //  await img.TranslateTo(nLeft, nTop, 0);
 
                 }
             });

@@ -2,7 +2,7 @@
 
 namespace DahlexApp;
 
-public partial class App : Application
+public partial class App 
 {
 	public App(IServiceProvider services)
 	{

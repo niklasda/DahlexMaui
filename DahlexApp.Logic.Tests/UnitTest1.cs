@@ -1,4 +1,3 @@
-using System.Security.Cryptography;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DahlexApp.Logic.Tests

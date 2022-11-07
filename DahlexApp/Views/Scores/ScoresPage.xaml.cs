@@ -1,10 +1,8 @@
 ﻿
-using CommunityToolkit.Mvvm.DependencyInjection;
-using DahlexApp.Views.How;
 
-namespace DahlexApp.Views.Scores
-{
-    public partial class ScoresPage //: MvxContentPage<ScoresViewModel>
+namespace DahlexApp.Views.Scores;
+
+    public partial class ScoresPage 
     {
         public ScoresPage(ScoresViewModel vm)
         {
@@ -14,4 +12,3 @@ namespace DahlexApp.Views.Scores
 
         }
     }
-}

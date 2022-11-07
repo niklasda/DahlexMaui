@@ -1,23 +1,22 @@
 ﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Reflection;
-using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DahlexApp.Logic.Services;
-using DahlexApp.Logic.Settings;
 
 namespace DahlexApp.Views.How
 {
     public class HowViewModel : ObservableObject
     {
-        public HowViewModel(IHighScoreService score, INavigationService navigationService)
+        public HowViewModel(INavigationService navigationService)
         {
             //  _dispatcher = dispatcher;
-            _score = score;
+            //_score = score;
             //  INavigation navigation = App.Current.MainPage.Navigation;
             //   BackCommand = new MvxCommand(() => { _ = Task.Run(async () => await navigationService.Close(this)); });
             CloseImage = ImageSource.FromFile("close.png");
+
+            _title = string.Empty;
+            _playerName = string.Empty;
 
             Title = "How";
             PlayerName = "nIX";
@@ -25,22 +24,22 @@ namespace DahlexApp.Views.How
 
             BackCommand = new AsyncRelayCommand( navigationService.NavigateBack);
 
-           // ImageSource image; 
-         //   Assembly assembly = GetType().GetTypeInfo().Assembly;
+            // ImageSource image; 
+            //   Assembly assembly = GetType().GetTypeInfo().Assembly;
 
             //MainThread.BeginInvokeOnMainThread();
 
             HowToPages.Clear();
-               // HowToPages.Add(new HowItemViewModel { ImageText = "Simple", ImageSource = ImageSource.FromResource("DahlexApp.Properties.Resources.resources.screen1_1280.png") });
-                HowToPages.Add(new HowItemViewModel { ImageText = "Simple", ImageSource = ImageSource.FromFile("screen4_1280.png") });
-                HowToPages.Add(new HowItemViewModel { ImageText = "Who is who", ImageSource = ImageSource.FromFile("screen2_1280.png") });
-               HowToPages.Add(new HowItemViewModel { ImageText = "Busy", ImageSource = ImageSource.FromFile("screen4_1280.png") });
+            // HowToPages.Add(new HowItemViewModel { ImageText = "Simple", ImageSource = ImageSource.FromResource("DahlexApp.Properties.Resources.resources.screen1_1280.png") });
+            HowToPages.Add(new HowItemViewModel("Simple", ImageSource.FromFile("screen4_1280.png")));
+            HowToPages.Add(new HowItemViewModel("Who is who", ImageSource.FromFile("screen2_1280.png")));
+            HowToPages.Add(new HowItemViewModel("Busy", ImageSource.FromFile("screen4_1280.png")));
             //      AwaitKt Shell.Current.GoToAsync();
         }
 
 
         //private readonly IMvxMainThreadAsyncDispatcher _dispatcher;
-        private IHighScoreService _score;
+       // private IHighScoreService _score;
 
         //public override void Prepare()
         //{
@@ -80,7 +79,7 @@ namespace DahlexApp.Views.How
 
         public ImageSource CloseImage { get; set; }
 
-        private string _title = string.Empty;
+        private string _title ;
         public string Title
         {
             get => _title;
