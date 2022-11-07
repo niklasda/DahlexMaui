@@ -8,6 +8,8 @@ using DahlexApp.Views.Board;
 using DahlexApp.Views.How;
 using DahlexApp.Views.Scores;
 using DahlexApp.Views.Settings;
+using Plugin.Maui.Audio;
+
 //using MvvmCross.Commands;
 //using MvvmCross.Navigation;
 //using MvvmCross.ViewModels;
@@ -17,15 +19,16 @@ namespace DahlexApp.Views.Start;
 
     public class StartViewModel : ObservableObject
     {
+
         public StartViewModel(INavigationService navigationService)
         {
-           // _navigationService = navigationService;
 
             Title = "Dahlex";
 
             LogoImageSource = ImageSource.FromFile("tile300.png"); // 42x42
 
-            HowCommand = new AsyncRelayCommand(async () => await navigationService.NavigateToPage<HowPage>());
+            HowCommand = new AsyncRelayCommand(async () =>
+                await navigationService.NavigateToPage<HowPage>();
 
             GotoBoardCommand = new AsyncRelayCommand(async () => await navigationService.NavigateToBoardPage<BoardPage>(new GameModeModel { SelectedGameMode = GameMode.Random }));
             
@@ -36,8 +39,7 @@ namespace DahlexApp.Views.Start;
 
             GotoScoresCommand = new AsyncRelayCommand(async () => await navigationService.NavigateToPage<ScoresPage>());
         }
-
-        //private readonly IMvxNavigationService _navigationService;
+    
 
         public ImageSource LogoImageSource { get; set; }
 
