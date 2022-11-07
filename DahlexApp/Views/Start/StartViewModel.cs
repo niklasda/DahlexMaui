@@ -27,10 +27,10 @@ namespace DahlexApp.Views.Start;
 
             HowCommand = new AsyncRelayCommand(async () => await navigationService.NavigateToPage<HowPage>());
 
-         //   GotoBoardCommand = new AsyncRelayCommand(async () => await navigationService.NavigateToPage<BoardPage>(new GameModeModel { SelectedGameMode = GameMode.Random }));
+            GotoBoardCommand = new AsyncRelayCommand(async () => await navigationService.NavigateToBoardPage<BoardPage>(new GameModeModel { SelectedGameMode = GameMode.Random }));
             
 
-         //   GotoTutorialCommand = new AsyncRelayCommand(async () => await navigationService.NavigateToPage<BoardPageCampaign>(new GameModeModel { SelectedGameMode = GameMode.Campaign }));
+            GotoTutorialCommand = new AsyncRelayCommand(async () => await navigationService.NavigateToBoardPage<BoardPage>(new GameModeModel { SelectedGameMode = GameMode.Campaign }));
 
             GotoSettingsCommand = new AsyncRelayCommand(async () => await navigationService.NavigateToPage<SettingsPage>());
 

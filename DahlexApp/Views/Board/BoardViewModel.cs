@@ -1,6 +1,7 @@
 ﻿
 using System.Diagnostics;
 using System.Reflection;
+using System.Reflection.Metadata.Ecma335;
 using System.Timers;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
@@ -10,6 +11,7 @@ using DahlexApp.Logic.Game;
 using DahlexApp.Logic.Interfaces;
 using DahlexApp.Logic.Logger;
 using DahlexApp.Logic.Models;
+using DahlexApp.Logic.Services;
 using DahlexApp.Logic.Settings;
 using DahlexApp.Logic.Utils;
 using Microsoft.Maui.Controls.Shapes;
@@ -18,7 +20,7 @@ using Plugin.Maui.Audio;
 
 namespace DahlexApp.Views.Board;
 //{
-    public class BoardViewModel : ObservableObject /*MvxViewModel<GameModeModel>*/, IDahlexView
+    public class BoardViewModel : ObservableObject /*MvxViewModel<GameModeModel>*/, IDahlexView, IBoardPage
     {
 
         public BoardViewModel(IHighScoreService hsm, IAudioManager audio)
@@ -274,22 +276,24 @@ namespace DahlexApp.Views.Board;
         private readonly GameSettings _settings;
         // private readonly IGameService _gs;
         private readonly IGameEngine _ge;
-        private GameMode _startMode;
-       // private readonly IToastPopUp _toast;
-        //private readonly IMvxMainThreadAsyncDispatcher _dispatcher;
+        private GameMode StartMode => StartGameMode.SelectedGameMode;
 
-        public IAsyncRelayCommand BombCommand { get; }
+        public GameModeModel StartGameMode { private get; set; }
+        // private readonly IToastPopUp _toast;
+    //private readonly IMvxMainThreadAsyncDispatcher _dispatcher;
+
+    public IAsyncRelayCommand BombCommand { get; }
         public IAsyncRelayCommand TeleCommand { get; }
         public IAsyncRelayCommand ComingSoonCommand { get; }
         public IAsyncRelayCommand NextLevelCommand { get; }
         public IAsyncRelayCommand StartGameCommand { get; }
 
-        public override void Prepare(GameModeModel startMode)
-        {
-            // first callback. Initialize parameter-agnostic stuff here
+        //public override void Prepare(GameModeModel startMode)
+        //{
+        //    // first callback. Initialize parameter-agnostic stuff here
 
-            _startMode = startMode.SelectedGameMode;
-        }
+        //    _startMode = startMode.SelectedGameMode;
+        //}
 
         //public override async Task Initialize()
         //{
@@ -413,7 +417,7 @@ namespace DahlexApp.Views.Board;
 
             if (_ge.Status == GameStatus.BeforeStart)
             {
-                await _ge.StartGame(_startMode);
+                await _ge.StartGame(StartMode);
 
             }
 

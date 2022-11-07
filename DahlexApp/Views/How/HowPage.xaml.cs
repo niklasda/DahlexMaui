@@ -5,13 +5,13 @@ namespace DahlexApp.Views;
 
 public partial class HowPage 
 {
-	public HowPage()
+	public HowPage(HowViewModel vm)
 	{
+        BindingContext = vm;
 		InitializeComponent();
 
-      //  var vm = Ioc.Default.GetRequiredService<HowViewModel>();
+        //var vm = Ioc.Default.GetRequiredService<HowViewModel>();
 
-      //  BindingContext = vm;
         //    NavigationPage.SetHasNavigationBar(this, false);
     }
 }

@@ -5,6 +5,7 @@ using DahlexApp.Logic.Settings;
 using DahlexApp.Views.How;
 using DahlexApp.Views.Start;
 using DahlexApp.Logic.Services;
+using DahlexApp.Views.Board;
 using DahlexApp.Views.Scores;
 using DahlexApp.Views.Settings;
 
@@ -28,6 +29,7 @@ public static class MauiProgram
 		builder.Services.AddTransient<HowPage>();
 		builder.Services.AddTransient<SettingsPage>();
 		builder.Services.AddTransient<ScoresPage>();
+		builder.Services.AddTransient<BoardPage>();
 
 
         builder.Services.AddSingleton<INavigationService, NavigationService>();
@@ -38,6 +40,7 @@ public static class MauiProgram
         builder.Services.AddTransient<HowViewModel>();
         builder.Services.AddTransient<SettingsViewModel>();
         builder.Services.AddTransient<ScoresViewModel>();
+        builder.Services.AddTransient<BoardViewModel>();
 
 
         return builder.Build();

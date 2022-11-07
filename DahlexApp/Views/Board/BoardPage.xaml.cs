@@ -2,17 +2,22 @@
 
 //using AndroidX.Lifecycle;
 
+using CommunityToolkit.Mvvm.DependencyInjection;
+using DahlexApp.Logic.Models;
+using DahlexApp.Logic.Services;
+
 namespace DahlexApp.Views.Board
 {
-    public partial class BoardPage //: MvxContentPage<BoardViewModel>
+    public partial class BoardPage : IBoardPage //: MvxContentPage<BoardViewModel>
     {
-        public BoardPage()
+        public BoardPage(BoardViewModel vm)
         {
+            BindingContext = vm;
             InitializeComponent();
             //NavigationPage.SetHasNavigationBar(this, false);
 
            
-            
+
         }
 
         protected override void OnAppearing()
@@ -43,5 +48,16 @@ namespace DahlexApp.Views.Board
         //    ViewModel.TheAbsBoard = TheBoard;
         //    ViewModel.TheAbsOverBoard = TheOverBoard;
         //}
+        public GameModeModel StartGameMode
+        {
+            
+            set
+            {
+                if (BindingContext is BoardViewModel vm)
+                {
+                    vm.StartGameMode = value;
+                }
+            }
+        }
     }
 }
