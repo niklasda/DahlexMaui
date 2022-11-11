@@ -42,7 +42,8 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
         Title = "Play";
 
-        ClickedTheProfCommand = new AsyncRelayCommand<Point>(async (p) => await PerformRound(MoveDirection.None));
+      //  ClickedTheProfCommand = new AsyncRelayCommand<Point>(async (p) => await PerformRound(MoveDirection.None));
+      //  SwipeLeftCommand = new AsyncRelayCommand(async _ => await PerformSwipe());
 
 
         StartGameCommand = new AsyncRelayCommand(async () =>
@@ -233,7 +234,14 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     private GameSettings GetSettings()
     {
         //w411 h660    iw37 37*11=407   37*13=481
-        ShortestDimension = Math.Min((int)Application.Current.MainPage.Width, (int)Application.Current.MainPage.Height);
+     //   ShortestDimension = Math.Min((int)Application.Current.MainPage.Width, (int)Application.Current.MainPage.Height);
+       // HeightDimension = ShortestDimension + 37 * 2;
+
+        //     Microsoft.Maui.Essentials.DeviceDisplay.MainDisplayInfo;
+        var width = DeviceDisplay.MainDisplayInfo.Width/ DeviceDisplay.MainDisplayInfo.Density; //1440
+        var height = DeviceDisplay.MainDisplayInfo.Height / DeviceDisplay.MainDisplayInfo.Density; //2560
+
+        ShortestDimension = Math.Min((int)width, (int)height);
         HeightDimension = ShortestDimension + 37 * 2;
 
         ISettingsManager sm = new SettingsManager(new IntSize(37 * 11, 37 * 13)); // w11 h13
@@ -312,6 +320,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     //}
 
     public IAsyncRelayCommand<Point> ClickedTheProfCommand { get; }
+    public IAsyncRelayCommand SwipeLeftCommand { get; }
 
     private TimeSpan _elapsed = TimeSpan.Zero;
 
@@ -459,14 +468,20 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
             }
         }
 
-        var pan = new PanGestureRecognizer();
-        pan.PanUpdated += Pan_PanUpdated;
+        //  ClickedTheProfCommand = new AsyncRelayCommand<Point>(async (p) => await PerformRound(MoveDirection.None));
+
+        var swipe = new SwipeGestureRecognizer(){Direction = SwipeDirection.Left};
+        swipe.Command = new AsyncRelayCommand(async _ => await PerformSwipe(SwipeDirection.Left)); ;
+        
+     //   var pan = new PanGestureRecognizer();
+     //   pan.PanUpdated += Pan_PanUpdated;
 
         var tap = new TapGestureRecognizer();
-        tap.Command = ClickedTheProfCommand;
+        tap.Command = new AsyncRelayCommand<Point>(async (p) => await PerformRound(MoveDirection.None)); 
 
         TheAbsOverBoard.GestureRecognizers.Clear();
-        TheAbsOverBoard.GestureRecognizers.Add(pan);
+        TheAbsOverBoard.GestureRecognizers.Add(swipe);
+       // TheAbsOverBoard.GestureRecognizers.Add(pan);
         TheAbsOverBoard.GestureRecognizers.Add(tap);
 
     }
@@ -474,6 +489,15 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     private int _tempX;
     private int _tempY;
 
+    private async Task PerformSwipe(SwipeDirection swipeDirection)
+    {
+        //      await PanPanUpdated(sender, e);
+        MoveDirection direction = MoveDirection.West;
+
+            bool moved = await PerformRound(direction);
+
+
+    }
     private void Pan_PanUpdated(object? sender, PanUpdatedEventArgs e)
     {
 
@@ -642,13 +666,14 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                         {
                             Image boardImage = new Image { InputTransparent = true };
 
-                            AbsoluteLayout.SetLayoutBounds(boardImage, new Rect(0 * x, 0 * y, 40, 40));
+                            AbsoluteLayout.SetLayoutBounds(boardImage, new Rect(10 * x, 10 * y, 40, 40));
                             AbsoluteLayout.SetLayoutFlags(boardImage, AbsoluteLayoutFlags.None);
 
                             imgName = cp.ImageName;
                             // Robot2ImageSource = ImageSource.FromResource("DahlexApp.Assets.Images.heap_02.png");
                             boardImage.AutomationId = imgName;
                             boardImage.Source = ImageSource.FromFile("heap_02.png");
+
                             TheAbsOverBoard.Children.Add(boardImage);
 
                             await Animate(cp, new IntPoint(0, 0), new IntPoint(x, y), 250);
@@ -665,7 +690,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                         {
                             Image boardImage = new Image { InputTransparent = true };
 
-                            AbsoluteLayout.SetLayoutBounds(boardImage, new Rect(0 * x, 0 * y, 40, 40));
+                            AbsoluteLayout.SetLayoutBounds(boardImage, new Rect(10 * x, 10 * y, 40, 40));
                             AbsoluteLayout.SetLayoutFlags(boardImage, AbsoluteLayoutFlags.None);
 
                             imgName = cp.ImageName;
@@ -684,7 +709,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                         {
                             Image boardImage = new Image { InputTransparent = true };
 
-                            AbsoluteLayout.SetLayoutBounds(boardImage, new Rect(0 * x, 0 * y, 40, 40));
+                            AbsoluteLayout.SetLayoutBounds(boardImage, new Rect(10 * x, 10 * y, 40, 40));
                             AbsoluteLayout.SetLayoutFlags(boardImage, AbsoluteLayoutFlags.None);
 
                             imgName = cp.ImageName;
@@ -805,14 +830,14 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                 IView i = TheAbsOverBoard.Children.First(z => z.AutomationId == bp.ImageName);
                 VisualElement img = (VisualElement)i;
 
-                //  await img.TranslateTo(nLeft, nTop, millis);
+                 // await img.TranslateTo(nLeft, nTop, millis);
 
             }
             else if (bp.Type == PieceType.Robot)
             {
                 var i = TheAbsOverBoard.Children.First(z => z.AutomationId == bp.ImageName);
                 VisualElement img = (VisualElement)i;
-                //  await img.TranslateTo(nLeft, nTop, millis);
+                 // await img.TranslateTo(nLeft, nTop, millis);
 
             }
             else if (bp.Type == PieceType.Heap)
@@ -845,7 +870,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
             if (imgv is Image img)
             {
                 TheAbsOverBoard.Children.Remove(imgv);
-                img.Source = ImageSource.FromResource("DahlexApp.Assets.Images.heap_02.png");
+                img.Source = ImageSource.FromFile("heap_02.png");
 
                 // move to front
                 TheAbsOverBoard.Children.Add(imgv);
