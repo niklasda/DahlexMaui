@@ -22,7 +22,7 @@
         </AbsoluteLayout.GestureRecognizers>-->
       </AbsoluteLayout>
 
-      <AbsoluteLayout WidthRequest="{Binding ShortestDimension}" HeightRequest="{Binding HeightDimension}" BackgroundColor="Red" x:Name="TheOverBoard">
+      <AbsoluteLayout WidthRequest="{Binding ShortestDimension}" HeightRequest="{Binding HeightDimension}" BackgroundColor="Transparent" x:Name="TheOverBoard">
 
         <!--<Image Source="{Binding PlanetImageSource}" x:Name="TheProfx" Aspect="AspectFit" AbsoluteLayout.LayoutBounds="0.2,0.1,0.1,0.1" IsVisible="False" >
           <Image.GestureRecognizers>

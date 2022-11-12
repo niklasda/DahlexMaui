@@ -669,6 +669,11 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                             AbsoluteLayout.SetLayoutBounds(boardImage, new Rect(10 * x, 10 * y, 40, 40));
                             AbsoluteLayout.SetLayoutFlags(boardImage, AbsoluteLayoutFlags.None);
 
+                            boardImage.TranslationX = 10 * x;
+                            boardImage.TranslationY = 10 * y;
+                            //bool ok = await boardImage.RotateTo(90, 1000);
+                            //bool ok = await boardImage.TranslateTo(10*x, 10*y, 1000);
+
                             imgName = cp.ImageName;
                             // Robot2ImageSource = ImageSource.FromResource("DahlexApp.Assets.Images.heap_02.png");
                             boardImage.AutomationId = imgName;
@@ -692,6 +697,8 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
                             AbsoluteLayout.SetLayoutBounds(boardImage, new Rect(10 * x, 10 * y, 40, 40));
                             AbsoluteLayout.SetLayoutFlags(boardImage, AbsoluteLayoutFlags.None);
+                            boardImage.TranslationX = 10 * x;
+                            boardImage.TranslationY = 10 * y;
 
                             imgName = cp.ImageName;
                             // boardImage.Source = LoadImage("planet_01.png");
@@ -711,6 +718,8 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
                             AbsoluteLayout.SetLayoutBounds(boardImage, new Rect(10 * x, 10 * y, 40, 40));
                             AbsoluteLayout.SetLayoutFlags(boardImage, AbsoluteLayoutFlags.None);
+                            boardImage.TranslationX = 10 * x;
+                            boardImage.TranslationY = 10 * y;
 
                             imgName = cp.ImageName;
                             string name = Randomizer.GetRandomFromSet("robot_04.png", "robot_05.png", "robot_06.png");
@@ -830,22 +839,26 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                 IView i = TheAbsOverBoard.Children.First(z => z.AutomationId == bp.ImageName);
                 VisualElement img = (VisualElement)i;
 
-                 // await img.TranslateTo(nLeft, nTop, millis);
+                img.TranslationX = nLeft;
+                img.TranslationY = nTop;
+                // await img.TranslateTo(nLeft, nTop, millis);
 
             }
             else if (bp.Type == PieceType.Robot)
             {
                 var i = TheAbsOverBoard.Children.First(z => z.AutomationId == bp.ImageName);
                 VisualElement img = (VisualElement)i;
-                 // await img.TranslateTo(nLeft, nTop, millis);
-
+                // await img.TranslateTo(nLeft, nTop, millis);
+                img.TranslationX = nLeft;
+                img.TranslationY = nTop;
             }
             else if (bp.Type == PieceType.Heap)
             {
                 var i = TheAbsOverBoard.Children.First(z => z.AutomationId == bp.ImageName);
                 VisualElement img = (VisualElement)i;
                 //  await img.TranslateTo(nLeft, nTop, 0);
-
+                img.TranslationX = nLeft;
+                img.TranslationY = nTop;
             }
         });
     }
