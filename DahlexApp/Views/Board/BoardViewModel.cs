@@ -470,17 +470,26 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
         //  ClickedTheProfCommand = new AsyncRelayCommand<Point>(async (p) => await PerformRound(MoveDirection.None));
 
-        var swipe = new SwipeGestureRecognizer(){Direction = SwipeDirection.Left};
-        swipe.Command = new AsyncRelayCommand(async _ => await PerformSwipe(SwipeDirection.Left)); ;
-        
-     //   var pan = new PanGestureRecognizer();
-     //   pan.PanUpdated += Pan_PanUpdated;
+        var swipel = new SwipeGestureRecognizer() { Direction = SwipeDirection.Left };
+        swipel.Command = new AsyncRelayCommand(async _ => await PerformSwipe(MoveDirection.West)); ;
+        var swiper = new SwipeGestureRecognizer() { Direction = SwipeDirection.Right };
+        swiper.Command = new AsyncRelayCommand(async _ => await PerformSwipe(MoveDirection.East)); ;
+        var swipeu = new SwipeGestureRecognizer() { Direction = SwipeDirection.Up };
+        swipeu.Command = new AsyncRelayCommand(async _ => await PerformSwipe(MoveDirection.North)); ;
+        var swiped = new SwipeGestureRecognizer() { Direction = SwipeDirection.Down};
+        swiped.Command = new AsyncRelayCommand(async _ => await PerformSwipe(MoveDirection.South)); ;
+
+        //   var pan = new PanGestureRecognizer();
+        //   pan.PanUpdated += Pan_PanUpdated;
 
         var tap = new TapGestureRecognizer();
-        tap.Command = new AsyncRelayCommand<Point>(async (p) => await PerformRound(MoveDirection.None)); 
+        tap.Command = new AsyncRelayCommand<Point>(async (p) => await PerformSwipe(MoveDirection.None)); 
 
         TheAbsOverBoard.GestureRecognizers.Clear();
-        TheAbsOverBoard.GestureRecognizers.Add(swipe);
+        TheAbsOverBoard.GestureRecognizers.Add(swiped);
+        TheAbsOverBoard.GestureRecognizers.Add(swipeu);
+        TheAbsOverBoard.GestureRecognizers.Add(swipel);
+        TheAbsOverBoard.GestureRecognizers.Add(swiper);
        // TheAbsOverBoard.GestureRecognizers.Add(pan);
         TheAbsOverBoard.GestureRecognizers.Add(tap);
 
@@ -489,12 +498,21 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     private int _tempX;
     private int _tempY;
 
-    private async Task PerformSwipe(SwipeDirection swipeDirection)
+    private async Task PerformSwipe(MoveDirection direction)
     {
-        //      await PanPanUpdated(sender, e);
-        MoveDirection direction = MoveDirection.West;
+        //var direction = swipeDirection switch
+        //{
+        //    SwipeDirection.Down => MoveDirection.South,
+        //    SwipeDirection.Right => MoveDirection.East,
+        //    SwipeDirection.Left => MoveDirection.West,
+        //    SwipeDirection.Up => MoveDirection.North,
+        //    SwipeDirection.Up => MoveDirection.North
+        //};
 
-            bool moved = await PerformRound(direction);
+        //      await PanPanUpdated(sender, e);
+        //        MoveDirection direction = MoveDirection.West;
+
+        bool moved = await PerformRound(direction);
 
 
     }

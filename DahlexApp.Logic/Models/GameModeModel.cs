@@ -6,16 +6,8 @@
 
     }
 
-    public class IntPoint
+    public record struct IntPoint(int X, int Y)
     {
-        public IntPoint(int x, int y)
-        {
-            X = x;
-            Y = y;
-        }
-
-        public int X { get; set; }
-        public int Y { get; set; }
         public static IntPoint Empty => new IntPoint(0, 0);
 
         public override string ToString()
@@ -24,16 +16,8 @@
         }
     }
 
-    public class IntSize
+    public readonly record struct IntSize(int Width, int Height)
     {
-        public IntSize(int w, int h)
-        {
-            Width = w;
-            Height = h;
-        }
-
-        public int Width { get; set; }
-        public int Height { get; set; }
         public static IntSize Empty => new IntSize(0, 0);
 
         public override string ToString()
