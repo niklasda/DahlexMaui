@@ -482,16 +482,16 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
         //   var pan = new PanGestureRecognizer();
         //   pan.PanUpdated += Pan_PanUpdated;
 
-        var tap = new TapGestureRecognizer();
-        tap.Command = new AsyncRelayCommand<Point>(async (p) => await PerformSwipe(MoveDirection.None)); 
-
+        var tap = new TapGestureRecognizer(){NumberOfTapsRequired = 1};
+        tap.Command = new AsyncRelayCommand( _=>PerformSwipe(MoveDirection.None));
+        //tap.Tapped += Tap_Tapped;
         TheAbsOverBoard.GestureRecognizers.Clear();
+        TheAbsOverBoard.GestureRecognizers.Add(tap);
         TheAbsOverBoard.GestureRecognizers.Add(swiped);
         TheAbsOverBoard.GestureRecognizers.Add(swipeu);
         TheAbsOverBoard.GestureRecognizers.Add(swipel);
         TheAbsOverBoard.GestureRecognizers.Add(swiper);
        // TheAbsOverBoard.GestureRecognizers.Add(pan);
-        TheAbsOverBoard.GestureRecognizers.Add(tap);
 
     }
 
