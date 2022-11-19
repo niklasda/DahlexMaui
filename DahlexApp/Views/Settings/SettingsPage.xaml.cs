@@ -9,4 +9,14 @@ public partial class SettingsPage
         InitializeComponent();
         Shell.SetNavBarIsVisible(this, false);
     }
+
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+
+        if (BindingContext is SettingsViewModel vm)
+        {
+            vm.OnDisappearing();
+        }
+    }
 }

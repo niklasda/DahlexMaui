@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using CommunityToolkit.Maui.Alerts;
+﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -61,8 +60,8 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
             UpdateUi(GameStatus.GameStarted, _ge.GetState(_elapsed));
         });
 
-        ComingSoonCommand = new AsyncRelayCommand(async () =>
-            await Application.Current.MainPage.DisplayAlert("Dahlex", "Coming SoOon", "Ok"));
+ //       ComingSoonCommand = new AsyncRelayCommand(async () =>
+   //         await Application.Current.MainPage.DisplayAlert("Dahlex", "Coming SoOon", "Ok"));
 
 
         NextLevelCommand = new AsyncRelayCommand(async () =>
@@ -105,6 +104,8 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
     private async Task DoTeleport()
     {
+      //  await Application.Current.MainPage.DisplayAlert("Dahlex", "Coming SoOon", "Ok");
+
         if (_ge != null)
         {
 
@@ -144,7 +145,8 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteLine(ex.Message);
+                        GameLogger.AddLineToLog(ex.Message);
+                       // Debug.WriteLine();
                         // safety try, marketplace version crashes on samsung 
                         //MessageBox.Show(ex.Message);
                     }
@@ -302,7 +304,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
     public IAsyncRelayCommand BombCommand { get; }
     public IAsyncRelayCommand TeleCommand { get; }
-    public IAsyncRelayCommand ComingSoonCommand { get; }
+    //public IAsyncRelayCommand ComingSoonCommand { get; } // todo seems unused
     public IAsyncRelayCommand NextLevelCommand { get; }
     public IAsyncRelayCommand StartGameCommand { get; }
 
@@ -470,28 +472,28 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
         //  ClickedTheProfCommand = new AsyncRelayCommand<Point>(async (p) => await PerformRound(MoveDirection.None));
 
-        var swipel = new SwipeGestureRecognizer() { Direction = SwipeDirection.Left };
-        swipel.Command = new AsyncRelayCommand(async _ => await PerformSwipe(MoveDirection.West)); ;
-        var swiper = new SwipeGestureRecognizer() { Direction = SwipeDirection.Right };
-        swiper.Command = new AsyncRelayCommand(async _ => await PerformSwipe(MoveDirection.East)); ;
-        var swipeu = new SwipeGestureRecognizer() { Direction = SwipeDirection.Up };
-        swipeu.Command = new AsyncRelayCommand(async _ => await PerformSwipe(MoveDirection.North)); ;
-        var swiped = new SwipeGestureRecognizer() { Direction = SwipeDirection.Down};
-        swiped.Command = new AsyncRelayCommand(async _ => await PerformSwipe(MoveDirection.South)); ;
+      //  var swipel = new SwipeGestureRecognizer() { Direction = SwipeDirection.Left };
+      //  swipel.Command = new AsyncRelayCommand(async _ => await PerformSwipe(MoveDirection.West)); ;
+      //  var swiper = new SwipeGestureRecognizer() { Direction = SwipeDirection.Right };
+      //  swiper.Command = new AsyncRelayCommand(async _ => await PerformSwipe(MoveDirection.East)); ;
+      //  var swipeu = new SwipeGestureRecognizer() { Direction = SwipeDirection.Up };
+      //  swipeu.Command = new AsyncRelayCommand(async _ => await PerformSwipe(MoveDirection.North)); ;
+      //  var swiped = new SwipeGestureRecognizer() { Direction = SwipeDirection.Down};
+      //  swiped.Command = new AsyncRelayCommand(async _ => await PerformSwipe(MoveDirection.South)); ;
 
-        //   var pan = new PanGestureRecognizer();
-        //   pan.PanUpdated += Pan_PanUpdated;
+           var pan = new PanGestureRecognizer();
+           pan.PanUpdated += Pan_PanUpdated;
 
         var tap = new TapGestureRecognizer(){NumberOfTapsRequired = 1};
         tap.Command = new AsyncRelayCommand( _=>PerformSwipe(MoveDirection.None));
         //tap.Tapped += Tap_Tapped;
         TheAbsOverBoard.GestureRecognizers.Clear();
+        TheAbsOverBoard.GestureRecognizers.Add(pan);
         TheAbsOverBoard.GestureRecognizers.Add(tap);
-        TheAbsOverBoard.GestureRecognizers.Add(swiped);
-        TheAbsOverBoard.GestureRecognizers.Add(swipeu);
-        TheAbsOverBoard.GestureRecognizers.Add(swipel);
-        TheAbsOverBoard.GestureRecognizers.Add(swiper);
-       // TheAbsOverBoard.GestureRecognizers.Add(pan);
+       // TheAbsOverBoard.GestureRecognizers.Add(swiped);
+     //   TheAbsOverBoard.GestureRecognizers.Add(swipeu);
+   //     TheAbsOverBoard.GestureRecognizers.Add(swipel);
+ //       TheAbsOverBoard.GestureRecognizers.Add(swiper);
 
     }
 
@@ -520,7 +522,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     {
 
 
-        PanPanUpdated(sender, e).GetAwaiter().GetResult();
+       PanPanUpdated(sender, e).GetAwaiter().GetResult();
     }
 
     private async Task PanPanUpdated(object? sender, PanUpdatedEventArgs e)
@@ -684,11 +686,11 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                         {
                             Image boardImage = new Image { InputTransparent = true };
 
-                            AbsoluteLayout.SetLayoutBounds(boardImage, new Rect(10 * x, 10 * y, 40, 40));
+                            AbsoluteLayout.SetLayoutBounds(boardImage, new Rect(37 * x, 37 * y, 40, 40));
                             AbsoluteLayout.SetLayoutFlags(boardImage, AbsoluteLayoutFlags.None);
 
-                            boardImage.TranslationX = 10 * x;
-                            boardImage.TranslationY = 10 * y;
+                            //boardImage.TranslationX = 37 * x;
+                            //boardImage.TranslationY = 37 * y;
                             //bool ok = await boardImage.RotateTo(90, 1000);
                             //bool ok = await boardImage.TranslateTo(10*x, 10*y, 1000);
 
@@ -715,8 +717,8 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
                             AbsoluteLayout.SetLayoutBounds(boardImage, new Rect(10 * x, 10 * y, 40, 40));
                             AbsoluteLayout.SetLayoutFlags(boardImage, AbsoluteLayoutFlags.None);
-                            boardImage.TranslationX = 10 * x;
-                            boardImage.TranslationY = 10 * y;
+                            //boardImage.TranslationX = 10 * x;
+                            //boardImage.TranslationY = 10 * y;
 
                             imgName = cp.ImageName;
                             // boardImage.Source = LoadImage("planet_01.png");
@@ -859,7 +861,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
                 img.TranslationX = nLeft;
                 img.TranslationY = nTop;
-                // await img.TranslateTo(nLeft, nTop, millis);
+                 await img.TranslateTo(nLeft, nTop, millis);
 
             }
             else if (bp.Type == PieceType.Robot)

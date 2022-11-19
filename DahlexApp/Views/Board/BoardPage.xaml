@@ -17,34 +17,11 @@
     <AbsoluteLayout BackgroundColor="{StaticResource PrimaryBackgroundColor}">
       <AbsoluteLayout WidthRequest="{Binding ShortestDimension}" BackgroundColor="Transparent" x:Name="TheBoard">
 
-        <!--<AbsoluteLayout.GestureRecognizers>
-          <PanGestureRecognizer PanUpdated="PanGestureRecognizer_OnPanUpdated" ></PanGestureRecognizer>
-        </AbsoluteLayout.GestureRecognizers>-->
+       
       </AbsoluteLayout>
 
       <AbsoluteLayout WidthRequest="{Binding ShortestDimension}" HeightRequest="{Binding HeightDimension}" BackgroundColor="Transparent" x:Name="TheOverBoard">
-
-        <!--<Image Source="{Binding PlanetImageSource}" x:Name="TheProfx" Aspect="AspectFit" AbsoluteLayout.LayoutBounds="0.2,0.1,0.1,0.1" IsVisible="False" >
-          <Image.GestureRecognizers>
-            <TapGestureRecognizer Command="{Binding ClickedTheProfCommand}"></TapGestureRecognizer>
-          </Image.GestureRecognizers>
-        </Image>
-        <Image Source="{Binding HeapImageSource}" x:Name="TheHeapx" Aspect="AspectFit" AbsoluteLayout.LayoutBounds="0.3,0.1,0.1,0.1" InputTransparent="True"  IsVisible="False">
-          <Image.GestureRecognizers>
-            <TapGestureRecognizer Command="{Binding ClickedTheHeapCommand}"></TapGestureRecognizer>
-          </Image.GestureRecognizers>
-        </Image>
-        <Image Source="{Binding Robot1ImageSource}" x:Name="TheRobotx" Aspect="AspectFit" AbsoluteLayout.LayoutBounds="0.4,0.1,0.1,0.1"   IsVisible="False">
-          <Image.GestureRecognizers>
-            <TapGestureRecognizer Command="{Binding ClickedTheRobotCommand}"></TapGestureRecognizer>
-          </Image.GestureRecognizers>
-        </Image>-->
-
-          <!--<AbsoluteLayout.GestureRecognizers>
-        <SwipeGestureRecognizer Direction="Left,Up,Right,Down" Swiped="SwipeGestureRecognizer_OnSwiped"></SwipeGestureRecognizer>
-          <PanGestureRecognizer PanUpdated="PanGestureRecognizer_OnPanUpdated" ></PanGestureRecognizer>
-        </AbsoluteLayout.GestureRecognizers>-->
-
+          
       </AbsoluteLayout>
     </AbsoluteLayout>
 

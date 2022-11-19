@@ -11,8 +11,6 @@ public partial class BoardPage : IBoardPage
         InitializeComponent();
         Shell.SetNavBarIsVisible(this, false);
 
-
-
         vm.TheAbsBoard = TheBoard;
         vm.TheAbsOverBoard = TheOverBoard;
     }
@@ -27,14 +25,6 @@ public partial class BoardPage : IBoardPage
         }
     }
 
-
-    //protected override void OnViewModelSet()
-    //{
-    //    base.OnViewModelSet();
-
-    //    ViewModel.TheAbsBoard = TheBoard;
-    //    ViewModel.TheAbsOverBoard = TheOverBoard;
-    //}
     public GameMode StartGameMode
     {
 

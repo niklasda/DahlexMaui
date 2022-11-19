@@ -16,12 +16,12 @@ namespace DahlexApp.Logic.Settings;
         /// <summary>Will return false only the first time a user ever runs this.
         /// Every time thereafter, a placeholder file will have been written to disk
         /// and will trigger a value of true.</summary>
-        public static bool IsFirstRun()
-        {
+        //public static bool IsFirstRun()
+        //{
            
-                return false;
+        //        return false;
            
-        }
+        //}
 
 
         //public static int MaxLevelIndicator

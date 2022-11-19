@@ -1,15 +1,19 @@
 ﻿
 
+using DahlexApp.Logic.Logger;
+
 namespace DahlexApp.Views.Scores;
 
-    public partial class ScoresPage 
+public partial class ScoresPage
+{
+    public ScoresPage(ScoresViewModel vm)
     {
-        public ScoresPage(ScoresViewModel vm)
-        {
-            BindingContext = vm;
-            InitializeComponent();
-            Shell.SetNavBarIsVisible(this, false);
-            //NavigationPage.SetHasNavigationBar(this, false);
+        BindingContext = vm;
+        InitializeComponent();
+        Shell.SetNavBarIsVisible(this, false);
+        //NavigationPage.SetHasNavigationBar(this, false);
 
-        }
+      //  GameLogger.AddLineToLog("Viewing scores page");
+
     }
+}

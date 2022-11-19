@@ -23,35 +23,35 @@ namespace DahlexApp.Logic.Utils;
             return new IntPoint(x, y);
         }
 
-        public static MoveDirection GetRandomDirection()
-        {
-            const int max = 9;
-            int v = Randy.Next(1, max);
-            switch(v)
-            {
-                case 1:
-                    return MoveDirection.East;
-                case 2:
-                    return MoveDirection.None;
-                case 3:
-                    return MoveDirection.North;
-                case 4:
-                    return MoveDirection.NorthEast;
-                case 5:
-                    return MoveDirection.NorthWest;
-                case 6:
-                    return MoveDirection.South;
-                case 7:
-                    return MoveDirection.SouthEast;
-                case 8:
-                    return MoveDirection.SouthWest;
-                case 9:
-                    return MoveDirection.West;
-                default:
-                    return MoveDirection.None;
-            }
+        //public static MoveDirection GetRandomDirection()
+        //{
+        //    const int max = 9;
+        //    int v = Randy.Next(1, max);
+        //    switch(v)
+        //    {
+        //        case 1:
+        //            return MoveDirection.East;
+        //        case 2:
+        //            return MoveDirection.None;
+        //        case 3:
+        //            return MoveDirection.North;
+        //        case 4:
+        //            return MoveDirection.NorthEast;
+        //        case 5:
+        //            return MoveDirection.NorthWest;
+        //        case 6:
+        //            return MoveDirection.South;
+        //        case 7:
+        //            return MoveDirection.SouthEast;
+        //        case 8:
+        //            return MoveDirection.SouthWest;
+        //        case 9:
+        //            return MoveDirection.West;
+        //        default:
+        //            return MoveDirection.None;
+        //    }
 
-        }
+        //}
 
         public static string GetRandomFromSet(params string[] names)
         {

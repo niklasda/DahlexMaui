@@ -16,11 +16,11 @@ namespace DahlexApp.Views.How
             CloseImage = ImageSource.FromFile("close.png");
 
             _title = string.Empty;
-            _playerName = string.Empty;
+         //   _playerName = string.Empty;
 
             Title = "How";
-            PlayerName = "nIX";
-            IsMuted = false;
+         //   PlayerName = "nIX";
+         //   IsMuted = false;
 
             BackCommand = new AsyncRelayCommand( navigationService.NavigateBack);
 
@@ -86,18 +86,18 @@ namespace DahlexApp.Views.How
             set => SetProperty(ref _title, value) ;
         }
 
-        private string _playerName;
-        public string PlayerName
-        {
-            get => _playerName;
-            set => SetProperty(ref _playerName, value);
-        }
+        //private string _playerName;
+        //public string PlayerName
+        //{
+        //    get => _playerName;
+        //    set => SetProperty(ref _playerName, value);
+        //}
 
-        private bool _isMuted;
-        public bool IsMuted
-        {
-            get => _isMuted;
-            set => SetProperty(ref _isMuted, value);
-        }
+        //private bool _isMuted;
+        //public bool IsMuted
+        //{
+        //    get => _isMuted;
+        //    set => SetProperty(ref _isMuted, value);
+        //}
     }
 }
