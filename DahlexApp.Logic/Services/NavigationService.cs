@@ -6,6 +6,7 @@ namespace DahlexApp.Logic.Services;
 public interface IBoardPage
 {
     GameMode StartGameMode { set; }
+    Task SetStartGameMode(GameMode value);
 }
 
 public interface INavigationService
@@ -54,16 +55,18 @@ public class NavigationService : INavigationService
         throw new InvalidOperationException($"Unable to resolve type {typeof(T).FullName}");
     }
 
-    public Task NavigateToBoardPage<T>(GameModeModel mode) where T : ContentPage, IBoardPage
+    public async Task NavigateToBoardPage<T>(GameModeModel mode) where T : ContentPage, IBoardPage
     {
         var page = ResolvePage<T>();
         if (page is not null)
         {
-            page.StartGameMode = mode.SelectedGameMode;
-            return Navigation.PushAsync(page, true);
+            await Navigation.PushAsync(page, true);
+        //    await Task.Delay(1000);
+           // page.StartGameMode = mode.SelectedGameMode;
+            await page.SetStartGameMode(mode.SelectedGameMode);
         }
 
-        throw new InvalidOperationException($"Unable to resolve type {typeof(T).FullName}");
+     //   throw new InvalidOperationException($"Unable to resolve type {typeof(T).FullName}");
     }
     //public Task NavigateToPage(ContentPage page)
     //{

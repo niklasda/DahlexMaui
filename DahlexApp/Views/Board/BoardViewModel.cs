@@ -2,6 +2,7 @@
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using DahlexApp.Logic.Game;
 using DahlexApp.Logic.Interfaces;
 using DahlexApp.Logic.Logger;
@@ -297,6 +298,10 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     // private readonly IGameService _gs;
     private readonly IGameEngine _ge;
     public GameMode StartGameMode { private get; set; }
+    public async Task SetStartGameMode(GameMode value)
+    {
+        StartGameMode = value;
+    }
 
     //  public GameModeModel StartGameMode { private get; set; }
     // private readonly IToastPopUp _toast;
@@ -472,20 +477,42 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
         //  ClickedTheProfCommand = new AsyncRelayCommand<Point>(async (p) => await PerformRound(MoveDirection.None));
 
-      //  var swipel = new SwipeGestureRecognizer() { Direction = SwipeDirection.Left };
-      //  swipel.Command = new AsyncRelayCommand(async _ => await PerformSwipe(MoveDirection.West)); ;
-      //  var swiper = new SwipeGestureRecognizer() { Direction = SwipeDirection.Right };
-      //  swiper.Command = new AsyncRelayCommand(async _ => await PerformSwipe(MoveDirection.East)); ;
-      //  var swipeu = new SwipeGestureRecognizer() { Direction = SwipeDirection.Up };
-      //  swipeu.Command = new AsyncRelayCommand(async _ => await PerformSwipe(MoveDirection.North)); ;
-      //  var swiped = new SwipeGestureRecognizer() { Direction = SwipeDirection.Down};
-      //  swiped.Command = new AsyncRelayCommand(async _ => await PerformSwipe(MoveDirection.South)); ;
+        //  var swipel = new SwipeGestureRecognizer() { Direction = SwipeDirection.Left };
+        //  swipel.Command = new AsyncRelayCommand(async _ => await PerformSwipe(MoveDirection.West)); ;
+        //  var swiper = new SwipeGestureRecognizer() { Direction = SwipeDirection.Right };
+        //  swiper.Command = new AsyncRelayCommand(async _ => await PerformSwipe(MoveDirection.East)); ;
+        //  var swipeu = new SwipeGestureRecognizer() { Direction = SwipeDirection.Up };
+        //  swipeu.Command = new AsyncRelayCommand(async _ => await PerformSwipe(MoveDirection.North)); ;
+        //  var swiped = new SwipeGestureRecognizer() { Direction = SwipeDirection.Down};
+        //  swiped.Command = new AsyncRelayCommand(async _ => await PerformSwipe(MoveDirection.South)); ;
 
-           var pan = new PanGestureRecognizer();
+
+        //var mh = new MessageHandler<object, string>( async (a,dir)=> { 
+            
+        //    if(Enum.TryParse<MoveDirection>( dir, true, out MoveDirection md))
+        //    {
+        //       bool moved = await PerformRound(md);
+
+        //    }
+        //});
+
+
+        WeakReferenceMessenger.Default.Register<BoardViewModel,string>(this, async (a, dir) => 
+        {
+            
+           if(Enum.TryParse<MoveDirection>( dir, true, out MoveDirection md))
+            {
+               bool moved = await PerformRound(md);
+
+            }
+
+        });
+
+        var pan = new PanGestureRecognizer();
            pan.PanUpdated += Pan_PanUpdated;
 
         var tap = new TapGestureRecognizer(){NumberOfTapsRequired = 1};
-        tap.Command = new AsyncRelayCommand( _=>PerformSwipe(MoveDirection.None));
+        tap.Command = new AsyncRelayCommand( _=>PerformRound(MoveDirection.None));
         //tap.Tapped += Tap_Tapped;
         TheAbsOverBoard.GestureRecognizers.Clear();
         TheAbsOverBoard.GestureRecognizers.Add(pan);
@@ -497,36 +524,23 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
     }
 
+     
+
+
     private int _tempX;
     private int _tempY;
 
-    private async Task PerformSwipe(MoveDirection direction)
-    {
-        //var direction = swipeDirection switch
-        //{
-        //    SwipeDirection.Down => MoveDirection.South,
-        //    SwipeDirection.Right => MoveDirection.East,
-        //    SwipeDirection.Left => MoveDirection.West,
-        //    SwipeDirection.Up => MoveDirection.North,
-        //    SwipeDirection.Up => MoveDirection.North
-        //};
+    //private async Task PerformSwipe(MoveDirection direction)
+    //{
 
-        //      await PanPanUpdated(sender, e);
-        //        MoveDirection direction = MoveDirection.West;
-
-        bool moved = await PerformRound(direction);
+    //    bool moved = await PerformRound(direction);
 
 
-    }
+    //}
     private void Pan_PanUpdated(object? sender, PanUpdatedEventArgs e)
     {
 
-
-       PanPanUpdated(sender, e).GetAwaiter().GetResult();
-    }
-
-    private async Task PanPanUpdated(object? sender, PanUpdatedEventArgs e)
-    {
+          
         if (e.StatusType == GestureStatus.Started)
         {
             _tempX = 0;
@@ -553,14 +567,18 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                 // very small swipe or tap is like clicking the professor in standard move mode
                 if (IsTap(p))
                 {
-                    moved = await PerformRound(MoveDirection.None);
+                    WeakReferenceMessenger.Default.Send< string>(MoveDirection.None.ToString());
+
+                  //  moved = await PerformRound(MoveDirection.None);
                 }
                 else //if (IsWithinBounds(e))
                 {
                     var direction = Trig.GetSwipeDirection(p);
                     if (direction != MoveDirection.Ignore)
                     {
-                        moved = await PerformRound(direction);
+                        WeakReferenceMessenger.Default.Send<string>(direction.ToString());
+
+                    //    moved = await PerformRound(direction);
                     }
                 }
             }

@@ -25,6 +25,17 @@ public partial class BoardPage : IBoardPage
         }
     }
 
+    public async Task SetStartGameMode(GameMode value)
+    {
+        if (BindingContext is BoardViewModel vm)
+        {
+            vm.StartGameMode = value;
+
+
+            await vm.OnAppearing();
+        }
+    }
+
     public GameMode StartGameMode
     {
 
