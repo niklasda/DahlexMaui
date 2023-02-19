@@ -11,5 +11,6 @@ public partial class App
         Ioc.Default.ConfigureServices(services);
 
         MainPage = new AppShell();
+
 	}
 }

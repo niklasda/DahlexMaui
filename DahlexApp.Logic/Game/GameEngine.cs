@@ -306,7 +306,7 @@ namespace DahlexApp.Logic.Game;
             {
                 p = Randomizer.GetRandomPosition(_boardSize.Width, _boardSize.Height);
             }
-            while (_board.GetPosition(p.X, p.Y) != null);
+            while (_board.GetPosition(p.X, p.Y) != null && _board.GetPosition(p.X, p.Y).Type != PieceType.None);
 
             return new IntPoint(p.X, p.Y);
         }

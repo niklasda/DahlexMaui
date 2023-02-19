@@ -877,8 +877,8 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                 IView i = TheAbsOverBoard.Children.First(z => z.AutomationId == bp.ImageName);
                 VisualElement img = (VisualElement)i;
 
-                img.TranslationX = nLeft;
-                img.TranslationY = nTop;
+               // img.TranslationX = nLeft;
+               // img.TranslationY = nTop;
                  await img.TranslateTo(nLeft, nTop, millis);
 
             }
@@ -886,9 +886,9 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
             {
                 var i = TheAbsOverBoard.Children.First(z => z.AutomationId == bp.ImageName);
                 VisualElement img = (VisualElement)i;
-                // await img.TranslateTo(nLeft, nTop, millis);
-                img.TranslationX = nLeft;
-                img.TranslationY = nTop;
+                 await img.TranslateTo(nLeft, nTop, millis);
+               // img.TranslationX = nLeft;
+               // img.TranslationY = nTop;
             }
             else if (bp.Type == PieceType.Heap)
             {

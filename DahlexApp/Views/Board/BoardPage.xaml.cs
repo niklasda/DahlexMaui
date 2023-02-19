@@ -46,7 +46,7 @@ public partial class BoardPage : IBoardPage
                 vm.StartGameMode = value;
 
 
-                vm.OnAppearing().GetAwaiter().GetResult();
+                //vm.OnAppearing().GetAwaiter().GetResult();
             }
         }
     }

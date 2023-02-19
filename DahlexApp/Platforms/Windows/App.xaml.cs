@@ -3,6 +3,7 @@ using Microsoft.UI.Xaml;
 using Windows.Graphics;
 using Microsoft.UI.Windowing;
 using WinRT.Interop;
+using System.Diagnostics;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -21,7 +22,18 @@ public partial class App : MauiWinUIApplication
 	public App()
 	{
 		this.InitializeComponent();
-	}
+
+        UnhandledException += (sender, e) =>
+        {
+            if (Debugger.IsAttached)
+                Debugger.Break();
+            
+            Debug.WriteLine(e.ToString());
+
+            e.Handled = true;
+        };
+
+    }
 
 	protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
 
