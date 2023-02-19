@@ -14,12 +14,13 @@ public class SettingsViewModel : ObservableObject
         BackCommand = new AsyncRelayCommand(navigationService.NavigateBack);
         CloseImage = ImageSource.FromFile("close.png");
 
-        _title = string.Empty;
+        //_title = string.Empty;
         Title = "Settings";
 
         SettingsManager sm = new SettingsManager(new IntSize(0, 0));
 
-        _profName = "";
+        //_profName = "";
+        Copyright = "Dahlex v0.9 (c) 2023 nida";
 
         var gs = sm.LoadLocalSettings();
         ProfName = gs.PlayerName;
@@ -80,6 +81,13 @@ public class SettingsViewModel : ObservableObject
     {
         get => _profName;
         set => SetProperty(ref _profName, value);
+    }
+
+    private string _copyright;
+    public string Copyright
+    {
+        get => _copyright;
+        set => SetProperty(ref _copyright, value);
     }
 
     private bool _isMuted;

@@ -17,7 +17,7 @@ public interface IDahlexView
     void Clear(bool all);
 
     // void SetBoardSizeControls();
-    Task PlaySound(Sound effect);
+    void PlaySound(Sound effect);
 
     Task Animate(BoardPosition bp, IntPoint oldPosition, IntPoint newPosition, uint millis);
 

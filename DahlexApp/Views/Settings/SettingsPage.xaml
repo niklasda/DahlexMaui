@@ -44,7 +44,7 @@
       </StackLayout>
     </StackLayout>
 
-    <Label   Margin="10" Text="Dahlex v0.9 (c) 2020 nida" Style="{StaticResource SubtitleStyle}"/>
+    <Label Margin="10" Text="{Binding Copyright}" Style="{StaticResource SubtitleStyle}"/>
 
   </Grid>
 

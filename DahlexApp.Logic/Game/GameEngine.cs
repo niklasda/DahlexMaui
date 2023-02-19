@@ -348,7 +348,7 @@ public class GameEngine : IGameEngine
             _boardView.AddLineToLog($"Robot-robot collision on {newPosition}");
             await _boardView.Animate(oldBp, oldPosition, newPosition, millis);
 
-            await _boardView.PlaySound(Sound.Crash);
+             _boardView.PlaySound(Sound.Crash);
             _boardView.ChangeImage(newBp);
             newBp.ConvertToHeap();
             _robotCount -= 2;
@@ -362,7 +362,7 @@ public class GameEngine : IGameEngine
             _boardView.AddLineToLog($"Robot-heap collision on {newPosition}");
             await _boardView.Animate(oldBp, oldPosition, newPosition, millis);
 
-            await _boardView.PlaySound(Sound.Crash);
+            _boardView.PlaySound(Sound.Crash);
             _boardView.ChangeImage(newBp);
 
             newBp.ConvertToHeap();
@@ -377,7 +377,7 @@ public class GameEngine : IGameEngine
             _boardView.AddLineToLog($"Robot killed professor on {newPosition}");
             await _boardView.Animate(oldBp, oldPosition, newPosition, millis);
 
-            await _boardView.PlaySound(Sound.Crash);
+             _boardView.PlaySound(Sound.Crash);
 
             newBp.ConvertToHeap();
             Status = GameStatus.GameLost;
@@ -388,7 +388,7 @@ public class GameEngine : IGameEngine
             _boardView.AddLineToLog($"Professor hit robot on {newPosition}");
             await _boardView.Animate(oldBp, oldPosition, newPosition, millis);
 
-            await _boardView.PlaySound(Sound.Crash);
+             _boardView.PlaySound(Sound.Crash);
 
             newBp.ConvertToHeap();
             Status = GameStatus.GameLost;

@@ -12,14 +12,14 @@ using DahlexApp.Logic.Settings;
 using DahlexApp.Logic.Utils;
 using Microsoft.Maui.Controls.Shapes;
 using Microsoft.Maui.Layouts;
-using Plugin.Maui.Audio;
+using System.Diagnostics;
 
 namespace DahlexApp.Views.Board;
 //{
 public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 {
 
-    public BoardViewModel(IHighScoreService hsm, IAudioManager audio)
+    public BoardViewModel(IHighScoreService hsm, /*IAudioManager audio,*/ ISoundManager audio)
     {
         _settings = GetSettings();
         _ge = new GameEngine(_settings, this, hsm);
@@ -115,7 +115,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                 await _ge.MoveHeapsToTemp();
                 if (await _ge.DoTeleport())
                 {
-                    await PlaySound(Sound.Teleport);
+                    PlaySound(Sound.Teleport);
 
                     await _ge.MoveRobotsToTemp();
                     await _ge.CommitTemp();
@@ -142,7 +142,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                     try
                     {
                         // do not await
-                        await DrawExplosionRadius(_ge.GetProfessorCoordinates());
+                        DrawExplosionRadius(_ge.GetProfessorCoordinates());
                     }
                     catch (Exception ex)
                     {
@@ -152,9 +152,12 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                         //MessageBox.Show(ex.Message);
                     }
 
-                    Vibration.Vibrate();
+                    if (Vibration.Default.IsSupported)
+                    {
+                        Vibration.Default.Vibrate();
+                    }
 
-                    await PlaySound(Sound.Bomb);
+                    PlaySound(Sound.Bomb);
                     if (await _ge.MoveProfessorToTemp(MoveDirection.None))
                     {
                         await _ge.MoveRobotsToTemp();
@@ -199,10 +202,16 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
         TheAbsBoard.Children.Add(bv);
 
-        await bv.ScaleXTo(15, 400);
-        await bv.ScaleYTo(15, 300);
-        await bv.ScaleXTo(0.1, 1000);
-        await bv.ScaleYTo(0.1, 7000);
+        var t1 = bv.ScaleXTo(15, 400);
+        await t1;
+        var t2 = bv.ScaleYTo(15, 300);
+        await t2;
+
+        var t3 = bv.ScaleXTo(0.1, 1000);
+        await t3;
+        var t4 = bv.ScaleYTo(0.1, 7000);
+
+        await t4;
         TheAbsBoard.Children.Remove(bv);
     }
 
@@ -335,101 +344,101 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
     {
         // is all the main thread things needed
-       // MainThread.BeginInvokeOnMainThread(() =>
-       // {
+        // MainThread.BeginInvokeOnMainThread(() =>
+        // {
 
-            if (gameStatus == GameStatus.BeforeStart)
+        if (gameStatus == GameStatus.BeforeStart)
+        {
+            CanBomb = false;
+            CanTele = false;
+            CanNext = false;
+            CanStart = true;
+        }
+        else if (gameStatus == GameStatus.GameStarted)
+        {
+            //AddLineToLog("Game started");
+            CanBomb = true;
+            CanTele = true;
+            CanNext = false;
+            CanStart = false;
+
+            if (state.Level == 1)
             {
-                CanBomb = false;
-                CanTele = false;
-                CanNext = false;
-                CanStart = true;
+                AddLineToLog("Game started");
             }
-            else if (gameStatus == GameStatus.GameStarted)
+            else
             {
-                //AddLineToLog("Game started");
+                AddLineToLog("Level started");
+            }
+        }
+        else if (gameStatus == GameStatus.LevelComplete)
+        {
+
+            AddLineToLog("Level won");
+
+            CanBomb = false;
+            CanTele = false;
+            CanNext = true;
+            CanStart = false;
+
+            //InfoText = state.Message;
+        }
+        else if (gameStatus == GameStatus.LevelOngoing)
+        {
+            if (state.BombCount > 0)
+            {
                 CanBomb = true;
+            }
+
+            if (state.TeleportCount > 0)
+            {
                 CanTele = true;
-                CanNext = false;
-                CanStart = false;
-
-                if (state.Level == 1)
-                {
-                    AddLineToLog("Game started");
-                }
-                else
-                {
-                    AddLineToLog("Level started");
-                }
             }
-            else if (gameStatus == GameStatus.LevelComplete)
+
+            CanNext = false;
+            CanStart = false;
+
+            if (string.IsNullOrWhiteSpace(state.Message))
             {
-
-                AddLineToLog("Level won");
-
-                CanBomb = false;
-                CanTele = false;
-                CanNext = true;
-                CanStart = false;
-
-                //InfoText = state.Message;
+                AddLineToLog("Game started");
             }
-            else if (gameStatus == GameStatus.LevelOngoing)
+            else
             {
-                if (state.BombCount > 0)
-                {
-                    CanBomb = true;
-                }
-
-                if (state.TeleportCount > 0)
-                {
-                    CanTele = true;
-                }
-
-                CanNext = false;
-                CanStart = false;
-
-                if (string.IsNullOrWhiteSpace(state.Message))
-                {
-                    AddLineToLog("Game started");
-                }
-                else
-                {
-                    InfoText = state.Message;
-                }
-
-                //InfoText = state.Message;
-            }
-            else if (gameStatus == GameStatus.GameLost)
-            {
-                AddLineToLog("You lost");
-                CanBomb = false;
-                CanTele = false;
-                CanNext = false;
-                CanStart = true;
-            }
-            else if (gameStatus == GameStatus.GameWon)
-            {
-                // tutorial won
-                // 
-                AddLineToLog("Tutorial won");
-                CanBomb = false;
-                CanTele = false;
-                CanNext = false;
-                CanStart = true;
-
+                InfoText = state.Message;
             }
 
-            if (state.BombCount < 1)
-            {
-                CanBomb = false;
-            }
+            //InfoText = state.Message;
+        }
+        else if (gameStatus == GameStatus.GameLost)
+        {
+            AddLineToLog("You lost");
+            CanBomb = false;
+            CanTele = false;
+            CanNext = false;
+            CanStart = true;
+        }
+        else if (gameStatus == GameStatus.GameWon)
+        {
+            // tutorial won
+            // 
+            AddLineToLog("Tutorial won");
+            CanBomb = false;
+            CanTele = false;
+            CanNext = false;
+            CanStart = true;
 
-            if (state.TeleportCount < 1)
-            {
-                CanTele = false;
-            }
-       // });
+        }
+
+        if (state.BombCount < 1)
+        {
+            CanBomb = false;
+        }
+
+        if (state.TeleportCount < 1)
+        {
+            CanTele = false;
+        }
+        // });
         //     BoardMessage(gameStatus);
     }
 
@@ -664,7 +673,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
 
     private bool _isBusy;
-    private readonly IAudioManager _audio;
+    private readonly ISoundManager _audio;
 
     public bool IsBusy
     {
@@ -686,104 +695,107 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     {
         //  var s = Application.Current.Dispatcher(() => { });
 
-       // await MainThread.InvokeOnMainThreadAsync(async () =>
-       // {
+        // await MainThread.InvokeOnMainThreadAsync(async () =>
+        // {
 
-            //int xOffset = _settings.ImageOffset.X;
-            //int yOffset = _settings.ImageOffset.Y;
-            //int gridPenWidth = _settings.LineWidth.X;
+        //int xOffset = _settings.ImageOffset.X;
+        //int yOffset = _settings.ImageOffset.Y;
+        //int gridPenWidth = _settings.LineWidth.X;
 
-            for (int x = 0; x < board.GetPositionWidth(); x++)
+        for (int x = 0; x < board.GetPositionWidth(); x++)
+        {
+            for (int y = 0; y < board.GetPositionHeight(); y++)
             {
-                for (int y = 0; y < board.GetPositionHeight(); y++)
+                BoardPosition cp = board.GetPosition(x, y);
+                if (cp != null)
                 {
-                    BoardPosition cp = board.GetPosition(x, y);
-                    if (cp != null)
+
+                    string imgName;
+                    if (cp.Type == PieceType.Heap)
                     {
+                        Image boardImage = new Image { InputTransparent = true };
 
-                        string imgName;
-                        if (cp.Type == PieceType.Heap)
+                        //  AbsoluteLayout.SetLayoutBounds(boardImage, new Rect(38 * x, 38 * y, 40, 40));
+                        //  AbsoluteLayout.SetLayoutFlags(boardImage, AbsoluteLayoutFlags.None);
+
+                        //boardImage.TranslationX = 37 * x;
+                        //boardImage.TranslationY = 37 * y;
+                        //bool ok = await boardImage.RotateTo(90, 1000);
+                        //bool ok = await boardImage.TranslateTo(10*x, 10*y, 1000);
+
+                        imgName = cp.ImageName;
+                        // Robot2ImageSource = ImageSource.FromResource("DahlexApp.Assets.Images.heap_02.png");
+                        boardImage.AutomationId = imgName;
+                        Debug.WriteLine($"{cp.Type} AutomationId set to {imgName}");
+                        boardImage.Source = ImageSource.FromFile("heap_02.png");
+
+                        TheAbsOverBoard.Children.Add(boardImage);
+
+                        await Animate(cp, new IntPoint(0, 0), new IntPoint(x, y), 250);
+
+                        // boardImage = pic;
+                        // Image img = AddImage(imgName, boardImage, pt, cp);
+                        if (cp.IsNew)
                         {
-                            Image boardImage = new Image { InputTransparent = true };
-
-                          //  AbsoluteLayout.SetLayoutBounds(boardImage, new Rect(38 * x, 38 * y, 40, 40));
-                          //  AbsoluteLayout.SetLayoutFlags(boardImage, AbsoluteLayoutFlags.None);
-
-                            //boardImage.TranslationX = 37 * x;
-                            //boardImage.TranslationY = 37 * y;
-                            //bool ok = await boardImage.RotateTo(90, 1000);
-                            //bool ok = await boardImage.TranslateTo(10*x, 10*y, 1000);
-
-                            imgName = cp.ImageName;
-                            // Robot2ImageSource = ImageSource.FromResource("DahlexApp.Assets.Images.heap_02.png");
-                            boardImage.AutomationId = imgName;
-                            boardImage.Source = ImageSource.FromFile("heap_02.png");
-
-                            TheAbsOverBoard.Children.Add(boardImage);
-
-                            await Animate(cp, new IntPoint(0, 0), new IntPoint(x, y), 250);
-
-                            // boardImage = pic;
-                            // Image img = AddImage(imgName, boardImage, pt, cp);
-                            if (cp.IsNew)
-                            {
-                                //   AddToFade(img, 0, 1);
-                                cp.IsNew = false;
-                            }
+                            //   AddToFade(img, 0, 1);
+                            cp.IsNew = false;
                         }
-                        else if (cp.Type == PieceType.Professor)
-                        {
-                            Image boardImage = new Image { InputTransparent = true };
+                    }
+                    else if (cp.Type == PieceType.Professor)
+                    {
+                        Image boardImage = new Image { InputTransparent = true };
 
                         //    AbsoluteLayout.SetLayoutBounds(boardImage, new Rect(38 * x, 38 * y, 40, 40));
                         //    AbsoluteLayout.SetLayoutFlags(boardImage, AbsoluteLayoutFlags.None);
-                            //boardImage.TranslationX = 10 * x;
-                            //boardImage.TranslationY = 10 * y;
+                        //boardImage.TranslationX = 10 * x;
+                        //boardImage.TranslationY = 10 * y;
 
-                            imgName = cp.ImageName;
-                            // boardImage.Source = LoadImage("planet_01.png");
+                        imgName = cp.ImageName;
+                        // boardImage.Source = LoadImage("planet_01.png");
 
-                            //boardImage.SetValue(BindablePropertyKey.FrameworkElement.NameProperty, imgName);
-                            boardImage.AutomationId = imgName;
-                            boardImage.Source = ImageSource.FromFile("planet_01.png");
-                            TheAbsOverBoard.Children.Add(boardImage);
-                            //boardImage = pic;
-                            //AddImage(imgName, boardImage, pt, cp);
-                            await Animate(cp, new IntPoint(0, 0), new IntPoint(x, y), 250);
-
-                        }
-                        else if (cp.Type == PieceType.Robot)
-                        {
-                            Image boardImage = new Image { InputTransparent = true };
-
-                          //  AbsoluteLayout.SetLayoutBounds(boardImage, new Rect(10 * x, 10 * y, 40, 40));
-                          //  AbsoluteLayout.SetLayoutFlags(boardImage, AbsoluteLayoutFlags.None);
-                          //  boardImage.TranslationX = 10 * x;
-                          //  boardImage.TranslationY = 10 * y;
-
-                            imgName = cp.ImageName;
-                            string name = Randomizer.GetRandomFromSet("robot_04.png", "robot_05.png", "robot_06.png");
-                            boardImage.Source = ImageSource.FromFile(name);
-                            boardImage.AutomationId = imgName;
-                            //                         boardImage.Source = LoadImage(name);
-                            TheAbsOverBoard.Children.Add(boardImage);
-
-                             Animate(cp, new IntPoint(0, 0), new IntPoint(x, y), 250);
-
-                            //     pic.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-                            //   boardImage = pic;
-                            // AddImage(imgName, boardImage, pt, cp);
-                        }
-                        //else if (cp.Type == PieceType.None)
-                        //{
-                        // imgName = cp.ImageName;
-                        // RemoveImage(imgName);
-                        //}
+                        //boardImage.SetValue(BindablePropertyKey.FrameworkElement.NameProperty, imgName);
+                        boardImage.AutomationId = imgName;
+                        Debug.WriteLine($"{cp.Type} AutomationId set to {imgName}");
+                        boardImage.Source = ImageSource.FromFile("planet_01.png");
+                        TheAbsOverBoard.Children.Add(boardImage);
+                        //boardImage = pic;
+                        //AddImage(imgName, boardImage, pt, cp);
+                        await Animate(cp, new IntPoint(0, 0), new IntPoint(x, y), 250);
 
                     }
+                    else if (cp.Type == PieceType.Robot)
+                    {
+                        Image boardImage = new Image { InputTransparent = true };
+
+                        //  AbsoluteLayout.SetLayoutBounds(boardImage, new Rect(10 * x, 10 * y, 40, 40));
+                        //  AbsoluteLayout.SetLayoutFlags(boardImage, AbsoluteLayoutFlags.None);
+                        //  boardImage.TranslationX = 10 * x;
+                        //  boardImage.TranslationY = 10 * y;
+
+                        imgName = cp.ImageName;
+                        string name = Randomizer.GetRandomFromSet("robot_04.png", "robot_05.png", "robot_06.png");
+                        boardImage.Source = ImageSource.FromFile(name);
+                        boardImage.AutomationId = imgName;
+                        Debug.WriteLine($"{cp.Type} AutomationId set to {imgName}");
+                        //                         boardImage.Source = LoadImage(name);
+                        TheAbsOverBoard.Children.Add(boardImage);
+
+                        Animate(cp, new IntPoint(0, 0), new IntPoint(x, y), 250);
+
+                        //     pic.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+                        //   boardImage = pic;
+                        // AddImage(imgName, boardImage, pt, cp);
+                    }
+                    //else if (cp.Type == PieceType.None)
+                    //{
+                    // imgName = cp.ImageName;
+                    // RemoveImage(imgName);
+                    //}
+
                 }
             }
-       // });
+        }
+        // });
     }
 
     public void ShowStatus(int level, int bombCount, int teleportCount, int robotCount, int moveCount, int maxLevel)
@@ -800,7 +812,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
     }
 
-    public async Task PlaySound(Sound sound)
+    public void PlaySound(Sound sound)
     {
         if (!_settings.LessSound)
         {
@@ -808,49 +820,56 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
             switch (sound)
             {
                 case Sound.Bomb:
-                    await PlayBomb();
+                    PlayBomb();
                     break;
                 case Sound.Teleport:
-                    await PlayTele();
+                    PlayTele();
                     break;
                 case Sound.Crash:
-                    await PlayCrash();
+                    PlayCrash();
                     break;
             }
         }
     }
 
-    private async Task PlayBomb()
+    private void PlayBomb()
     {
         // ImageSource.FromFile();
 
-        var stream = await FileSystem.OpenAppPackageFileAsync("bomb.wav");
-        var audioPlayer = _audio.CreatePlayer(stream);
+        _audio.PlayBomb();
 
-        audioPlayer.Play();
+        //  var stream = await FileSystem.OpenAppPackageFileAsync("bomb.wav");
+        // var audioPlayer = _audio.CreatePlayer(stream);
+
+        // audioPlayer.Play();
 
         //ISimpleAudioPlayer player = CrossSimpleAudioPlayer.Current;
         //  _audio.Load(GetStreamFromFile("bomb.wav"));
         //player.Play();
     }
 
-    private async Task PlayTele()
+    private void PlayTele()
     {
-        var stream = await FileSystem.OpenAppPackageFileAsync("tele.wav");
-        using (IAudioPlayer audioPlayer = _audio.CreatePlayer(stream))
-        {
-            audioPlayer.Play();
-        }
+        _audio.PlayTele();
+
+        // var stream = await FileSystem.OpenAppPackageFileAsync("tele.wav");
+        // using (IAudioPlayer audioPlayer = _audio.CreatePlayer(stream))
+        // {
+        //     audioPlayer.Play();
+        // }
         //ISimpleAudioPlayer player = CrossSimpleAudioPlayer.Current;
         //  player.Load(GetStreamFromFile("tele.wav"));
         //player.Play();
     }
 
-    private async Task PlayCrash()
+    private void PlayCrash()
     {
-        var stream = await FileSystem.OpenAppPackageFileAsync("heap.wav");
-        var audioPlayer = _audio.CreatePlayer(stream);
-        audioPlayer.Play();
+        _audio.PlayCrash();
+
+
+        //   var stream = await FileSystem.OpenAppPackageFileAsync("heap.wav");
+        //   var audioPlayer = _audio.CreatePlayer(stream);
+        //   audioPlayer.Play();
 
         //        IAudioManager player = CrossSimpleAudioPlayer.Current;
         // var v = player.Volume;
@@ -867,83 +886,88 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
     public async Task Animate(BoardPosition bp, IntPoint oldPosNotUsed, IntPoint newPos, uint millis)
     {
-       // await MainThread.InvokeOnMainThreadAsync(async () =>
+        // await MainThread.InvokeOnMainThreadAsync(async () =>
         //{
 
 
-            int nLeft = newPos.X * (_settings.SquareSize.Width);
-            int nTop = newPos.Y * (_settings.SquareSize.Height);
+        int nLeft = newPos.X * (_settings.SquareSize.Width);
+        int nTop = newPos.Y * (_settings.SquareSize.Height);
 
-            if (bp.Type == PieceType.Professor)
+        if (bp.Type == PieceType.Professor)
+        {
+
+            IView i = TheAbsOverBoard.Children.First(z => z.AutomationId == bp.ImageName);
+            VisualElement img = (VisualElement)i;
+
+            // img.TranslationX = nLeft;
+            // img.TranslationY = nTop;
+            img.TranslateTo(nLeft, nTop, millis);
+
+        }
+        else if (bp.Type == PieceType.Robot)
+        {
+            var i = TheAbsOverBoard.Children.First(z => z.AutomationId == bp.ImageName);
+            VisualElement img = (VisualElement)i;
+            img.TranslateTo(nLeft, nTop, millis);
+            // img.TranslationX = nLeft;
+            // img.TranslationY = nTop;
+        }
+        else if (bp.Type == PieceType.Heap)
+        {
+            if (!TheAbsOverBoard.Children.Any(z => z.AutomationId == bp.ImageName))
             {
-
-                IView i = TheAbsOverBoard.Children.First(z => z.AutomationId == bp.ImageName);
-                VisualElement img = (VisualElement)i;
-
-                // img.TranslationX = nLeft;
-                // img.TranslationY = nTop;
-                 img.TranslateTo(nLeft, nTop, millis);
-
+                Debug.WriteLine($"Could not find {bp.Type} with name {bp.ImageName}");
             }
-            else if (bp.Type == PieceType.Robot)
-            {
-                var i = TheAbsOverBoard.Children.First(z => z.AutomationId == bp.ImageName);
-                VisualElement img = (VisualElement)i;
-                 img.TranslateTo(nLeft, nTop, millis);
-                // img.TranslationX = nLeft;
-                // img.TranslationY = nTop;
-            }
-            else if (bp.Type == PieceType.Heap)
-            {
-                var i = TheAbsOverBoard.Children.First(z => z.AutomationId == bp.ImageName);
-                VisualElement img = (VisualElement)i;
-                //  await img.TranslateTo(nLeft, nTop, 0);
-                img.TranslationX = nLeft;
-                img.TranslationY = nTop;
-            }
+
+            var i = TheAbsOverBoard.Children.First(z => z.AutomationId == bp.ImageName);
+            VisualElement img = (VisualElement)i;
+            //  await img.TranslateTo(nLeft, nTop, 0);
+            img.TranslationX = nLeft;
+            img.TranslationY = nTop;
+        }
         //ud});
     }
 
     public void RemoveImage(string imageName)
     {
-     //   MainThread.BeginInvokeOnMainThread(() =>
-       // {
+        //   MainThread.BeginInvokeOnMainThread(() =>
+        // {
 
-            var img = TheAbsOverBoard.Children.FirstOrDefault(z => z.AutomationId == imageName);
-            TheAbsOverBoard.Children.Remove(img);
-       // });
+        var img = TheAbsOverBoard.Children.FirstOrDefault(z => z.AutomationId == imageName);
+        TheAbsOverBoard.Children.Remove(img);
+        // });
     }
 
     public void ChangeImage(BoardPosition bp)
     {
-       // MainThread.BeginInvokeOnMainThread(() =>
-       // {
+        // MainThread.BeginInvokeOnMainThread(() =>
+        // {
 
-            var imgv = TheAbsOverBoard.Children.FirstOrDefault(z => z.AutomationId == bp.ImageName);
+        var imgv = TheAbsOverBoard.Children.FirstOrDefault(z => z.AutomationId == bp.ImageName);
 
-            if (imgv is Image img)
-            {
-                TheAbsOverBoard.Children.Remove(imgv);
-                img.Source = ImageSource.FromFile("heap_02.png");
+        if (imgv is Image img)
+        {
+            TheAbsOverBoard.Children.Remove(imgv);
+            img.Source = ImageSource.FromFile("heap_02.png");
 
-                // move to front
-                TheAbsOverBoard.Children.Add(imgv);
+            // move to front
+            TheAbsOverBoard.Children.Add(imgv);
 
-            }
+        }
 
-            //            Image boardImage = new Image { InputTransparent = true };
+        //            Image boardImage = new Image { InputTransparent = true };
 
-            //          AbsoluteLayout.SetLayoutBounds(boardImage, new Rectangle(0 * x, 0 * y, 40, 40));
-            //        AbsoluteLayout.SetLayoutFlags(boardImage, AbsoluteLayoutFlags.None);
+        //          AbsoluteLayout.SetLayoutBounds(boardImage, new Rectangle(0 * x, 0 * y, 40, 40));
+        //        AbsoluteLayout.SetLayoutFlags(boardImage, AbsoluteLayoutFlags.None);
 
-            //      imgName = cp.ImageName;
-            // boardImage.Source = LoadImage("planet_01.png");
+        //      imgName = cp.ImageName;
+        // boardImage.Source = LoadImage("planet_01.png");
 
-            //boardImage.SetValue(BindablePropertyKey.FrameworkElement.NameProperty, imgName);
-            //    boardImage.AutomationId = imgName;
-            //  boardImage.Source = ImageSource.FromResource("DahlexApp.Assets.Images.planet_01.png");
-            //TheAbsOverBoard.Children.Add(boardImage);
-       // });
+        //boardImage.SetValue(BindablePropertyKey.FrameworkElement.NameProperty, imgName);
+        //    boardImage.AutomationId = imgName;
+        //  boardImage.Source = ImageSource.FromResource("DahlexApp.Assets.Images.planet_01.png");
+        //TheAbsOverBoard.Children.Add(boardImage);
+        // });
     }
 }
 //}
