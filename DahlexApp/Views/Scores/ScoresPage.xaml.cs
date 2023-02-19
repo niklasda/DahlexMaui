@@ -11,7 +11,6 @@ public partial class ScoresPage
         Shell.SetNavBarIsVisible(this, false);
         //NavigationPage.SetHasNavigationBar(this, false);
 
-      //  GameLogger.AddLineToLog("Viewing scores page");
 
     }
 }

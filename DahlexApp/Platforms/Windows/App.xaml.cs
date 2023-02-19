@@ -25,12 +25,13 @@ public partial class App : MauiWinUIApplication
 
         UnhandledException += (sender, e) =>
         {
+            Debug.WriteLine(e.Exception.ToString());
+
             if (Debugger.IsAttached)
                 Debugger.Break();
-            
-            Debug.WriteLine(e.ToString());
 
-            e.Handled = true;
+
+          //  e.Handled = true;
         };
 
     }

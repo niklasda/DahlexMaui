@@ -335,8 +335,8 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
     {
         // is all the main thread things needed
-        MainThread.BeginInvokeOnMainThread(() =>
-        {
+       // MainThread.BeginInvokeOnMainThread(() =>
+       // {
 
             if (gameStatus == GameStatus.BeforeStart)
             {
@@ -429,7 +429,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
             {
                 CanTele = false;
             }
-        });
+       // });
         //     BoardMessage(gameStatus);
     }
 
@@ -686,8 +686,8 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     {
         //  var s = Application.Current.Dispatcher(() => { });
 
-        await MainThread.InvokeOnMainThreadAsync(async () =>
-        {
+       // await MainThread.InvokeOnMainThreadAsync(async () =>
+       // {
 
             //int xOffset = _settings.ImageOffset.X;
             //int yOffset = _settings.ImageOffset.Y;
@@ -706,8 +706,8 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                         {
                             Image boardImage = new Image { InputTransparent = true };
 
-                            AbsoluteLayout.SetLayoutBounds(boardImage, new Rect(37 * x, 37 * y, 40, 40));
-                            AbsoluteLayout.SetLayoutFlags(boardImage, AbsoluteLayoutFlags.None);
+                          //  AbsoluteLayout.SetLayoutBounds(boardImage, new Rect(38 * x, 38 * y, 40, 40));
+                          //  AbsoluteLayout.SetLayoutFlags(boardImage, AbsoluteLayoutFlags.None);
 
                             //boardImage.TranslationX = 37 * x;
                             //boardImage.TranslationY = 37 * y;
@@ -735,8 +735,8 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                         {
                             Image boardImage = new Image { InputTransparent = true };
 
-                            AbsoluteLayout.SetLayoutBounds(boardImage, new Rect(10 * x, 10 * y, 40, 40));
-                            AbsoluteLayout.SetLayoutFlags(boardImage, AbsoluteLayoutFlags.None);
+                        //    AbsoluteLayout.SetLayoutBounds(boardImage, new Rect(38 * x, 38 * y, 40, 40));
+                        //    AbsoluteLayout.SetLayoutFlags(boardImage, AbsoluteLayoutFlags.None);
                             //boardImage.TranslationX = 10 * x;
                             //boardImage.TranslationY = 10 * y;
 
@@ -756,10 +756,10 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                         {
                             Image boardImage = new Image { InputTransparent = true };
 
-                            AbsoluteLayout.SetLayoutBounds(boardImage, new Rect(10 * x, 10 * y, 40, 40));
-                            AbsoluteLayout.SetLayoutFlags(boardImage, AbsoluteLayoutFlags.None);
-                            boardImage.TranslationX = 10 * x;
-                            boardImage.TranslationY = 10 * y;
+                          //  AbsoluteLayout.SetLayoutBounds(boardImage, new Rect(10 * x, 10 * y, 40, 40));
+                          //  AbsoluteLayout.SetLayoutFlags(boardImage, AbsoluteLayoutFlags.None);
+                          //  boardImage.TranslationX = 10 * x;
+                          //  boardImage.TranslationY = 10 * y;
 
                             imgName = cp.ImageName;
                             string name = Randomizer.GetRandomFromSet("robot_04.png", "robot_05.png", "robot_06.png");
@@ -768,7 +768,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                             //                         boardImage.Source = LoadImage(name);
                             TheAbsOverBoard.Children.Add(boardImage);
 
-                            await Animate(cp, new IntPoint(0, 0), new IntPoint(x, y), 250);
+                             Animate(cp, new IntPoint(0, 0), new IntPoint(x, y), 250);
 
                             //     pic.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
                             //   boardImage = pic;
@@ -783,7 +783,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                     }
                 }
             }
-        });
+       // });
     }
 
     public void ShowStatus(int level, int bombCount, int teleportCount, int robotCount, int moveCount, int maxLevel)
@@ -837,9 +837,10 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     private async Task PlayTele()
     {
         var stream = await FileSystem.OpenAppPackageFileAsync("tele.wav");
-        var audioPlayer = _audio.CreatePlayer(stream);
-        audioPlayer.Play();
-
+        using (IAudioPlayer audioPlayer = _audio.CreatePlayer(stream))
+        {
+            audioPlayer.Play();
+        }
         //ISimpleAudioPlayer player = CrossSimpleAudioPlayer.Current;
         //  player.Load(GetStreamFromFile("tele.wav"));
         //player.Play();
@@ -864,10 +865,10 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     //    return stream;
     //}
 
-    public async Task Animate(BoardPosition bp, IntPoint oldPos, IntPoint newPos, uint millis)
+    public async Task Animate(BoardPosition bp, IntPoint oldPosNotUsed, IntPoint newPos, uint millis)
     {
-        await MainThread.InvokeOnMainThreadAsync(async () =>
-        {
+       // await MainThread.InvokeOnMainThreadAsync(async () =>
+        //{
 
 
             int nLeft = newPos.X * (_settings.SquareSize.Width);
@@ -881,14 +882,14 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
                 // img.TranslationX = nLeft;
                 // img.TranslationY = nTop;
-                await img.TranslateTo(nLeft, nTop, millis);
+                 img.TranslateTo(nLeft, nTop, millis);
 
             }
             else if (bp.Type == PieceType.Robot)
             {
                 var i = TheAbsOverBoard.Children.First(z => z.AutomationId == bp.ImageName);
                 VisualElement img = (VisualElement)i;
-                await img.TranslateTo(nLeft, nTop, millis);
+                 img.TranslateTo(nLeft, nTop, millis);
                 // img.TranslationX = nLeft;
                 // img.TranslationY = nTop;
             }
@@ -900,23 +901,23 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                 img.TranslationX = nLeft;
                 img.TranslationY = nTop;
             }
-        });
+        //ud});
     }
 
     public void RemoveImage(string imageName)
     {
-        MainThread.BeginInvokeOnMainThread(() =>
-        {
+     //   MainThread.BeginInvokeOnMainThread(() =>
+       // {
 
             var img = TheAbsOverBoard.Children.FirstOrDefault(z => z.AutomationId == imageName);
             TheAbsOverBoard.Children.Remove(img);
-        });
+       // });
     }
 
     public void ChangeImage(BoardPosition bp)
     {
-        MainThread.BeginInvokeOnMainThread(() =>
-        {
+       // MainThread.BeginInvokeOnMainThread(() =>
+       // {
 
             var imgv = TheAbsOverBoard.Children.FirstOrDefault(z => z.AutomationId == bp.ImageName);
 
@@ -942,7 +943,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
             //    boardImage.AutomationId = imgName;
             //  boardImage.Source = ImageSource.FromResource("DahlexApp.Assets.Images.planet_01.png");
             //TheAbsOverBoard.Children.Add(boardImage);
-        });
+       // });
     }
 }
 //}
