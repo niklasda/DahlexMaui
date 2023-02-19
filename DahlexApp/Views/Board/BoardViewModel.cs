@@ -42,8 +42,8 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
         Title = "Play";
 
-      //  ClickedTheProfCommand = new AsyncRelayCommand<Point>(async (p) => await PerformRound(MoveDirection.None));
-      //  SwipeLeftCommand = new AsyncRelayCommand(async _ => await PerformSwipe());
+        //  ClickedTheProfCommand = new AsyncRelayCommand<Point>(async (p) => await PerformRound(MoveDirection.None));
+        //  SwipeLeftCommand = new AsyncRelayCommand(async _ => await PerformSwipe());
 
 
         StartGameCommand = new AsyncRelayCommand(async () =>
@@ -61,8 +61,8 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
             UpdateUi(GameStatus.GameStarted, _ge.GetState(_elapsed));
         });
 
- //       ComingSoonCommand = new AsyncRelayCommand(async () =>
-   //         await Application.Current.MainPage.DisplayAlert("Dahlex", "Coming SoOon", "Ok"));
+        //       ComingSoonCommand = new AsyncRelayCommand(async () =>
+        //         await Application.Current.MainPage.DisplayAlert("Dahlex", "Coming SoOon", "Ok"));
 
 
         NextLevelCommand = new AsyncRelayCommand(async () =>
@@ -105,7 +105,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
     private async Task DoTeleport()
     {
-      //  await Application.Current.MainPage.DisplayAlert("Dahlex", "Coming SoOon", "Ok");
+        //  await Application.Current.MainPage.DisplayAlert("Dahlex", "Coming SoOon", "Ok");
 
         if (_ge != null)
         {
@@ -147,7 +147,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                     catch (Exception ex)
                     {
                         GameLogger.AddLineToLog(ex.Message);
-                       // Debug.WriteLine();
+                        // Debug.WriteLine();
                         // safety try, marketplace version crashes on samsung 
                         //MessageBox.Show(ex.Message);
                     }
@@ -237,11 +237,11 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     private GameSettings GetSettings()
     {
         //w411 h660    iw37 37*11=407   37*13=481
-     //   ShortestDimension = Math.Min((int)Application.Current.MainPage.Width, (int)Application.Current.MainPage.Height);
-       // HeightDimension = ShortestDimension + 37 * 2;
+        //   ShortestDimension = Math.Min((int)Application.Current.MainPage.Width, (int)Application.Current.MainPage.Height);
+        // HeightDimension = ShortestDimension + 37 * 2;
 
         //     Microsoft.Maui.Essentials.DeviceDisplay.MainDisplayInfo;
-        var width = DeviceDisplay.MainDisplayInfo.Width/ DeviceDisplay.MainDisplayInfo.Density; //1440
+        var width = DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density; //1440
         var height = DeviceDisplay.MainDisplayInfo.Height / DeviceDisplay.MainDisplayInfo.Density; //2560
 
         ShortestDimension = Math.Min((int)width, (int)height);
@@ -297,7 +297,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     private readonly GameSettings _settings;
     // private readonly IGameService _gs;
     private readonly IGameEngine _ge;
-    public GameMode StartGameMode { private get; set; }
+    private GameMode StartGameMode { get; set; }
     public async Task SetStartGameMode(GameMode value)
     {
         StartGameMode = value;
@@ -326,8 +326,8 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
     //}
 
-    public IAsyncRelayCommand<Point> ClickedTheProfCommand { get; }
-    public IAsyncRelayCommand SwipeLeftCommand { get; }
+    //public IAsyncRelayCommand<Point> ClickedTheProfCommand { get; }
+    //public IAsyncRelayCommand SwipeLeftCommand { get; }
 
     private TimeSpan _elapsed = TimeSpan.Zero;
 
@@ -488,7 +488,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
 
         //var mh = new MessageHandler<object, string>( async (a,dir)=> { 
-            
+
         //    if(Enum.TryParse<MoveDirection>( dir, true, out MoveDirection md))
         //    {
         //       bool moved = await PerformRound(md);
@@ -497,34 +497,35 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
         //});
 
 
-        WeakReferenceMessenger.Default.Register<BoardViewModel,string>(this, async (a, dir) => 
+        WeakReferenceMessenger.Default.Register<BoardViewModel, string>(this, async (a, dir) =>
         {
-            
-           if(Enum.TryParse<MoveDirection>( dir, true, out MoveDirection md))
+
+            if (Enum.TryParse<MoveDirection>(dir, true, out MoveDirection md))
             {
-               bool moved = await PerformRound(md);
+                bool moved = await PerformRound(md);
 
             }
 
         });
 
         var pan = new PanGestureRecognizer();
-           pan.PanUpdated += Pan_PanUpdated;
+        pan.PanUpdated += Pan_PanUpdated;
 
-        var tap = new TapGestureRecognizer(){NumberOfTapsRequired = 1};
-        tap.Command = new AsyncRelayCommand( _=>PerformRound(MoveDirection.None));
+        var tap = new TapGestureRecognizer() { NumberOfTapsRequired = 1 };
+        tap.Command = new AsyncRelayCommand(_ => PerformRound(MoveDirection.None));
+
         //tap.Tapped += Tap_Tapped;
         TheAbsOverBoard.GestureRecognizers.Clear();
         TheAbsOverBoard.GestureRecognizers.Add(pan);
         TheAbsOverBoard.GestureRecognizers.Add(tap);
-       // TheAbsOverBoard.GestureRecognizers.Add(swiped);
-     //   TheAbsOverBoard.GestureRecognizers.Add(swipeu);
-   //     TheAbsOverBoard.GestureRecognizers.Add(swipel);
- //       TheAbsOverBoard.GestureRecognizers.Add(swiper);
+        // TheAbsOverBoard.GestureRecognizers.Add(swiped);
+        //   TheAbsOverBoard.GestureRecognizers.Add(swipeu);
+        //     TheAbsOverBoard.GestureRecognizers.Add(swipel);
+        //       TheAbsOverBoard.GestureRecognizers.Add(swiper);
 
     }
 
-     
+
 
 
     private int _tempX;
@@ -540,7 +541,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     private void Pan_PanUpdated(object? sender, PanUpdatedEventArgs e)
     {
 
-          
+
         if (e.StatusType == GestureStatus.Started)
         {
             _tempX = 0;
@@ -558,7 +559,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
         }
         else if (e.StatusType == GestureStatus.Completed)
         {
-            bool moved;
+            //bool moved;
             var p = new Point(_tempX, _tempY);
 
             if (_ge != null && _ge.Status == GameStatus.LevelOngoing)
@@ -567,9 +568,9 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                 // very small swipe or tap is like clicking the professor in standard move mode
                 if (IsTap(p))
                 {
-                    WeakReferenceMessenger.Default.Send< string>(MoveDirection.None.ToString());
+                    WeakReferenceMessenger.Default.Send<string>(MoveDirection.None.ToString());
 
-                  //  moved = await PerformRound(MoveDirection.None);
+                    //  moved = await PerformRound(MoveDirection.None);
                 }
                 else //if (IsWithinBounds(e))
                 {
@@ -578,7 +579,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                     {
                         WeakReferenceMessenger.Default.Send<string>(direction.ToString());
 
-                    //    moved = await PerformRound(direction);
+                        //    moved = await PerformRound(direction);
                     }
                 }
             }
@@ -593,6 +594,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     public void OnDisappearing()
     {
         // base.ViewDisappearing();
+        WeakReferenceMessenger.Default.Unregister<string>(this);
 
         _gameTimer?.Stop();
     }
@@ -877,18 +879,18 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                 IView i = TheAbsOverBoard.Children.First(z => z.AutomationId == bp.ImageName);
                 VisualElement img = (VisualElement)i;
 
-               // img.TranslationX = nLeft;
-               // img.TranslationY = nTop;
-                 await img.TranslateTo(nLeft, nTop, millis);
+                // img.TranslationX = nLeft;
+                // img.TranslationY = nTop;
+                await img.TranslateTo(nLeft, nTop, millis);
 
             }
             else if (bp.Type == PieceType.Robot)
             {
                 var i = TheAbsOverBoard.Children.First(z => z.AutomationId == bp.ImageName);
                 VisualElement img = (VisualElement)i;
-                 await img.TranslateTo(nLeft, nTop, millis);
-               // img.TranslationX = nLeft;
-               // img.TranslationY = nTop;
+                await img.TranslateTo(nLeft, nTop, millis);
+                // img.TranslationX = nLeft;
+                // img.TranslationY = nTop;
             }
             else if (bp.Type == PieceType.Heap)
             {

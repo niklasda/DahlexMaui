@@ -6,6 +6,5 @@ public partial class AppShell
 	{
 		InitializeComponent();
 
-		//Routing.RegisterRoute();
 	}
 }

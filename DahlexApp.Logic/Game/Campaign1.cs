@@ -1,9 +1,9 @@
 ﻿namespace DahlexApp.Logic.Game;
 
-    public static class Campaign1
-    {
-        // w=11 x h=13
-        public static readonly string[] Boards = {
+public static class Campaign1
+{
+    // w=11 x h=13
+    public static readonly string[] Boards = {
             "Zero-based",
 
             "            H" +
@@ -110,4 +110,4 @@
             "             " +
             "Try the teleportation"
           };
-    }
+}

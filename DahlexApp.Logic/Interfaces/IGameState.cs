@@ -1,23 +1,23 @@
 ﻿namespace DahlexApp.Logic.Interfaces;
 
-    public interface IGameState
-    {
-        int Level { get; set; }
+public interface IGameState
+{
+    int Level { get; set; }
 
-        int MoveCount { get; set; }
+    int MoveCount { get; set; }
 
-        int BombCount { get; set; }
+    int BombCount { get; set; }
 
-        int TeleportCount { get; set; }
+    int TeleportCount { get; set; }
 
-        int GameStatus { get; set; }
+    int GameStatus { get; set; }
 
-        int ElapsedTimeInSeconds { get; set; }
+    int ElapsedTimeInSeconds { get; set; }
 
-        string TheBoard { get; set; }
+    string TheBoard { get; set; }
 
-        int Mode { get; set; }
+    int Mode { get; set; }
 
-        //[IgnoreDataMember]
-        string Message { get; set; }
-    }
+    //[IgnoreDataMember]
+    string Message { get; set; }
+}

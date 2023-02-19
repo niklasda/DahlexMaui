@@ -15,7 +15,7 @@ public static class GameLogger
         if (!string.IsNullOrEmpty(log))
         {
             log += Environment.NewLine;
-            
+
             log += txtLog;
             TheLog = log;
         }

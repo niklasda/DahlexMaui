@@ -1,7 +1,7 @@
 ﻿
 namespace DahlexApp.Logic.Models;
 
-    //[DataContract]
+//[DataContract]
 public class GameSettings
 {
     public GameSettings(IntSize canvasSize)

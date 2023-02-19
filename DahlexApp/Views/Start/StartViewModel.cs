@@ -19,11 +19,9 @@ public class StartViewModel : ObservableObject
 
         LogoImageSource = ImageSource.FromFile("tile300.png"); // 42x42
 
-        HowCommand = new AsyncRelayCommand(async () =>
-            await navigationService.NavigateToPage<HowPage>());
+        HowCommand = new AsyncRelayCommand(async () => await navigationService.NavigateToPage<HowPage>());
 
         GotoBoardCommand = new AsyncRelayCommand(async () => await navigationService.NavigateToBoardPage<BoardPage>(new GameModeModel { SelectedGameMode = GameMode.Random }));
-
 
         GotoTutorialCommand = new AsyncRelayCommand(async () => await navigationService.NavigateToBoardPage<BoardPage>(new GameModeModel { SelectedGameMode = GameMode.Campaign }));
 

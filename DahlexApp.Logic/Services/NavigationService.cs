@@ -5,7 +5,7 @@ namespace DahlexApp.Logic.Services;
 
 public interface IBoardPage
 {
-    GameMode StartGameMode { set; }
+   // GameMode StartGameMode { set; }
     Task SetStartGameMode(GameMode value);
 }
 

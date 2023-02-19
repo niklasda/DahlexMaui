@@ -1,6 +1,4 @@
-﻿
-
-using DahlexApp.Logic.Logger;
+﻿using DahlexApp.Logic.Logger;
 
 namespace DahlexApp.Views.Scores;
 

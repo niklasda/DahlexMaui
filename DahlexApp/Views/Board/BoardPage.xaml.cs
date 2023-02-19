@@ -29,25 +29,17 @@ public partial class BoardPage : IBoardPage
     {
         if (BindingContext is BoardViewModel vm)
         {
-            vm.StartGameMode = value;
+            //vm.StartGameMode = value;
+           await  vm.SetStartGameMode( value);
 
 
             await vm.OnAppearing();
         }
     }
 
-    public GameMode StartGameMode
-    {
+    //private GameMode StartGameMode
+    //{
 
-        set
-        {
-            if (BindingContext is BoardViewModel vm)
-            {
-                vm.StartGameMode = value;
-
-
-                //vm.OnAppearing().GetAwaiter().GetResult();
-            }
-        }
-    }
+    //     get;  set;
+    //}
 }

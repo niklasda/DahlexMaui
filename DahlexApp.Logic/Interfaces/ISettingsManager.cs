@@ -2,9 +2,9 @@
 
 namespace DahlexApp.Logic.Interfaces;
 
-    public interface ISettingsManager
-    {
-        GameSettings LoadLocalSettings();
+public interface ISettingsManager
+{
+    GameSettings LoadLocalSettings();
 
-        void SaveLocalSettings(GameSettings settings);
-    }
+    void SaveLocalSettings(GameSettings settings);
+}
