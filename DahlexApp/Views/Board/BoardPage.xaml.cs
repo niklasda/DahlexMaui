@@ -13,6 +13,8 @@ public partial class BoardPage : IBoardPage
 
         vm.TheAbsBoard = TheBoard;
         vm.TheAbsOverBoard = TheOverBoard;
+
+        DeviceDisplay.KeepScreenOn = true;
     }
 
     protected override void OnDisappearing()

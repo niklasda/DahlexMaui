@@ -28,20 +28,20 @@ namespace DahlexApp.Views.Board
 
 
             Stream bombStream = await FileSystem.OpenAppPackageFileAsync("bomb.wav");
-            bombPlayer = _audio.CreatePlayer(bombStream);
+            _bombPlayer = _audio.CreatePlayer(bombStream);
 
             var teleStream = await FileSystem.OpenAppPackageFileAsync("tele.wav");
-            telePlayer = _audio.CreatePlayer(teleStream);
+            _telePlayer = _audio.CreatePlayer(teleStream);
 
             var crashStream = await FileSystem.OpenAppPackageFileAsync("heap.wav");
-            crashPlayer = _audio.CreatePlayer(crashStream);
+            _crashPlayer = _audio.CreatePlayer(crashStream);
 
         }
 
         private readonly IAudioManager _audio;
-        private IAudioPlayer bombPlayer;
-        private IAudioPlayer telePlayer;
-        private IAudioPlayer crashPlayer;
+        private IAudioPlayer _bombPlayer;
+        private IAudioPlayer _telePlayer;
+        private IAudioPlayer _crashPlayer;
 
         public void PlayBomb()
         {
@@ -50,9 +50,9 @@ namespace DahlexApp.Views.Board
             //  Stream stream = await FileSystem.OpenAppPackageFileAsync("bomb.wav");
             //IAudioPlayer audioPlayer = _audio.CreatePlayer(stream);
 
-            if (!bombPlayer.IsPlaying)
+            if (!_bombPlayer.IsPlaying)
             {
-                bombPlayer.Play();
+                _bombPlayer.Play();
 
             }
 
@@ -63,9 +63,9 @@ namespace DahlexApp.Views.Board
 
         public void PlayTele()
         {
-            if (!telePlayer.IsPlaying)
+            if (!_telePlayer.IsPlaying)
             {
-                telePlayer.Play();
+                _telePlayer.Play();
 
             }
 
@@ -81,9 +81,9 @@ namespace DahlexApp.Views.Board
 
         public void PlayCrash()
         {
-            if (!crashPlayer.IsPlaying)
+            if (!_crashPlayer.IsPlaying)
             {
-                crashPlayer.Play();
+                _crashPlayer.Play();
 
             }
 

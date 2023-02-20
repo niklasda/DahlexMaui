@@ -51,10 +51,10 @@ public static class MauiProgram
 			return sm;
 		});
 
-//        builder.Services.AddTransient<StartViewModel>();
-  //      builder.Services.AddTransient<HowViewModel>();
-    //    builder.Services.AddTransient<SettingsViewModel>();
-      //  builder.Services.AddTransient<ScoresViewModel>();
+        //        builder.Services.AddTransient<StartViewModel>();
+        //      builder.Services.AddTransient<HowViewModel>();
+        //    builder.Services.AddTransient<SettingsViewModel>();
+        //  builder.Services.AddTransient<ScoresViewModel>();
         //builder.Services.AddTransient<BoardViewModel>();
 
 

@@ -14,7 +14,7 @@
 		<ApplicationTitle>DahlexApp</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.dahlexapp</ApplicationId>
+		<ApplicationId>se.nida.dahlexapp</ApplicationId>
 		<ApplicationIdGuid>0AB7BB1A-4001-40F7-B8C9-1B7D43D2C3EE</ApplicationIdGuid>
 
 		<!-- Versions -->
@@ -23,17 +23,44 @@
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">29.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 		<Nullable>enable</Nullable>
 		<DefaultLanguage>en-US</DefaultLanguage>
+		<Authors>nida.se</Authors>
+		<Company>nida.se</Company>
+		<Product>dahlex</Product>
+		<Title>Dahlex</Title>
+		<RepositoryUrl>https://github.com/niklasda/DahlexMaui</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageIcon>AppIconMedium.png</PackageIcon>
+		<NeutralLanguage>en-US</NeutralLanguage>
+		<AssemblyVersion>1.0</AssemblyVersion>
+		<FileVersion>1.0</FileVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android33.0|AnyCPU'">
+	  <ApplicationTitle>Dahlex</ApplicationTitle>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android33.0|AnyCPU'">
+	  <ApplicationTitle>Dahlex</ApplicationTitle>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|AnyCPU'">
+	  <ApplicationTitle>Dahlex</ApplicationTitle>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|AnyCPU'">
+	  <ApplicationTitle>Dahlex</ApplicationTitle>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\appiconmedium.svg" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
@@ -60,6 +87,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\AppIcon\AppIconMedium.svg" />
 	  <None Remove="Resources\Images\Close.png" />
 	  <None Remove="Resources\Images\heap_02.png" />
 	  <None Remove="Resources\Images\icon.png" />
@@ -128,6 +156,13 @@
 	    <Generator>PublicResXFileCodeGenerator</Generator>
 	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="Resources\AppIcon\appiconmedium.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 
 </Project>
