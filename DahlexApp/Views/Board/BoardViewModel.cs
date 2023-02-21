@@ -19,7 +19,7 @@ namespace DahlexApp.Views.Board;
 public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 {
 
-    public BoardViewModel(IHighScoreService hsm, /*IAudioManager audio,*/ ISoundManager audio)
+    public BoardViewModel(IHighScoreService hsm, ISoundManager audio)
     {
         _settings = GetSettings();
         _ge = new GameEngine(_settings, this, hsm);
@@ -42,8 +42,6 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
         Title = "Play";
 
-        //  ClickedTheProfCommand = new AsyncRelayCommand<Point>(async (p) => await PerformRound(MoveDirection.None));
-        //  SwipeLeftCommand = new AsyncRelayCommand(async _ => await PerformSwipe());
 
 
         StartGameCommand = new AsyncRelayCommand(async () =>
@@ -52,7 +50,6 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
             _elapsed = TimeSpan.Zero;
 
             _gameTimer = Application.Current.Dispatcher.CreateTimer();
-            //_gameTimer = Dispatcher.CreateTimer();
             _gameTimer.Interval = TimeSpan.FromMilliseconds(1000);
             _gameTimer.Tick += GameTimerElapsed;
             _gameTimer.Start();

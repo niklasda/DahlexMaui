@@ -7,42 +7,47 @@
                  Title="{Binding Title}"
                  BackgroundColor="{StaticResource PrimaryBackgroundColor}">
 
-  <Grid>
+    <Grid>
 
 
-    <StackLayout Orientation="Vertical" >
+        <StackLayout Orientation="Vertical" >
 
-      <Frame HeightRequest="80" BackgroundColor="{StaticResource ListItemBackgroundColor}" Padding="0" Margin="-1,-2,-1,0" BorderColor="Black" HasShadow="True">
-        <Grid>
-          <Frame Padding="10" Margin="0,0,10,0" BackgroundColor="Transparent" HorizontalOptions="End" VerticalOptions="Center"  >
+            <Frame HeightRequest="80" BackgroundColor="{StaticResource ListItemBackgroundColor}" Padding="0" Margin="-1,-2,-1,0" BorderColor="Black" HasShadow="True">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+                    
+                    <Frame Padding="10" Margin="0,0,10,0" BackgroundColor="Transparent" HorizontalOptions="End" VerticalOptions="Center" Grid.Column="1"  >
                         <Image HeightRequest="20" WidthRequest="20" Aspect="AspectFit" Source="{Binding CloseImage}" />
-            <Frame.GestureRecognizers>
-              <TapGestureRecognizer Command="{Binding BackCommand}"></TapGestureRecognizer>
-            </Frame.GestureRecognizers>
-          </Frame>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding BackCommand}"></TapGestureRecognizer>
+                        </Frame.GestureRecognizers>
+                    </Frame>
 
-          <Label Text="{Binding Title}" Style="{StaticResource TitleStyle}" />
-        </Grid>
-      </Frame>
-
-
-      <CollectionView ItemsSource="{Binding HighScoreList}"  ItemsLayout="VerticalList" VerticalScrollBarVisibility="Always" >
-        <CollectionView.ItemTemplate >
-          <DataTemplate x:DataType="local:ScoreItemViewModel">
-
-            <Grid Padding="16,8" Margin="16,8">
+                    <Label Text="{Binding Title}" Style="{StaticResource TitleStyle}" Grid.Column="0" Grid.ColumnSpan="2" />
+                </Grid>
+            </Frame>
 
 
+            <CollectionView ItemsSource="{Binding HighScoreList}"  ItemsLayout="VerticalList" VerticalScrollBarVisibility="Always" >
+                <CollectionView.ItemTemplate >
+                    <DataTemplate x:DataType="local:ScoreItemViewModel">
 
-              <Label Text="{Binding Title}"
+                        <Grid Padding="16,8" Margin="16,8">
+
+
+
+                            <Label Text="{Binding Title}"
                      HorizontalOptions="Start" HorizontalTextAlignment="Start"
                      VerticalOptions="Start"  Style="{StaticResource SubtitleStyle}" />
-            </Grid>
+                        </Grid>
 
-          </DataTemplate>
-        </CollectionView.ItemTemplate>
-      </CollectionView>
-    </StackLayout>
-  </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </Grid>
 
 </ContentPage>

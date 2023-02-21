@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:start="clr-namespace:DahlexApp.Views.Start"
-             x:Class="DahlexApp.Views.Start.MainPage"
+             x:Class="DahlexApp.Views.Start.StartPage"
              x:DataType="start:StartViewModel"
              Title="{Binding Title}">
 
@@ -19,19 +19,19 @@
 
 
             <StackLayout Orientation="Horizontal" Padding="0,10,0,5" Spacing="5">
-                <Button Text="Play" Command="{Binding GotoBoardCommand}" Style="{StaticResource ButtonStyle}" Opacity="0.8" Margin="19,0,9,0" />
+                <Button Text="Play" Command="{Binding GotoBoardCommand}" Style="{StaticResource SmallButtonStyle}" Opacity="0.8" Margin="19,0,9,0" />
 
-                <Button Text="Tutorial" Command="{Binding GotoTutorialCommand}" Style="{StaticResource ButtonStyle}" Opacity="0.8" Margin="9,0,19,0"  />
+                <Button Text="Tutorial" Command="{Binding GotoTutorialCommand}" Style="{StaticResource SmallButtonStyle}" Opacity="0.8" Margin="9,0,19,0"  />
 
             </StackLayout>
 
             <StackLayout Orientation="Horizontal" Padding="0,5,0,10" Spacing="5">
 
-                <Button Text="HowTo"  Command="{Binding HowCommand}" Style="{StaticResource ButtonStyle}" Opacity="0.8" />
+                <Button Text="HowTo"  Command="{Binding HowCommand}" Style="{StaticResource SmallButtonStyle}" Opacity="0.8" />
 
-                <Button Text="Scores" Command="{Binding GotoScoresCommand}" Style="{StaticResource ButtonStyle}" Opacity="0.8" />
+                <Button Text="Scores" Command="{Binding GotoScoresCommand}" Style="{StaticResource SmallButtonStyle}" Opacity="0.8" />
 
-                <Button Text="Settings" Command="{Binding GotoSettingsCommand}" Style="{StaticResource ButtonStyle}" Opacity="0.8" />
+                <Button Text="Settings" Command="{Binding GotoSettingsCommand}" Style="{StaticResource SmallButtonStyle}" Opacity="0.8" />
             </StackLayout>
         </StackLayout>
     </Grid>

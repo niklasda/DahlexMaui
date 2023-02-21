@@ -12,21 +12,17 @@ namespace DahlexApp.Views.Board
         void PlayBomb();
         void PlayTele();
         void PlayCrash();
-
     }
+
     public class SoundManager : ISoundManager
     {
-        // TODO  use this to prevent parallell play
         public SoundManager(IAudioManager audio)
         {
             _audio = audio;
-
         }
 
         public async Task Init()
         {
-
-
             Stream bombStream = await FileSystem.OpenAppPackageFileAsync("bomb.wav");
             _bombPlayer = _audio.CreatePlayer(bombStream);
 
@@ -35,13 +31,12 @@ namespace DahlexApp.Views.Board
 
             var crashStream = await FileSystem.OpenAppPackageFileAsync("heap.wav");
             _crashPlayer = _audio.CreatePlayer(crashStream);
-
         }
 
-        private readonly IAudioManager _audio;
-        private IAudioPlayer _bombPlayer;
-        private IAudioPlayer _telePlayer;
-        private IAudioPlayer _crashPlayer;
+        private IAudioManager _audio { get; }
+        private IAudioPlayer _bombPlayer { get; set; }
+        private IAudioPlayer _telePlayer { get; set; }
+        private IAudioPlayer _crashPlayer { get; set; }
 
         public void PlayBomb()
         {

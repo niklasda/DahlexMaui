@@ -2,10 +2,10 @@
 namespace DahlexApp.Views.Start;
 
 
-public partial class MainPage 
+public partial class StartPage 
 {
 
-	public MainPage(StartViewModel vm)
+	public StartPage(StartViewModel vm)
     {
         BindingContext = vm;
 		InitializeComponent();

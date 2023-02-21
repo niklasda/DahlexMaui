@@ -14,12 +14,10 @@ public class SettingsViewModel : ObservableObject
         BackCommand = new AsyncRelayCommand(navigationService.NavigateBack);
         CloseImage = ImageSource.FromFile("close.png");
 
-        //_title = string.Empty;
         Title = "Settings";
 
         SettingsManager sm = new SettingsManager(new IntSize(0, 0));
 
-        //_profName = "";
         Copyright = "Dahlex v0.9 (c) 2023 nida";
 
         var gs = sm.LoadLocalSettings();
@@ -44,26 +42,6 @@ public class SettingsViewModel : ObservableObject
     }
 
     //public override void Prepare()
-    //{
-    //    // first callback. Initialize parameter-agnostic stuff here
-    //}
-
-    //public override async Task Initialize()
-    //{
-    //    await base.Initialize();
-
-    //    // do the heavy work here
-
-    //    SettingsManager sm = new SettingsManager(new Size(0,0));
-    //    var gs = sm.LoadLocalSettings();
-    //    ProfName = gs.PlayerName;
-    //    IsMuted = gs.LessSound;
-    //}
-
-    //public override void ViewDisappeared()
-    //{
-    //    base.ViewDisappeared();
-  //}
 
     public IAsyncRelayCommand BackCommand { get; set; }
 
