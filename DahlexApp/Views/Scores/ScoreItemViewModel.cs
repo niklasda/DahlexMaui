@@ -1,4 +1,3 @@
-﻿
-namespace DahlexApp.Views.Scores;
+﻿namespace DahlexApp.Views.Scores;
 
 public record ScoreItemViewModel(string Title);

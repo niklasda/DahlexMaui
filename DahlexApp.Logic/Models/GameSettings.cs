@@ -1,7 +1,6 @@
 ﻿
 namespace DahlexApp.Logic.Models;
 
-//[DataContract]
 public class GameSettings
 {
     public GameSettings(IntSize canvasSize)
@@ -20,7 +19,6 @@ public class GameSettings
     /// <summary>
     /// Number of squares on the board
     /// </summary>
-    //   [IgnoreDataMember]
     public IntSize BoardSize
     {
         get

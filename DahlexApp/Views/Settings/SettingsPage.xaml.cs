@@ -1,5 +1,4 @@
-﻿
-namespace DahlexApp.Views.Settings;
+﻿namespace DahlexApp.Views.Settings;
 
 public partial class SettingsPage 
 {

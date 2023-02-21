@@ -1,9 +1,4 @@
 ﻿using Plugin.Maui.Audio;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DahlexApp.Views.Board
 {
@@ -40,20 +35,10 @@ namespace DahlexApp.Views.Board
 
         public void PlayBomb()
         {
-            // ImageSource.FromFile();
-
-            //  Stream stream = await FileSystem.OpenAppPackageFileAsync("bomb.wav");
-            //IAudioPlayer audioPlayer = _audio.CreatePlayer(stream);
-
             if (!_bombPlayer.IsPlaying)
             {
                 _bombPlayer.Play();
-
             }
-
-            //ISimpleAudioPlayer player = CrossSimpleAudioPlayer.Current;
-            //  _audio.Load(GetStreamFromFile("bomb.wav"));
-            //player.Play();
         }
 
         public void PlayTele()
@@ -61,17 +46,7 @@ namespace DahlexApp.Views.Board
             if (!_telePlayer.IsPlaying)
             {
                 _telePlayer.Play();
-
             }
-
-//            var stream = await FileSystem.OpenAppPackageFileAsync("tele.wav");
-  //          using (IAudioPlayer audioPlayer = _audio.CreatePlayer(stream))
-    //        {
-      //          audioPlayer.Play();
-        //    }
-            //ISimpleAudioPlayer player = CrossSimpleAudioPlayer.Current;
-            //  player.Load(GetStreamFromFile("tele.wav"));
-            //player.Play();
         }
 
         public void PlayCrash()
@@ -79,17 +54,7 @@ namespace DahlexApp.Views.Board
             if (!_crashPlayer.IsPlaying)
             {
                 _crashPlayer.Play();
-
             }
-
-//            var stream = await FileSystem.OpenAppPackageFileAsync("heap.wav");
-  //          var audioPlayer = _audio.CreatePlayer(stream);
-    //        audioPlayer.Play();
-
-            //        IAudioManager player = CrossSimpleAudioPlayer.Current;
-            // var v = player.Volume;
-            //          player.Load(GetStreamFromFile("heap.wav"));
-            //        player.Play();
         }
     }
 }

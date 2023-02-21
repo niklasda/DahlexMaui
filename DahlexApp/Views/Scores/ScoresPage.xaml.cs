@@ -1,6 +1,4 @@
-﻿using DahlexApp.Logic.Logger;
-
-namespace DahlexApp.Views.Scores;
+﻿namespace DahlexApp.Views.Scores;
 
 public partial class ScoresPage
 {
@@ -9,8 +7,6 @@ public partial class ScoresPage
         BindingContext = vm;
         InitializeComponent();
         Shell.SetNavBarIsVisible(this, false);
-        //NavigationPage.SetHasNavigationBar(this, false);
-
 
     }
 }

@@ -39,9 +39,4 @@ public partial class BoardPage : IBoardPage
         }
     }
 
-    //private GameMode StartGameMode
-    //{
-
-    //     get;  set;
-    //}
 }

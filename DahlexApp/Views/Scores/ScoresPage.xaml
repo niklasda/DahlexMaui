@@ -12,14 +12,14 @@
 
         <StackLayout Orientation="Vertical" >
 
-            <Frame HeightRequest="80" BackgroundColor="{StaticResource ListItemBackgroundColor}" Padding="0" Margin="-1,-2,-1,0" BorderColor="Black" HasShadow="True">
+            <Frame HeightRequest="80" BackgroundColor="{StaticResource ListItemBackgroundColor}" Padding="0" Margin="-1,-2,-1,0"  BorderColor="{StaticResource ListItemBackgroundColor}" HasShadow="True">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="100" />
                     </Grid.ColumnDefinitions>
-                    
-                    <Frame Padding="10" Margin="0,0,10,0" BackgroundColor="Transparent" HorizontalOptions="End" VerticalOptions="Center" Grid.Column="1"  >
+
+                    <Frame Padding="10" Margin="0,0,10,0" BackgroundColor="{StaticResource ListItemBackgroundColor}"  BorderColor="{StaticResource ListItemBackgroundColor}" HorizontalOptions="End" VerticalOptions="Center" Grid.Column="1"  >
                         <Image HeightRequest="20" WidthRequest="20" Aspect="AspectFit" Source="{Binding CloseImage}" />
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding BackCommand}"></TapGestureRecognizer>

@@ -13,13 +13,10 @@ public class ScoresViewModel : ObservableObject
     public ScoresViewModel(IHighScoreService scores, INavigationService navigationService)
     {
         _scores = scores;
-        // _dispatcher = dispatcher;
-        //_navigationService = navigationService;
 
         BackCommand = new AsyncRelayCommand(navigationService.NavigateBack);
         CloseImage = ImageSource.FromFile("close.png");
 
-        // _title = string.Empty;
         Title = "Scores";
 
         HighScoreList.Clear();
@@ -36,20 +33,6 @@ public class ScoresViewModel : ObservableObject
 
     private readonly IHighScoreService _scores;
 
-    //  private readonly IMvxMainThreadAsyncDispatcher _dispatcher;
-    // private readonly IMvxNavigationService _navigationService;
-
-    //public override void Prepare()
-    //{
-    //    // first callback. Initialize parameter-agnostic stuff here
-    //}
-
-    //public override async Task Initialize()
-    //{
-    //    await base.Initialize();
-
-    //    // do the heavy work here
-    //}
 
     public IAsyncRelayCommand BackCommand { get; set; }
 
@@ -66,18 +49,4 @@ public class ScoresViewModel : ObservableObject
 
     public ObservableCollection<ScoreItemViewModel> HighScoreList { get; } = new ObservableCollection<ScoreItemViewModel>();
 
-    //public override void ViewAppeared()
-    //{
-    //    base.ViewAppeared();
-
-    //    _ = _dispatcher.ExecuteOnMainThreadAsync(() =>
-    //      {
-    //          Title = "Scores";
-
-    //          HighScoreList.Clear();
-
-    //          var scores = _scores.LoadLocalHighScores();
-    //          HighScoreList.AddRange(scores.Select(_ => new ScoreItemViewModel { Title = _.Content }));
-    //      });
-    //}
 }

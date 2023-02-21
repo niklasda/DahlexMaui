@@ -1,4 +1,3 @@
-
 namespace DahlexApp.Views.How;
 
 public partial class HowPage 

@@ -12,7 +12,6 @@ public class GameEngine : IGameEngine
 
     private readonly IHighScoreService _highScoreManager;
 
-    //    private readonly HighScoreManager _highScoreManager;
     private readonly GameSettings _settings;
     private int _bombCount;
     private int _teleportCount;

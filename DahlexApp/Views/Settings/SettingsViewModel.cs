@@ -28,20 +28,17 @@ public class SettingsViewModel : ObservableObject
 
     public void OnDisappearing()
     {
-        // base.ViewDisappearing();
 
         SettingsManager sm = new SettingsManager(new IntSize(0, 0));
         var g = new GameSettings(new IntSize(0, 0));
-        // {
+        
         g.PlayerName = ProfName;
         g.LessSound = IsMuted;
-        //}
+        
         sm.SaveLocalSettings(g);
   
-       // _gameTimer?.Stop();
     }
 
-    //public override void Prepare()
 
     public IAsyncRelayCommand BackCommand { get; set; }
 
