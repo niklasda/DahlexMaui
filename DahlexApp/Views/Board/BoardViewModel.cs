@@ -502,12 +502,16 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
         //    }
         //});
 
+        Debug.WriteLine($"Registering Weak Messenger");
 
         WeakReferenceMessenger.Default.Register<BoardViewModel, string>(this, async (a, dir) =>
         {
+            Debug.WriteLine($" Weak Messenger");
 
             if (Enum.TryParse<MoveDirection>(dir, true, out MoveDirection md))
             {
+                Debug.WriteLine($"Pan: {md}");
+
                 bool moved = await PerformRound(md);
 
             }
@@ -518,12 +522,24 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
         pan.PanUpdated += Pan_PanUpdated;
 
         var tap = new TapGestureRecognizer() { NumberOfTapsRequired = 1 };
-        tap.Command = new AsyncRelayCommand(_ => PerformRound(MoveDirection.None));
 
+        tap.Command = new RelayCommand(() =>
+        {
+
+            Debug.WriteLine($"Tap: {MoveDirection.None}");
+            WeakReferenceMessenger.Default.Send<string>(MoveDirection.None.ToString());
+
+           // return PerformRound(MoveDirection.None);
+        }
+       );
+
+        
         //tap.Tapped += Tap_Tapped;
         TheAbsOverBoard.GestureRecognizers.Clear();
+     TheAbsOverBoard.GestureRecognizers.Add(tap);
         TheAbsOverBoard.GestureRecognizers.Add(pan);
-        TheAbsOverBoard.GestureRecognizers.Add(tap);
+       
+        
         // TheAbsOverBoard.GestureRecognizers.Add(swiped);
         //   TheAbsOverBoard.GestureRecognizers.Add(swipeu);
         //     TheAbsOverBoard.GestureRecognizers.Add(swipel);
@@ -546,6 +562,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     //}
     private void Pan_PanUpdated(object? sender, PanUpdatedEventArgs e)
     {
+        Debug.WriteLine($"{e.GestureId}: {e.StatusType}");
 
 
         if (e.StatusType == GestureStatus.Started)
