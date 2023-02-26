@@ -1,12 +1,8 @@
-﻿using Plugin.Maui.Audio;
+﻿namespace DahlexApp.Views.Board;
 
-namespace DahlexApp.Views.Board
+public interface ISoundService
 {
-    public interface ISoundService
-    {
-        void PlayBomb();
-        void PlayTele();
-        void PlayCrash();
-    }
-
+    void PlayBomb();
+    void PlayTele();
+    void PlayCrash();
 }

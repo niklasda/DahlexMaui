@@ -1,7 +1,11 @@
 
+bombs dont leave heaps
 
-ios icons
-ios mvvX di toast
+doble move on tap on android
+
+
+
+
 
 x shadow på score. tec. header
 

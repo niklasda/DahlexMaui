@@ -8,12 +8,12 @@ using Moq;
 namespace DahlexApp.Logic.Tests;
 
 [TestClass]
-public class UnitTest1
+public class GameEngineTests
 {
 
     [TestMethod]
 
-    public void Test1()
+    public void TestGameEngine()
     {
         GameSettings settings = new GameSettings(IntSize.Empty);
         IDahlexView vm = Mock.Of<IDahlexView>();
@@ -21,19 +21,9 @@ public class UnitTest1
         GameEngine eng = new GameEngine(settings, vm, scores);
 
         Assert.IsNotNull(eng);
+
+        Assert.AreEqual(0, eng.CurrentLevel);
+        Assert.AreEqual(true, eng.AreThereNoMoreLevels);
     }
 
-    [DataTestMethod]
-    [DataRow(3)]
-    [DataRow(5)]
-    [DataRow(6)]
-    public void MyFirstTheory(int value)
-    {
-        Assert.IsTrue(IsOdd(value));
-    }
-
-    bool IsOdd(int value)
-    {
-        return value % 2 == 1;
-    }
 }

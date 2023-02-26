@@ -27,13 +27,13 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
         _audio = audio;
         // w411 h660
 
-        _title = "";
-        _timerText = "0s";
-        _bombText = "B";
-        _teleText = "T";
-        _infoText = "";
-        _infoText1 = "Level:";
-        _infoText2 = "Dahlex:";
+        //_title = "";
+        TimerText = "0s";
+        BombText = "B";
+        TeleText = "T";
+        InfoText = "";
+        InfoText1 = "Level:";
+        InfoText2 = "Dahlex:";
 
         Title = "Play";
 
@@ -79,13 +79,23 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                 await BlowBomb();
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Debug.WriteLine($"Bomb failed: {ex.Message}");
             }
         });
 
-        TeleCommand = new AsyncRelayCommand(DoTeleport);
-
+        TeleCommand = new AsyncRelayCommand(async () =>
+        {
+            try
+            { 
+                await DoTeleport();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Teleport failed: {ex.Message}");
+            }
+        });
 
         //  OnAppearing().GetAwaiter().GetResult();
     }
@@ -95,7 +105,6 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
     private async Task DoTeleport()
     {
-        //  await Application.Current.MainPage.DisplayAlert("Dahlex", "Coming SoOon", "Ok");
 
         if (_ge != null)
         {
@@ -159,7 +168,6 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                     IToast m = Toast.Make("Nothing to bomb");
                     await m.Show();
 
-                    //_toast.ShowToastMessage("Nothing to bomb");
                     AddLineToLog("Cannot bomb");
                 }
             }
@@ -415,8 +423,14 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
         if (_ge.Status == GameStatus.BeforeStart)
         {
-            await _ge.StartGame(StartGameMode);
-
+            if (StartGameMode == GameMode.Random)
+            {
+                await StartGameCommand.ExecuteAsync(null);
+            }
+            else
+            {
+                await _ge.StartGame(StartGameMode);
+            }
         }
 
         // todo save and load state
@@ -486,17 +500,13 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
       
     }
 
-    private void Tap_Tapped(object? sender, TappedEventArgs e)
-    {
-        throw new NotImplementedException();
-    }
+
 
     private int _tempX;
     private int _tempY;
 
     private void Pan_PanUpdated(object? sender, PanUpdatedEventArgs e)
     {
-
 
         if (e.StatusType == GestureStatus.Started)
         {
@@ -512,8 +522,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
         else if (e.StatusType == GestureStatus.Canceled)
         {
             Debug.WriteLine($"{e.GestureId}: {e.StatusType}");
-            //_tempX = e.TotalX;
-            //_tempY = e.TotalY;
+        
         }
         else if (e.StatusType == GestureStatus.Completed)
         {
@@ -527,7 +536,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                 // very small swipe or tap is like clicking the professor in standard move mode
                 if (IsTap(p))
                 {
-                    //WeakReferenceMessenger.Default.Send<string>(MoveDirection.None.ToString());
+                    WeakReferenceMessenger.Default.Send<string>(MoveDirection.None.ToString());
 
                     //  moved = await PerformRound(MoveDirection.None);
                 }
@@ -664,7 +673,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
 
                         imgName = cp.ImageName;
-                        // Robot2ImageSource = ImageSource.FromResource("DahlexApp.Assets.Images.heap_02.png");
+                        
                         boardImage.AutomationId = imgName;
                         Debug.WriteLine($"{cp.Type} AutomationId set to {imgName}");
                         boardImage.Source = ImageSource.FromFile("heap_02.png");
@@ -752,34 +761,16 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
             switch (sound)
             {
                 case Sound.Bomb:
-                    PlayBomb();
+                    _audio.PlayBomb();
                     break;
                 case Sound.Teleport:
-                    PlayTele();
+                    _audio.PlayTele();
                     break;
                 case Sound.Crash:
-                    PlayCrash();
+                    _audio.PlayCrash();
                     break;
             }
         }
-    }
-
-    private void PlayBomb()
-    {
-
-        _audio.PlayBomb();
-
-    }
-
-    private void PlayTele()
-    {
-        _audio.PlayTele();
-    }
-
-    private void PlayCrash()
-    {
-        _audio.PlayCrash();
-
     }
 
 
@@ -854,19 +845,5 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
         }
 
-        //            Image boardImage = new Image { InputTransparent = true };
-
-        //          AbsoluteLayout.SetLayoutBounds(boardImage, new Rectangle(0 * x, 0 * y, 40, 40));
-        //        AbsoluteLayout.SetLayoutFlags(boardImage, AbsoluteLayoutFlags.None);
-
-        //      imgName = cp.ImageName;
-        // boardImage.Source = LoadImage("planet_01.png");
-
-        //boardImage.SetValue(BindablePropertyKey.FrameworkElement.NameProperty, imgName);
-        //    boardImage.AutomationId = imgName;
-        //  boardImage.Source = ImageSource.FromResource("DahlexApp.Assets.Images.planet_01.png");
-        //TheAbsOverBoard.Children.Add(boardImage);
-        // });
     }
 }
-//}
