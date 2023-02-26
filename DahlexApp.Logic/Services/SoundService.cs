@@ -2,16 +2,11 @@
 
 namespace DahlexApp.Views.Board
 {
-    public interface ISoundManager
-    {
-        void PlayBomb();
-        void PlayTele();
-        void PlayCrash();
-    }
+    
 
-    public class SoundManager : ISoundManager
+    public class SoundService : ISoundService
     {
-        public SoundManager(IAudioManager audio)
+        public SoundService(IAudioManager audio)
         {
             _audio = audio;
         }

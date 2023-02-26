@@ -1,6 +1,4 @@
-﻿
-namespace DahlexApp.Views.Start;
-
+﻿namespace DahlexApp.Views.Start;
 
 public partial class StartPage 
 {
@@ -12,6 +10,5 @@ public partial class StartPage
         Shell.SetNavBarIsVisible(this, false);
 
     }
-
 }
 

@@ -51,4 +51,3 @@ public partial class App : MauiWinUIApplication
         appWindow.Resize(new SizeInt32(600, 1080));
     }
 }
-

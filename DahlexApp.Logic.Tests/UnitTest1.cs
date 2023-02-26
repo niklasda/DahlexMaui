@@ -1,4 +1,9 @@
+using DahlexApp.Logic.Game;
+using DahlexApp.Logic.Interfaces;
+using DahlexApp.Logic.Models;
+using DahlexApp.Logic.Settings;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 namespace DahlexApp.Logic.Tests;
 
@@ -10,6 +15,12 @@ public class UnitTest1
 
     public void Test1()
     {
+        GameSettings settings = new GameSettings(IntSize.Empty);
+        IDahlexView vm = Mock.Of<IDahlexView>();
+        IHighScoreService scores = Mock.Of<IHighScoreService>();
+        GameEngine eng = new GameEngine(settings, vm, scores);
+
+        Assert.IsNotNull(eng);
     }
 
     [DataTestMethod]

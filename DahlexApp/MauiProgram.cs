@@ -37,8 +37,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<IPreferencesService, PreferencesService>();
         builder.Services.AddSingleton<IHighScoreService, HighScoreService>();
         builder.Services.AddSingleton<IAudioManager>(AudioManager.Current);
-        builder.Services.AddSingleton<ISoundManager>(  sp => { var am = sp.GetRequiredService<IAudioManager>();
-			var sm = new SoundManager(am);
+        builder.Services.AddSingleton<ISoundService>(  sp => { var am = sp.GetRequiredService<IAudioManager>();
+			var sm = new SoundService(am);
 			 sm.Init();
 			return sm;
 		});

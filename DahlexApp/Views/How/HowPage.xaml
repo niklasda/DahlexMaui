@@ -7,7 +7,6 @@
              Title="{Binding Title}"
              BackgroundColor="{StaticResource PrimaryBackgroundColor}">
 
-
     <Grid >
 
         <StackLayout  Orientation="Vertical" >

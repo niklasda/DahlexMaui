@@ -31,8 +31,7 @@ public partial class BoardPage : IBoardPage
     {
         if (BindingContext is BoardViewModel vm)
         {
-            //vm.StartGameMode = value;
-           await  vm.SetStartGameMode( value);
+            await vm.SetStartGameMode(value);
 
 
             await vm.OnAppearing();

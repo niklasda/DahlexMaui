@@ -31,7 +31,7 @@ public class GameEngine : IGameEngine
         _tail = string.Empty;
         _boardView = boardViewModel;
         _highScoreManager = highScoreManager;
-        //          _highScoreManager = highScoreManager;
+        
         _settings = settings;
 
         _boardSize = _settings.BoardSize;
