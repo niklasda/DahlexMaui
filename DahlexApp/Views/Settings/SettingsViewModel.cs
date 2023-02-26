@@ -8,7 +8,6 @@ namespace DahlexApp.Views.Settings;
 
 public class SettingsViewModel : ObservableObject
 {
-
     public SettingsViewModel(INavigationService navigationService)
     {
         BackCommand = new AsyncRelayCommand(navigationService.NavigateBack);
@@ -44,21 +43,21 @@ public class SettingsViewModel : ObservableObject
 
     public ImageSource CloseImage { get; set; }
 
-    private string _title;
+    private string _title = string.Empty;
     public string Title
     {
         get => _title;
         set => SetProperty(ref _title, value);
     }
 
-    private string _profName;
+    private string _profName = string.Empty;
     public string ProfName
     {
         get => _profName;
         set => SetProperty(ref _profName, value);
     }
 
-    private string _copyright;
+    private string _copyright = string.Empty;
     public string Copyright
     {
         get => _copyright;

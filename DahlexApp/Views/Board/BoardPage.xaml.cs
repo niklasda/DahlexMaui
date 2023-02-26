@@ -33,7 +33,6 @@ public partial class BoardPage : IBoardPage
         {
             await vm.SetStartGameMode(value);
 
-
             await vm.OnAppearing();
         }
     }

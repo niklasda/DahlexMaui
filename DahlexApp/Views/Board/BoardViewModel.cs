@@ -44,7 +44,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
             _gameTimer?.Stop();
             _elapsed = TimeSpan.Zero;
 
-            _gameTimer = Application.Current.Dispatcher.CreateTimer();
+            _gameTimer = Application.Current!.Dispatcher.CreateTimer();
             _gameTimer.Interval = TimeSpan.FromMilliseconds(1000);
             _gameTimer.Tick += GameTimerElapsed;
             _gameTimer.Start();
@@ -179,7 +179,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     private async Task DrawExplosionRadius(IntPoint pos)
     {
         Color borderColor = Color.FromRgb(0x53, 0xc0, 0x90);
-        if (Application.Current.Resources.TryGetValue("GreenAccentColor", out var bgc))
+        if (Application.Current!.Resources.TryGetValue("GreenAccentColor", out var bgc))
         {
             borderColor = (Color)bgc;
         }
@@ -415,7 +415,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
 
 
-    private IDispatcherTimer _gameTimer;
+    private IDispatcherTimer _gameTimer = null!;
 
     public async Task OnAppearing()
     {
@@ -566,49 +566,49 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
         _gameTimer?.Stop();
     }
 
-    private string _title;
+    private string _title = string.Empty;
     public string Title
     {
         get => _title;
         set => SetProperty(ref _title, value);
     }
 
-    private string _infoText;
+    private string _infoText = string.Empty;
     public string InfoText
     {
         get => _infoText;
         set => SetProperty(ref _infoText, value);
     }
 
-    private string _timerText;
+    private string _timerText = string.Empty;
     public string TimerText
     {
         get => _timerText;
         set => SetProperty(ref _timerText, value);
     }
 
-    private string _infoText1;
+    private string _infoText1 = string.Empty;
     public string InfoText1
     {
         get => _infoText1;
         set => SetProperty(ref _infoText1, value);
     }
 
-    private string _infoText2;
+    private string _infoText2 = string.Empty;
     public string InfoText2
     {
         get => _infoText2;
         set => SetProperty(ref _infoText2, value);
     }
 
-    private string _bombText;
+    private string _bombText = string.Empty;
     public string BombText
     {
         get => _bombText;
         set => SetProperty(ref _bombText, value);
     }
 
-    private string _teleText;
+    private string _teleText = string.Empty;
     public string TeleText
     {
         get => _teleText;
@@ -639,9 +639,10 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
         set => SetProperty(ref _isBusy, value);
     }
 
-
+    // set from code-behind
     public AbsoluteLayout TheAbsBoard { get; set; }
     public AbsoluteLayout TheAbsOverBoard { get; set; }
+
     public void AddLineToLog(string log)
     {
         GameLogger.AddLineToLog(log);

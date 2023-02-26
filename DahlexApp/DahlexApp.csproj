@@ -59,7 +59,8 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\appiconold.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" />
 		<MauiIcon Include="Resources\AppIcon\appiconmedium.svg" />
 
 		<!-- Splash Screen -->
@@ -87,6 +88,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\AppIcon\appicon.svg" />
 	  <None Remove="Resources\AppIcon\AppIconMedium.svg" />
 	  <None Remove="Resources\Images\Close.png" />
 	  <None Remove="Resources\Images\heap_02.png" />

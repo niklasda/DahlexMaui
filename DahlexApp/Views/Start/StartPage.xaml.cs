@@ -8,7 +8,6 @@ public partial class StartPage
         BindingContext = vm;
 		InitializeComponent();
         Shell.SetNavBarIsVisible(this, false);
-
     }
 }
 

@@ -43,7 +43,7 @@ public partial class App : MauiWinUIApplication
         base.OnLaunched(args);
 
         
-        var currentWindow = Application.Windows[0].Handler.PlatformView;
+        var currentWindow = Application.Windows.First().Handler!.PlatformView;
         IntPtr _windowHandle = WindowNative.GetWindowHandle(currentWindow);
         var windowId = Win32Interop.GetWindowIdFromWindow(_windowHandle);
 

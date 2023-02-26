@@ -23,9 +23,9 @@ public class SoundService : ISoundService
     }
 
     private IAudioManager _audio { get; }
-    private IAudioPlayer _bombPlayer { get; set; }
-    private IAudioPlayer _telePlayer { get; set; }
-    private IAudioPlayer _crashPlayer { get; set; }
+    private IAudioPlayer _bombPlayer { get; set; } = null!;
+    private IAudioPlayer _telePlayer { get; set; } = null!;
+    private IAudioPlayer _crashPlayer { get; set; } = null!;
 
     public void PlayBomb()
     {

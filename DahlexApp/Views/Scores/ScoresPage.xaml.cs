@@ -7,6 +7,5 @@ public partial class ScoresPage
         BindingContext = vm;
         InitializeComponent();
         Shell.SetNavBarIsVisible(this, false);
-
     }
 }
