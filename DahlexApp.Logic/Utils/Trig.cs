@@ -19,7 +19,6 @@ public static class Trig
 
     private static MoveDirection GetTranslationDirection(Point p)
     {
-
         var angle = Math.Atan2(p.Y, p.X);
 
         if (-Math.PI / 8 <= angle && angle < Math.PI / 8)

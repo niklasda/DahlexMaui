@@ -10,9 +10,7 @@ namespace DahlexApp.Logic.Tests;
 [TestClass]
 public class GameEngineTests
 {
-
     [TestMethod]
-
     public void TestGameEngine()
     {
         GameSettings settings = new GameSettings(IntSize.Empty);
@@ -25,5 +23,4 @@ public class GameEngineTests
         Assert.AreEqual(0, eng.CurrentLevel);
         Assert.AreEqual(true, eng.AreThereNoMoreLevels);
     }
-
 }

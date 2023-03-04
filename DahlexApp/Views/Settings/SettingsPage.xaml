@@ -5,11 +5,11 @@
              x:Class="DahlexApp.Views.Settings.SettingsPage"
              x:DataType="local:SettingsViewModel"
              Title="{Binding Title}"
-             BackgroundColor="{StaticResource PrimaryBackgroundColor}" >
+             BackgroundColor="{StaticResource PrimaryBackgroundColor}">
 
-    <Grid >
+    <Grid>
 
-        <StackLayout Orientation="Vertical" >
+        <StackLayout Orientation="Vertical">
 
             <Frame HeightRequest="80" BackgroundColor="{StaticResource ListItemBackgroundColor}" Padding="0" Margin="-1,-2,-1,0"  BorderColor="{StaticResource ListItemBackgroundColor}" HasShadow="True">
                 <Grid>
@@ -18,7 +18,7 @@
                         <ColumnDefinition Width="100" />
                     </Grid.ColumnDefinitions>
 
-                    <Frame Padding="10" Margin="0,0,10,0" BackgroundColor="{StaticResource ListItemBackgroundColor}"  BorderColor="{StaticResource ListItemBackgroundColor}" HorizontalOptions="End" VerticalOptions="Center" Grid.Column="1"  >
+                    <Frame Padding="10" Margin="0,0,10,0" BackgroundColor="{StaticResource ListItemBackgroundColor}"  BorderColor="{StaticResource ListItemBackgroundColor}" HorizontalOptions="End" VerticalOptions="Center" Grid.Column="1">
                         <Image HeightRequest="20" WidthRequest="20" Aspect="AspectFit" Source="{Binding CloseImage}" />
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding BackCommand}"></TapGestureRecognizer>
@@ -29,26 +29,18 @@
                 </Grid>
             </Frame>
 
-
-
             <StackLayout Orientation="Vertical" Padding="16,10,0,10" Spacing="10">
                 <StackLayout Orientation="Horizontal" Padding="16,10,0,10" Spacing="10">
                     <Label Text="Name:" Style="{StaticResource LabelStyle}" WidthRequest="80"></Label>
                     <Entry Text="{Binding ProfName}" BackgroundColor="{StaticResource AlmostBlackColor}" TextColor="{StaticResource PrimaryForegroundColor}" WidthRequest="180"></Entry>
-
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" Padding="16,10,0,10" Spacing="10">
                     <Label Text="Mute" Style="{StaticResource LabelStyle}" WidthRequest="80"></Label>
                     <CheckBox IsChecked="{Binding IsMuted}" Color="{StaticResource PrimaryForegroundColor}" ></CheckBox>
-
                 </StackLayout>
-
-
             </StackLayout>
         </StackLayout>
 
-        <Label Margin="10" Text="{Binding Copyright}" Style="{StaticResource SubtitleStyle}"/>
-
+        <Label Margin="10" Text="{Binding Copyright}" Style="{StaticResource SubtitleStyle}" />
     </Grid>
-
 </ContentPage>

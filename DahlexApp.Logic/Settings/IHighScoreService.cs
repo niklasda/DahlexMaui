@@ -6,7 +6,8 @@ namespace DahlexApp.Logic.Settings;
 public interface IHighScoreService
 {
     void AddHighScore(GameMode mode, string name, int level, int bombsLeft, int teleportsLeft, int moves, DateTime startTime, IntSize boardSize);
+
     List<HighScore> LoadLocalHighScores();
+
     void SaveLocalHighScores();
 }
-

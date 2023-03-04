@@ -12,7 +12,6 @@ public class SettingsManager : ISettingsManager
         _canvasSize = canvasSize;
     }
 
-
     public GameSettings LoadLocalSettings()
     {
         var settings = new GameSettings(_canvasSize);

@@ -1,7 +1,7 @@
-﻿using System.Collections.ObjectModel;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DahlexApp.Logic.Services;
+using System.Collections.ObjectModel;
 
 namespace DahlexApp.Views.How;
 
@@ -15,8 +15,7 @@ public class HowViewModel : ObservableObject
 
         Title = "How";
 
-        BackCommand = new AsyncRelayCommand( navigationService.NavigateBack);
-
+        BackCommand = new AsyncRelayCommand(navigationService.NavigateBack);
 
         HowToPages.Clear();
         HowToPages.Add(new HowItemViewModel("Simple", ImageSource.FromFile("screen4_1280.png")));
@@ -26,16 +25,15 @@ public class HowViewModel : ObservableObject
 
     public ObservableCollection<HowItemViewModel> HowToPages { get; } = new ObservableCollection<HowItemViewModel>();
 
-
     public IAsyncRelayCommand BackCommand { get; set; }
 
     public ImageSource CloseImage { get; set; }
 
-    private string _title ;
+    private string _title;
+
     public string Title
     {
         get => _title;
-        set => SetProperty(ref _title, value) ;
+        set => SetProperty(ref _title, value);
     }
-
 }

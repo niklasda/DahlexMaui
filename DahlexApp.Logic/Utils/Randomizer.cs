@@ -7,7 +7,7 @@ public static class Randomizer
     private static readonly Random Randy = new Random(DateTime.Now.Millisecond);
 
     /// <summary>
-    /// Returns a random point with 
+    /// Returns a random point with
     /// 0 &lt;= x &lt; xMax and
     /// 0 &lt;= y &lt; yMax
     /// <seealso cref="Point"/>

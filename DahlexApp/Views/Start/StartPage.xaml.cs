@@ -1,13 +1,11 @@
 ﻿namespace DahlexApp.Views.Start;
 
-public partial class StartPage 
+public partial class StartPage
 {
-
-	public StartPage(StartViewModel vm)
+    public StartPage(StartViewModel vm)
     {
         BindingContext = vm;
-		InitializeComponent();
+        InitializeComponent();
         Shell.SetNavBarIsVisible(this, false);
     }
 }
-

@@ -1,7 +1,6 @@
 ﻿using DahlexApp.Logic.Game;
 using DahlexApp.Logic.Models;
 
-
 namespace DahlexApp.Logic.Interfaces;
 
 public interface IDahlexView

@@ -1,10 +1,9 @@
 ﻿namespace DahlexApp;
 
-public partial class AppShell 
+public partial class AppShell
 {
-	public AppShell()
-	{
-		InitializeComponent();
-
-	}
+    public AppShell()
+    {
+        InitializeComponent();
+    }
 }

@@ -3,6 +3,8 @@
 public interface ISoundService
 {
     void PlayBomb();
+
     void PlayTele();
+
     void PlayCrash();
 }

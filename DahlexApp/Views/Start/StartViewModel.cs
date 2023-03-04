@@ -11,7 +11,6 @@ namespace DahlexApp.Views.Start;
 
 public class StartViewModel : ObservableObject
 {
-
     public StartViewModel(INavigationService navigationService)
     {
         _title = string.Empty;
@@ -30,7 +29,6 @@ public class StartViewModel : ObservableObject
         GotoScoresCommand = new AsyncRelayCommand(async () => await navigationService.NavigateToPage<ScoresPage>());
     }
 
-
     public ImageSource LogoImageSource { get; set; }
 
     public IAsyncRelayCommand HowCommand { get; }
@@ -39,9 +37,8 @@ public class StartViewModel : ObservableObject
     public IAsyncRelayCommand GotoSettingsCommand { get; }
     public IAsyncRelayCommand GotoScoresCommand { get; }
 
-
-
     private string _title;
+
     public string Title
     {
         get => _title;

@@ -1,5 +1,5 @@
-﻿using System.Diagnostics;
-using DahlexApp.Logic.Models;
+﻿using DahlexApp.Logic.Models;
+using System.Diagnostics;
 
 namespace DahlexApp.Logic.Services;
 
@@ -11,14 +11,18 @@ public interface IBoardPage
 public interface INavigationService
 {
     Task NavigateToPage<T>() where T : ContentPage;
+
     Task NavigateToBoardPage<T>(GameModeModel mode) where T : ContentPage, IBoardPage;
+
     Task NavigateBack();
+
     INavigation Navigation { get; }
 }
 
 public class NavigationService : INavigationService
 {
     private readonly IServiceProvider _services;
+
     public INavigation Navigation
     {
         get
@@ -41,7 +45,6 @@ public class NavigationService : INavigationService
         _services = services;
     }
 
-
     public Task NavigateToPage<T>() where T : ContentPage
     {
         var page = ResolvePage<T>();
@@ -59,11 +62,10 @@ public class NavigationService : INavigationService
         if (page is not null)
         {
             await Navigation.PushAsync(page, true);
-        //    await Task.Delay(1000);
-           // page.StartGameMode = mode.SelectedGameMode;
+            //    await Task.Delay(1000);
+            // page.StartGameMode = mode.SelectedGameMode;
             await page.SetStartGameMode(mode.SelectedGameMode);
         }
-
     }
 
     public Task NavigateBack()
@@ -77,5 +79,4 @@ public class NavigationService : INavigationService
     }
 
     private T? ResolvePage<T>() where T : Page => _services.GetService<T>();
-
 }

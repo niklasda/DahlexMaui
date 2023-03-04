@@ -1,5 +1,4 @@
-﻿
-namespace DahlexApp.Logic.Models;
+﻿namespace DahlexApp.Logic.Models;
 
 public class GameSettings
 {

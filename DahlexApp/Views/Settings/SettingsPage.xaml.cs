@@ -1,6 +1,6 @@
 ﻿namespace DahlexApp.Views.Settings;
 
-public partial class SettingsPage 
+public partial class SettingsPage
 {
     public SettingsPage(SettingsViewModel vm)
     {

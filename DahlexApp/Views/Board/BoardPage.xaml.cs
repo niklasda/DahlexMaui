@@ -36,5 +36,4 @@ public partial class BoardPage : IBoardPage
             await vm.OnAppearing();
         }
     }
-
 }

@@ -1,8 +1,8 @@
-﻿using System.Text;
-using DahlexApp.Logic.Interfaces;
+﻿using DahlexApp.Logic.Interfaces;
 using DahlexApp.Logic.Models;
 using DahlexApp.Logic.Settings;
 using DahlexApp.Logic.Utils;
+using System.Text;
 
 namespace DahlexApp.Logic.Game;
 
@@ -31,7 +31,7 @@ public class GameEngine : IGameEngine
         _tail = string.Empty;
         _boardView = boardViewModel;
         _highScoreManager = highScoreManager;
-        
+
         _settings = settings;
 
         _boardSize = _settings.BoardSize;
@@ -347,7 +347,7 @@ public class GameEngine : IGameEngine
             _boardView.AddLineToLog($"Robot-robot collision on {newPosition}");
             await _boardView.Animate(oldBp, oldPosition, newPosition, millis);
 
-             _boardView.PlaySound(Sound.Crash);
+            _boardView.PlaySound(Sound.Crash);
             _boardView.ChangeImage(newBp);
             newBp.ConvertToHeap();
             _robotCount -= 2;
@@ -376,7 +376,7 @@ public class GameEngine : IGameEngine
             _boardView.AddLineToLog($"Robot killed professor on {newPosition}");
             await _boardView.Animate(oldBp, oldPosition, newPosition, millis);
 
-             _boardView.PlaySound(Sound.Crash);
+            _boardView.PlaySound(Sound.Crash);
 
             newBp.ConvertToHeap();
             Status = GameStatus.GameLost;
@@ -387,7 +387,7 @@ public class GameEngine : IGameEngine
             _boardView.AddLineToLog($"Professor hit robot on {newPosition}");
             await _boardView.Animate(oldBp, oldPosition, newPosition, millis);
 
-             _boardView.PlaySound(Sound.Crash);
+            _boardView.PlaySound(Sound.Crash);
 
             newBp.ConvertToHeap();
             Status = GameStatus.GameLost;
@@ -569,7 +569,6 @@ public class GameEngine : IGameEngine
         if (clear)
         {
             _boardView.Clear(true);
-
 
             //_boardView?.DrawLines();
             await _boardView.DrawBoard(_board, _squareSize.Width, _squareSize.Height);

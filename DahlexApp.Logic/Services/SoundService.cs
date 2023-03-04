@@ -2,7 +2,6 @@
 
 namespace DahlexApp.Views.Board;
 
-
 public class SoundService : ISoundService
 {
     public SoundService(IAudioManager audio)

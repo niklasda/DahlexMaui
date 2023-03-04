@@ -6,7 +6,6 @@ namespace DahlexApp.Logic.Settings;
 
 public class HighScoreService : IHighScoreService
 {
-
     public HighScoreService(IPreferencesService preferences)
     {
         _preferences = preferences;
@@ -26,9 +25,7 @@ public class HighScoreService : IHighScoreService
             var hs = new HighScore(name, level, bombsLeft, teleportsLeft, moves, startTime, boardSize);
             _scores.Add(hs);
         }
-
     }
-
 
     public List<HighScore> LoadLocalHighScores()
     {
@@ -42,7 +39,6 @@ public class HighScoreService : IHighScoreService
                 _scores = JsonSerializer.Deserialize<List<HighScore>>(hsList) ?? new List<HighScore>();
                 //_scores = JsonConvert.DeserializeObject<List<HighScore>>(hsList);
             }
-
 
             if (_scores.Count == 0)
             {

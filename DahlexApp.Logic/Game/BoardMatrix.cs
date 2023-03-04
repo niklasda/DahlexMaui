@@ -50,22 +50,27 @@ public sealed class BoardMatrix : IBoard
     {
         return _positions[x, y];
     }
+
     public void SetPosition(int x, int y, BoardPosition pos)
     {
         _positions[x, y] = pos;
     }
+
     public void ResetPosition(int x, int y)
     {
         _positions[x, y] = BoardPosition.Empty;
     }
+
     public int GetPositionHeight()
     {
         return _boardSize.Height;
     }
+
     public int GetPositionWidth()
     {
         return _boardSize.Width;
     }
+
     public IntPoint GetProfessor()
     {
         return GetProfessor(_positions);
@@ -75,14 +80,17 @@ public sealed class BoardMatrix : IBoard
     {
         return _tempPositions[x, y];
     }
+
     public void SetTempPosition(int x, int y, BoardPosition pos)
     {
         _tempPositions[x, y] = pos;
     }
+
     public void ResetTempPosition(int x, int y)
     {
         _tempPositions[x, y] = new BoardPosition(PieceType.None, "");
     }
+
     public IntPoint GetProfessorFromTemp()
     {
         return GetProfessor(_tempPositions);

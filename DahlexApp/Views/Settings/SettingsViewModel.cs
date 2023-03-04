@@ -24,26 +24,23 @@ public class SettingsViewModel : ObservableObject
         IsMuted = gs.LessSound;
     }
 
-
     public void OnDisappearing()
     {
-
         SettingsManager sm = new SettingsManager(new IntSize(0, 0));
         var g = new GameSettings(new IntSize(0, 0));
-        
+
         g.PlayerName = ProfName;
         g.LessSound = IsMuted;
-        
-        sm.SaveLocalSettings(g);
-  
-    }
 
+        sm.SaveLocalSettings(g);
+    }
 
     public IAsyncRelayCommand BackCommand { get; set; }
 
     public ImageSource CloseImage { get; set; }
 
     private string _title = string.Empty;
+
     public string Title
     {
         get => _title;
@@ -51,6 +48,7 @@ public class SettingsViewModel : ObservableObject
     }
 
     private string _profName = string.Empty;
+
     public string ProfName
     {
         get => _profName;
@@ -58,6 +56,7 @@ public class SettingsViewModel : ObservableObject
     }
 
     private string _copyright = string.Empty;
+
     public string Copyright
     {
         get => _copyright;
@@ -65,6 +64,7 @@ public class SettingsViewModel : ObservableObject
     }
 
     private bool _isMuted;
+
     public bool IsMuted
     {
         get => _isMuted;

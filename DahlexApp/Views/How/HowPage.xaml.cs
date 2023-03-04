@@ -1,11 +1,11 @@
 namespace DahlexApp.Views.How;
 
-public partial class HowPage 
+public partial class HowPage
 {
-	public HowPage(HowViewModel vm)
-	{
+    public HowPage(HowViewModel vm)
+    {
         BindingContext = vm;
-		InitializeComponent();
+        InitializeComponent();
         Shell.SetNavBarIsVisible(this, false);
     }
 }

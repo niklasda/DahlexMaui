@@ -2,15 +2,14 @@
 
 namespace DahlexApp;
 
-public partial class App 
+public partial class App
 {
-	public App(IServiceProvider services)
-	{
-		InitializeComponent();
+    public App(IServiceProvider services)
+    {
+        InitializeComponent();
 
         Ioc.Default.ConfigureServices(services);
 
         MainPage = new AppShell();
-
-	}
+    }
 }

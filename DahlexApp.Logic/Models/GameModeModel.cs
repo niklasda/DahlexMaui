@@ -3,7 +3,6 @@
 public class GameModeModel
 {
     public GameMode SelectedGameMode { get; set; }
-
 }
 
 public record struct IntPoint(int X, int Y)

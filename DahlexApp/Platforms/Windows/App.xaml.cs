@@ -1,9 +1,9 @@
 ﻿using Microsoft.UI;
-using Microsoft.UI.Xaml;
-using Windows.Graphics;
 using Microsoft.UI.Windowing;
-using WinRT.Interop;
+using Microsoft.UI.Xaml;
 using System.Diagnostics;
+using Windows.Graphics;
+using WinRT.Interop;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -15,13 +15,13 @@ namespace DahlexApp.WinUI;
 /// </summary>
 public partial class App : MauiWinUIApplication
 {
-	/// <summary>
-	/// Initializes the singleton application object.  This is the first line of authored code
-	/// executed, and as such is the logical equivalent of main() or WinMain().
-	/// </summary>
-	public App()
-	{
-		this.InitializeComponent();
+    /// <summary>
+    /// Initializes the singleton application object.  This is the first line of authored code
+    /// executed, and as such is the logical equivalent of main() or WinMain().
+    /// </summary>
+    public App()
+    {
+        this.InitializeComponent();
 
         UnhandledException += (sender, e) =>
         {
@@ -30,19 +30,16 @@ public partial class App : MauiWinUIApplication
             if (Debugger.IsAttached)
                 Debugger.Break();
 
-
-          //  e.Handled = true;
+            //  e.Handled = true;
         };
-
     }
 
-	protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+    protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
 
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
         base.OnLaunched(args);
 
-        
         var currentWindow = Application.Windows.First().Handler!.PlatformView;
         IntPtr _windowHandle = WindowNative.GetWindowHandle(currentWindow);
         var windowId = Win32Interop.GetWindowIdFromWindow(_windowHandle);
