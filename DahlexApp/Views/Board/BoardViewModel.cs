@@ -18,12 +18,11 @@ namespace DahlexApp.Views.Board;
 
 public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 {
-
     public BoardViewModel(IHighScoreService hsm, ISoundService audio)
     {
         _settings = GetSettings();
         _ge = new GameEngine(_settings, this, hsm);
-       
+
         _audio = audio;
         // w411 h660
 
@@ -34,10 +33,10 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
         InfoText = "";
         InfoText1 = "Level:";
         InfoText2 = "Dahlex:";
-
         Title = "Play";
 
-
+        TheAbsBoard = new AbsoluteLayout(); // set from code behind
+        TheAbsOverBoard = new AbsoluteLayout(); // set from code behind
 
         StartGameCommand = new AsyncRelayCommand(async () =>
         {
@@ -52,8 +51,6 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
             await _ge.StartGame(GameMode.Random);
             UpdateUi(GameStatus.GameStarted, _ge.GetState(_elapsed));
         });
-
-
 
         NextLevelCommand = new AsyncRelayCommand(async () =>
         {
@@ -77,7 +74,6 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
             try
             {
                 await BlowBomb();
-
             }
             catch (Exception ex)
             {
@@ -88,7 +84,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
         TeleCommand = new AsyncRelayCommand(async () =>
         {
             try
-            { 
+            {
                 await DoTeleport();
             }
             catch (Exception ex)
@@ -100,15 +96,10 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
         //  OnAppearing().GetAwaiter().GetResult();
     }
 
-
-
-
     private async Task DoTeleport()
     {
-
         if (_ge != null)
         {
-
             if (_ge.Status == GameStatus.LevelOngoing)
             {
                 await _ge.MoveHeapsToTemp();
@@ -147,7 +138,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                     {
                         GameLogger.AddLineToLog(ex.Message);
                         // Debug.WriteLine();
-                        // safety try, marketplace version crashes on samsung 
+                        // safety try, marketplace version crashes on samsung
                         //MessageBox.Show(ex.Message);
                     }
 
@@ -189,7 +180,6 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
             Fill = new SolidColorBrush(Colors.Transparent),
             Stroke = new SolidColorBrush(borderColor),
             StrokeThickness = 1,
-
         };
 
         AbsoluteLayout.SetLayoutBounds(bv, new Rect(37 * pos.X + 16, 37 * pos.Y + 16, 5, 5));
@@ -209,7 +199,6 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
         await t4;
         TheAbsBoard.Children.Remove(bv);
     }
-
 
     private async Task<bool> PerformRound(MoveDirection dir)
     {
@@ -267,6 +256,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     }
 
     private bool _canBomb;
+
     public bool CanBomb
     {
         get => _canBomb;
@@ -274,6 +264,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     }
 
     private bool _canTele;
+
     public bool CanTele
     {
         get => _canTele;
@@ -281,6 +272,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     }
 
     private bool _canStart;
+
     public bool CanStart
     {
         get => _canStart;
@@ -288,27 +280,26 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     }
 
     private bool _canNext;
+
     public bool CanNext
     {
         get => _canNext;
         set => SetProperty(ref _canNext, value);
     }
 
-
     private readonly GameSettings _settings;
     private readonly IGameEngine _ge;
     private GameMode StartGameMode { get; set; }
+
     public async Task SetStartGameMode(GameMode value)
     {
         StartGameMode = value;
     }
 
-
     public IAsyncRelayCommand BombCommand { get; }
     public IAsyncRelayCommand TeleCommand { get; }
     public IAsyncRelayCommand NextLevelCommand { get; }
     public IAsyncRelayCommand StartGameCommand { get; }
-
 
     private TimeSpan _elapsed = TimeSpan.Zero;
 
@@ -318,7 +309,6 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
         // is all the main thread things needed
         // MainThread.BeginInvokeOnMainThread(() =>
         // {
-
         if (gameStatus == GameStatus.BeforeStart)
         {
             CanBomb = false;
@@ -345,7 +335,6 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
         }
         else if (gameStatus == GameStatus.LevelComplete)
         {
-
             AddLineToLog("Level won");
 
             CanBomb = false;
@@ -392,13 +381,12 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
         else if (gameStatus == GameStatus.GameWon)
         {
             // tutorial won
-            // 
+            //
             AddLineToLog("Tutorial won");
             CanBomb = false;
             CanTele = false;
             CanNext = false;
             CanStart = true;
-
         }
 
         if (state.BombCount < 1)
@@ -412,8 +400,6 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
         }
         // });
     }
-
-
 
     private IDispatcherTimer _gameTimer = null!;
 
@@ -445,22 +431,18 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
                 if (x % 2 == 0 && y % 2 == 1 || x % 2 == 1 && y % 2 == 0)
                 {
-                    
                     bv.Color = Colors.Orange;
                 }
                 else
                 {
                     bv.Color = Colors.DarkOrange;
-
                 }
-
 
                 AbsoluteLayout.SetLayoutBounds(bv, new Rect(37 * x, 37 * y, 37, 37));
                 AbsoluteLayout.SetLayoutFlags(bv, AbsoluteLayoutFlags.None);
                 TheAbsBoard.Children.Add(bv);
             }
         }
-
 
         //Debug.WriteLine($"Registering Weak Messenger");
 
@@ -473,41 +455,45 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                 Debug.WriteLine($"Pan: {md}");
 
                 bool moved = await PerformRound(md);
-
             }
-
         });
 
         var pan = new PanGestureRecognizer();
+        //pan.
         pan.PanUpdated += Pan_PanUpdated;
 
         var tap = new TapGestureRecognizer() { NumberOfTapsRequired = 1 };
-        //tap.Tapped += (o, e) => { };
-        tap.Command = new RelayCommand(() =>
-        {
+        tap.Tapped += Tap_Tapped;
+        //       // tap.Command += TapTapped;
+        //     );
 
-            Debug.WriteLine($"Tap: {MoveDirection.None}");
-            WeakReferenceMessenger.Default.Send<string>(MoveDirection.None.ToString());
-
-        }
-       );
-
-        
         TheAbsOverBoard.GestureRecognizers.Clear();
-     
+
         TheAbsOverBoard.GestureRecognizers.Add(tap);
         TheAbsOverBoard.GestureRecognizers.Add(pan);
-      
     }
 
+    private DateTime lastTap = DateTime.MinValue;
 
+    private void Tap_Tapped(object? sender, TappedEventArgs e)
+    {
+        if ((DateTime.Now - lastTap).TotalMilliseconds > 100) // stupid workaround for double tap
+        {
+            lastTap = DateTime.Now;
+            Debug.WriteLine($"Tap: {MoveDirection.None} {DateTime.Now.ToString("HH:mm:ss.fff")}");
+            WeakReferenceMessenger.Default.Send<string>(MoveDirection.None.ToString());
+        }
+        else
+        {
+            Debug.WriteLine($"Tap swallowed");
+        }
+    }
 
     private int _tempX;
     private int _tempY;
 
     private void Pan_PanUpdated(object? sender, PanUpdatedEventArgs e)
     {
-
         if (e.StatusType == GestureStatus.Started)
         {
             Debug.WriteLine($"{e.GestureId}: {e.StatusType}");
@@ -522,7 +508,6 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
         else if (e.StatusType == GestureStatus.Canceled)
         {
             Debug.WriteLine($"{e.GestureId}: {e.StatusType}");
-        
         }
         else if (e.StatusType == GestureStatus.Completed)
         {
@@ -536,6 +521,8 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                 // very small swipe or tap is like clicking the professor in standard move mode
                 if (IsTap(p))
                 {
+                    Debug.WriteLine($"PanTap: {MoveDirection.None}");
+
                     WeakReferenceMessenger.Default.Send<string>(MoveDirection.None.ToString());
 
                     //  moved = await PerformRound(MoveDirection.None);
@@ -545,6 +532,8 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                     var direction = Trig.GetSwipeDirection(p);
                     if (direction != MoveDirection.Ignore)
                     {
+                        Debug.WriteLine($"PanIt: {direction}");
+
                         WeakReferenceMessenger.Default.Send<string>(direction.ToString());
 
                         //    moved = await PerformRound(direction);
@@ -567,6 +556,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     }
 
     private string _title = string.Empty;
+
     public string Title
     {
         get => _title;
@@ -574,6 +564,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     }
 
     private string _infoText = string.Empty;
+
     public string InfoText
     {
         get => _infoText;
@@ -581,6 +572,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     }
 
     private string _timerText = string.Empty;
+
     public string TimerText
     {
         get => _timerText;
@@ -588,6 +580,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     }
 
     private string _infoText1 = string.Empty;
+
     public string InfoText1
     {
         get => _infoText1;
@@ -595,6 +588,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     }
 
     private string _infoText2 = string.Empty;
+
     public string InfoText2
     {
         get => _infoText2;
@@ -602,6 +596,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     }
 
     private string _bombText = string.Empty;
+
     public string BombText
     {
         get => _bombText;
@@ -609,6 +604,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     }
 
     private string _teleText = string.Empty;
+
     public string TeleText
     {
         get => _teleText;
@@ -616,6 +612,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     }
 
     private int _shortestDimension;
+
     public int ShortestDimension
     {
         get => _shortestDimension;
@@ -623,12 +620,12 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     }
 
     private int _heightDimension;
+
     public int HeightDimension
     {
         get => _heightDimension;
         set => SetProperty(ref _heightDimension, value);
     }
-
 
     private bool _isBusy;
     private readonly ISoundService _audio;
@@ -641,13 +638,13 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
     // set from code-behind
     public AbsoluteLayout TheAbsBoard { get; set; }
+
     public AbsoluteLayout TheAbsOverBoard { get; set; }
 
     public void AddLineToLog(string log)
     {
         GameLogger.AddLineToLog(log);
         InfoText = log;
-
     }
 
     public async Task DrawBoard(IBoard board, int xSize, int ySize)
@@ -656,8 +653,6 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
         // await MainThread.InvokeOnMainThreadAsync(async () =>
         // {
-
-
         for (int x = 0; x < board.GetPositionWidth(); x++)
         {
             for (int y = 0; y < board.GetPositionHeight(); y++)
@@ -665,16 +660,13 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                 BoardPosition cp = board.GetPosition(x, y);
                 if (cp != null)
                 {
-
                     string imgName;
                     if (cp.Type == PieceType.Heap)
                     {
                         Image boardImage = new Image { InputTransparent = true };
 
-
-
                         imgName = cp.ImageName;
-                        
+
                         boardImage.AutomationId = imgName;
                         Debug.WriteLine($"{cp.Type} AutomationId set to {imgName}");
                         boardImage.Source = ImageSource.FromFile("heap_02.png");
@@ -695,7 +687,6 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                     {
                         Image boardImage = new Image { InputTransparent = true };
 
-
                         imgName = cp.ImageName;
                         // boardImage.Source = LoadImage("planet_01.png");
 
@@ -707,12 +698,10 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                         //boardImage = pic;
                         //AddImage(imgName, boardImage, pt, cp);
                         await Animate(cp, new IntPoint(0, 0), new IntPoint(x, y), 250);
-
                     }
                     else if (cp.Type == PieceType.Robot)
                     {
                         Image boardImage = new Image { InputTransparent = true };
-
 
                         imgName = cp.ImageName;
                         string name = Randomizer.GetRandomFromSet("robot_04.png", "robot_05.png", "robot_06.png");
@@ -733,7 +722,6 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                     // imgName = cp.ImageName;
                     // RemoveImage(imgName);
                     //}
-
                 }
             }
         }
@@ -751,22 +739,22 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     public void Clear(bool all)
     {
         TheAbsOverBoard.Children.Clear();
-
     }
 
     public void PlaySound(Sound sound)
     {
         if (!_settings.LessSound)
         {
-
             switch (sound)
             {
                 case Sound.Bomb:
                     _audio.PlayBomb();
                     break;
+
                 case Sound.Teleport:
                     _audio.PlayTele();
                     break;
+
                 case Sound.Crash:
                     _audio.PlayCrash();
                     break;
@@ -774,26 +762,21 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
         }
     }
 
-
     public async Task Animate(BoardPosition bp, IntPoint oldPosNotUsed, IntPoint newPos, uint millis)
     {
         // await MainThread.InvokeOnMainThreadAsync(async () =>
         //{
-
-
         int nLeft = newPos.X * (_settings.SquareSize.Width);
         int nTop = newPos.Y * (_settings.SquareSize.Height);
 
         if (bp.Type == PieceType.Professor)
         {
-
             IView i = TheAbsOverBoard.Children.First(z => z.AutomationId == bp.ImageName);
             VisualElement img = (VisualElement)i;
 
             // img.TranslationX = nLeft;
             // img.TranslationY = nTop;
             img.TranslateTo(nLeft, nTop, millis);
-
         }
         else if (bp.Type == PieceType.Robot)
         {
@@ -823,7 +806,6 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     {
         //   MainThread.BeginInvokeOnMainThread(() =>
         // {
-
         var img = TheAbsOverBoard.Children.FirstOrDefault(z => z.AutomationId == imageName);
         TheAbsOverBoard.Children.Remove(img);
         // });
@@ -833,7 +815,6 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     {
         // MainThread.BeginInvokeOnMainThread(() =>
         // {
-
         var imgv = TheAbsOverBoard.Children.FirstOrDefault(z => z.AutomationId == bp.ImageName);
 
         if (imgv is Image img)
@@ -843,8 +824,6 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
             // move to front
             TheAbsOverBoard.Children.Add(imgv);
-
         }
-
     }
 }
