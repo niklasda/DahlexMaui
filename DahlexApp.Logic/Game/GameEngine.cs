@@ -494,7 +494,7 @@ public class GameEngine : IGameEngine
 
         if (!oldProfessorPosition.Equals(newProfessorPosition) || (dir == MoveDirection.None))
         {
-            await MoveCharacter(oldProfessorPosition, newProfessorPosition, 250); // no guid needed, prof has own storyboard
+            await MoveCharacter(oldProfessorPosition, newProfessorPosition, 250); //
             _moveCount++;
             return true;
         }

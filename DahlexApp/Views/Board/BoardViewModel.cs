@@ -303,6 +303,8 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
     private TimeSpan _elapsed = TimeSpan.Zero;
 
+    private uint AnimationDuration { get; } = 250;
+
     private void UpdateUi(GameStatus gameStatus, IGameState state)
 
     {
@@ -405,6 +407,8 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
     public async Task OnAppearing()
     {
+        Debug.WriteLine($"{DateTime.Now} - OnAppearing start");
+
         // base.ViewAppeared();
 
         if (_ge.Status == GameStatus.BeforeStart)
@@ -420,8 +424,11 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
         }
 
         // todo save and load state
+        Debug.WriteLine($"{DateTime.Now} - OnAppearing 2");
 
         UpdateUi(_ge.Status, _ge.GetState(_elapsed));
+
+        Debug.WriteLine($"{DateTime.Now} - OnAppearing 3");
 
         for (int x = 0; x < 11; x++)
         {
@@ -443,6 +450,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                 TheAbsBoard.Children.Add(bv);
             }
         }
+        Debug.WriteLine($"{DateTime.Now} - OnAppearing board drawn");
 
         //Debug.WriteLine($"Registering Weak Messenger");
 
@@ -471,13 +479,15 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
         TheAbsOverBoard.GestureRecognizers.Add(tap);
         TheAbsOverBoard.GestureRecognizers.Add(pan);
+
+        Debug.WriteLine($"{DateTime.Now} - OnAppearing Dane");
     }
 
     private DateTime lastTap = DateTime.MinValue;
 
     private void Tap_Tapped(object? sender, TappedEventArgs e)
     {
-        if ((DateTime.Now - lastTap).TotalMilliseconds > 100) // stupid workaround for double tap
+        if ((DateTime.Now - lastTap).TotalMilliseconds > AnimationDuration) // stupid workaround for double tap
         {
             lastTap = DateTime.Now;
             Debug.WriteLine($"Tap: {MoveDirection.None} {DateTime.Now.ToString("HH:mm:ss.fff")}");
@@ -627,14 +637,14 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
         set => SetProperty(ref _heightDimension, value);
     }
 
-    private bool _isBusy;
+    //private bool _isBusy;
     private readonly ISoundService _audio;
 
-    public bool IsBusy
-    {
-        get => _isBusy;
-        set => SetProperty(ref _isBusy, value);
-    }
+    //public bool IsBusy
+    //{
+    //    get => _isBusy;
+    //    set => SetProperty(ref _isBusy, value);
+    //}
 
     // set from code-behind
     public AbsoluteLayout TheAbsBoard { get; set; }
@@ -645,6 +655,16 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     {
         GameLogger.AddLineToLog(log);
         InfoText = log;
+    }
+
+    public bool AttemptBack()
+    {
+        if (_ge.Status == GameStatus.LevelOngoing || _ge.Status == GameStatus.LevelComplete)
+        {
+            InfoText = "Cannot back";
+            return false;
+        }
+        return true;
     }
 
     public async Task DrawBoard(IBoard board, int xSize, int ySize)
@@ -673,7 +693,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
                         TheAbsOverBoard.Children.Add(boardImage);
 
-                        await Animate(cp, new IntPoint(0, 0), new IntPoint(x, y), 250);
+                        await Animate(cp, new IntPoint(0, 0), new IntPoint(x, y), AnimationDuration);
 
                         // boardImage = pic;
                         // Image img = AddImage(imgName, boardImage, pt, cp);
@@ -697,7 +717,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                         TheAbsOverBoard.Children.Add(boardImage);
                         //boardImage = pic;
                         //AddImage(imgName, boardImage, pt, cp);
-                        await Animate(cp, new IntPoint(0, 0), new IntPoint(x, y), 250);
+                        await Animate(cp, new IntPoint(0, 0), new IntPoint(x, y), AnimationDuration);
                     }
                     else if (cp.Type == PieceType.Robot)
                     {
@@ -711,7 +731,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                         //                         boardImage.Source = LoadImage(name);
                         TheAbsOverBoard.Children.Add(boardImage);
 
-                        Animate(cp, new IntPoint(0, 0), new IntPoint(x, y), 250);
+                        Animate(cp, new IntPoint(0, 0), new IntPoint(x, y), AnimationDuration);
 
                         //     pic.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
                         //   boardImage = pic;

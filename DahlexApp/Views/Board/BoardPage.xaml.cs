@@ -17,6 +17,23 @@ public partial class BoardPage : IBoardPage
         DeviceDisplay.KeepScreenOn = true;
     }
 
+    protected override bool OnBackButtonPressed()
+    {
+        var vm = BindingContext as BoardViewModel;
+        if (vm != null)
+        {
+            if (vm.AttemptBack())
+            {
+                return base.OnBackButtonPressed();
+            }
+            return true;
+        }
+        //       else
+        //     {
+        return base.OnBackButtonPressed();
+        //   }
+    }
+
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
