@@ -480,7 +480,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
         TheAbsOverBoard.GestureRecognizers.Add(tap);
         TheAbsOverBoard.GestureRecognizers.Add(pan);
 
-        Debug.WriteLine($"{DateTime.Now} - OnAppearing Dane");
+        Debug.WriteLine($"{DateTime.Now} - OnAppearing Done");
     }
 
     private DateTime lastTap = DateTime.MinValue;
