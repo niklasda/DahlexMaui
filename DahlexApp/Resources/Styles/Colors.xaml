@@ -11,7 +11,7 @@
     <Color x:Key="SecondaryForegroundColor">#FFCCCCCC</Color>
 
     <Color x:Key="ListItemBackgroundColor">#FF212636</Color>
-    <Color x:Key="ListItemForegroundColor">#FFFFFFFF</Color>
+    <!--<Color x:Key="ListItemForegroundColor">#FFFFFFFF</Color>-->
 
     <Color x:Key="GreenAccentColor">#33D033</Color>
 
@@ -19,9 +19,10 @@
 
     <Color x:Key="Primary">#512BD4</Color>
     <Color x:Key="Secondary">#DFD8F7</Color>
-    <Color x:Key="Tertiary">#2B0B98</Color>
+    <!--<Color x:Key="Tertiary">#2B0B98</Color>-->
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>
+
     <!--<Color x:Key="Gray100">#E1E1E1</Color>
     <Color x:Key="Gray200">#C8C8C8</Color>
     <Color x:Key="Gray300">#ACACAC</Color>
@@ -32,7 +33,7 @@
     <Color x:Key="Gray950">#141414</Color>-->
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}" />
     <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}" />
-    <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}" />
+    <!--<SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}" />-->
 
     <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource White}" />
     <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource Black}" />
