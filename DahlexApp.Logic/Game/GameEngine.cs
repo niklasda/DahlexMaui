@@ -576,7 +576,7 @@ public class GameEngine : IGameEngine
         _boardView?.ShowStatus(CurrentLevel, _bombCount, _teleportCount, _robotCount, _moveCount, _maxLevel);
     }
 
-    public async Task<bool> BlowBomb()
+    public async Task<(bool, int)> BlowBomb()
     {
         int robotCountBefore = _robotCount;
         //Guid roundId = Guid.NewGuid();
@@ -619,13 +619,13 @@ public class GameEngine : IGameEngine
         if (robotCountBefore != _robotCount)
         {
             _bombCount--;
-            return true;
+            return (true, _bombCount);
         }
 
-        return false;
+        return (false, _bombCount);
     }
 
-    public async Task<bool> DoTeleport()
+    public async Task<(bool, int)> DoTeleport()
     {
         if (_teleportCount > 0)
         {
@@ -637,8 +637,8 @@ public class GameEngine : IGameEngine
             await MoveCharacter(oldProfPos, newProfPos, 1500);
             _moveCount++;
             _teleportCount--;
-            return true;
+            return (true, _teleportCount);
         }
-        return false;
+        return (false, _teleportCount);
     }
 }

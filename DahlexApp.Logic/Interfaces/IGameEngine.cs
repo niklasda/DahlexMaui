@@ -12,10 +12,10 @@ public interface IGameEngine
 
     Task StartGame(GameMode mode);
 
-    /// <summary>
-    /// Continue game from tombstone, called after setState
-    /// </summary>
-    Task ContinueGame(GameMode mode);
+    // <summary>
+    // Continue game from tombstone, called after setState
+    // </summary>
+    //Task ContinueGame(GameMode mode);
 
     /// <summary>
     /// Gather state to save to tombstone
@@ -24,11 +24,11 @@ public interface IGameEngine
     /// <returns></returns>
     IGameState GetState(TimeSpan elapsed);
 
-    /// <summary>
-    /// Restore state from tombstone, called before continueGame
-    /// </summary>
-    /// <param name="state"></param>
-    void SetState(IGameState state);
+    // <summary>
+    // Restore state from tombstone, called before continueGame
+    // </summary>
+    // <param name="state"></param>
+    //void SetState(IGameState state);
 
     Task StartNextLevel();
 
@@ -40,9 +40,9 @@ public interface IGameEngine
 
     Task CommitTemp();
 
-    Task<bool> BlowBomb();
+    Task<(bool Ok, int BombsLeft)> BlowBomb();
 
-    Task<bool> DoTeleport();
+    Task<(bool Ok, int TelesLeft)> DoTeleport();
 
     IntPoint GetProfessorCoordinates();
 

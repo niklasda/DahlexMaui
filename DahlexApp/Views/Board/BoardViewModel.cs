@@ -103,7 +103,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
             if (_ge.Status == GameStatus.LevelOngoing)
             {
                 await _ge.MoveHeapsToTemp();
-                if (await _ge.DoTeleport())
+                if ((await _ge.DoTeleport()).Ok)
                 {
                     PlaySound(Sound.Teleport);
 
@@ -127,7 +127,8 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
             if (_ge.Status == GameStatus.LevelOngoing)
             {
                 await _ge.MoveHeapsToTemp();
-                if (await _ge.BlowBomb())
+                var bombResult = await _ge.BlowBomb();
+                if (bombResult.Ok)
                 {
                     try
                     {
@@ -156,10 +157,18 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                 }
                 else
                 {
-                    IToast m = Toast.Make("Nothing to bomb");
-                    await m.Show();
+                    if (bombResult.BombsLeft > 0)
+                    {
+                        // int count = _ge.BombCount;
+                        IToast m = Toast.Make("Nothing to bomb");
+                        await m.Show();
 
-                    AddLineToLog("Cannot bomb");
+                        AddLineToLog("Cannot bomb");
+                    }
+                    else
+                    {
+                        AddLineToLog("No bombs left");
+                    }
                 }
             }
 
