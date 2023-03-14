@@ -5,7 +5,7 @@ namespace DahlexApp.Logic.Interfaces;
 
 public interface IDahlexView
 {
-    void AddLineToLog(string log);
+    string AddLineToLog(string log);
 
     // void DrawGrid(int width, int height, int xSize, int ySize);
     Task DrawBoard(IBoard board, int xSize, int ySize);

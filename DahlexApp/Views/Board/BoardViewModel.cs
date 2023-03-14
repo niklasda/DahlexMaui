@@ -100,6 +100,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     {
         if (_ge != null)
         {
+            string message = string.Empty;
             if (_ge.Status == GameStatus.LevelOngoing)
             {
                 await _ge.MoveHeapsToTemp();
@@ -109,14 +110,17 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
                     await _ge.MoveRobotsToTemp();
                     await _ge.CommitTemp();
+                    message = "Teleporting";
                 }
                 else
                 {
-                    AddLineToLog("No more teleports");
+                    message = AddLineToLog("No more teleports");
                 }
             }
 
-            UpdateUi(_ge.Status, _ge.GetState(_elapsed));
+            var state = _ge.GetState(_elapsed);
+            state.Message = message;
+            UpdateUi(_ge.Status, state);
         }
     }
 
@@ -124,6 +128,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     {
         if (_ge != null)
         {
+            string message = string.Empty;
             if (_ge.Status == GameStatus.LevelOngoing)
             {
                 await _ge.MoveHeapsToTemp();
@@ -134,6 +139,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                     {
                         // do not await
                         DrawExplosionRadius(_ge.GetProfessorCoordinates());
+                        message = "Bombing";
                     }
                     catch (Exception ex)
                     {
@@ -163,16 +169,18 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                         IToast m = Toast.Make("Nothing to bomb");
                         await m.Show();
 
-                        AddLineToLog("Cannot bomb");
+                        message = AddLineToLog("Cannot bomb");
                     }
                     else
                     {
-                        AddLineToLog("No bombs left");
+                        message = AddLineToLog("No bombs left");
                     }
                 }
             }
 
-            UpdateUi(_ge.Status, _ge.GetState(_elapsed));
+            var state = _ge.GetState(_elapsed);
+            state.Message = message;
+            UpdateUi(_ge.Status, state);
         }
     }
 
@@ -660,10 +668,11 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
     public AbsoluteLayout TheAbsOverBoard { get; set; }
 
-    public void AddLineToLog(string log)
+    public string AddLineToLog(string log)
     {
         GameLogger.AddLineToLog(log);
         InfoText = log;
+        return log;
     }
 
     public bool AttemptBack()
