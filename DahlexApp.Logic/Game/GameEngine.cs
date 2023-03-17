@@ -259,7 +259,7 @@ public class GameEngine : IGameEngine
 
     private void CreateRobots(int count)
     {
-        RemoveOldPieces(PieceType.Heap);  // todo why, and why heaps
+        //  RemoveOldPieces(PieceType.Heap);  // todo why, and why heaps
         for (int i = 0; i < count; i++)
         {
             IntPoint robotPos = GetFreePosition();
@@ -270,7 +270,7 @@ public class GameEngine : IGameEngine
 
     private void CreateHeaps(int count)
     {
-        RemoveOldPieces(PieceType.Heap); // todo why
+        //RemoveOldPieces(PieceType.Heap); // todo why
         for (int i = 0; i < count; i++)
         {
             IntPoint robotPos = GetFreePosition();
@@ -279,24 +279,24 @@ public class GameEngine : IGameEngine
         }
     }
 
-    private void RemoveOldPieces(PieceType typeToRemove)
-    {
-        for (int x = 0; x < _board.GetPositionWidth(); x++)
-        {
-            for (int y = 0; y < _board.GetPositionHeight(); y++)
-            {
-                if (_board.GetPosition(x, y) != null)
-                {
-                    BoardPosition cp = _board.GetPosition(x, y);
+    //private void RemoveOldPieces(PieceType typeToRemove)
+    //{
+    //    for (int x = 0; x < _board.GetPositionWidth(); x++)
+    //    {
+    //        for (int y = 0; y < _board.GetPositionHeight(); y++)
+    //        {
+    //            if (_board.GetPosition(x, y) != null)
+    //            {
+    //                BoardPosition cp = _board.GetPosition(x, y);
 
-                    if (cp.Type == typeToRemove)
-                    {
-                        _board.ResetPosition(x, y);
-                    }
-                }
-            }
-        }
-    }
+    //                if (cp.Type == typeToRemove)
+    //                {
+    //                    _board.ResetPosition(x, y);
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
 
     private IntPoint GetFreePosition()
     {
