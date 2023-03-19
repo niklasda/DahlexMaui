@@ -114,6 +114,6 @@ public sealed class BoardMatrix : IBoard
             }
         }
 
-        return new IntPoint(-1, -1);
+        return IntPoint.Empty;
     }
 }
