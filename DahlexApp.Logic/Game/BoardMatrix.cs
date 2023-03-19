@@ -56,10 +56,10 @@ public sealed class BoardMatrix : IBoard
         _positions[x, y] = pos;
     }
 
-    public void ResetPosition(int x, int y)
-    {
-        _positions[x, y] = BoardPosition.Empty;
-    }
+    //public void ResetPosition(int x, int y)
+    //{
+    //    _positions[x, y] = BoardPosition.Empty;
+    //}
 
     public int GetPositionHeight()
     {

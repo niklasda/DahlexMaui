@@ -5,7 +5,6 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using DahlexApp.Logic.Game;
 using DahlexApp.Logic.Interfaces;
-using DahlexApp.Logic.Logger;
 using DahlexApp.Logic.Models;
 using DahlexApp.Logic.Services;
 using DahlexApp.Logic.Settings;
@@ -143,8 +142,8 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                     }
                     catch (Exception ex)
                     {
-                        GameLogger.AddLineToLog(ex.Message);
-                        // Debug.WriteLine();
+                        //GameLogger.AddLineToLog(ex.Message);
+                        Debug.WriteLine(ex.ToString());
                         // safety try, marketplace version crashes on samsung
                         //MessageBox.Show(ex.Message);
                     }
@@ -670,7 +669,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
     public string AddLineToLog(string log)
     {
-        GameLogger.AddLineToLog(log);
+        //GameLogger.AddLineToLog(log);
         InfoText = log;
         return log;
     }

@@ -27,16 +27,18 @@ public class NavigationService : INavigationService
     {
         get
         {
-            INavigation? navigation = Application.Current?.MainPage?.Navigation;
-            if (navigation is not null)
-                return navigation;
-            else
+            INavigation navigation = Application.Current!.MainPage!.Navigation;
             {
-                //This is not good!
-                if (Debugger.IsAttached)
-                    Debugger.Break();
-                throw new Exception();
+                return navigation;
             }
+            //if (navigation is not null)
+            //else
+            //{
+            //    //This is not good!
+            //    if (Debugger.IsAttached)
+            //        Debugger.Break();
+            //    throw new Exception();
+            //}
         }
     }
 

@@ -10,7 +10,7 @@ public class BoardPosition
 
     public string ImageName { get; set; }
 
-    public static BoardPosition Empty { get; set; } = new BoardPosition(PieceType.None, string.Empty);
+    //public static BoardPosition Empty { get; set; } = new BoardPosition(PieceType.None, string.Empty);
 
     public BoardPosition(PieceType pType, string imgName)
     {

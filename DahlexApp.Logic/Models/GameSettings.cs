@@ -34,19 +34,19 @@ public class GameSettings
     /// The size of the squares on the board, TODO with or without margin ???
     /// </summary>
     //   [IgnoreDataMember]
-    public readonly IntSize SquareSize = new IntSize(37, 37); // image size 42 x 42
+    public IntSize SquareSize { get; set; } = new IntSize(37, 37); // image size 42 x 42
 
-    /// <summary>
-    /// The offset to apply to get the images inside the squares
-    /// </summary>
+    // <summary>
+    // The offset to apply to get the images inside the squares
+    // </summary>
     //    [IgnoreDataMember]
-    public readonly IntPoint ImageOffset = new IntPoint(1, 1); // w, h
+    //public IntPoint ImageOffset { get; set; } = new IntPoint(1, 1); // w, h
 
-    /// <summary>
-    /// The distance between squares
-    /// </summary>
+    // <summary>
+    // The distance between squares
+    // </summary>
     //    [IgnoreDataMember]
-    public readonly IntPoint LineWidth = new IntPoint(0, 0);
+    // public IntPoint LineWidth { get; set; } = new IntPoint(0, 0);
 
     //[IgnoreDataMember]
     //public bool IsFirstRun;

@@ -73,16 +73,16 @@ public class GameEngine : IGameEngine
         await InitNewLevel(CurrentLevel);
     }
 
-    /// <summary>
-    /// Continue game from tombstone, called after setState
-    /// </summary>
-    public async Task ContinueGame(GameMode mode)
-    {
-        _gameMode = mode;
-        _startTime = DateTime.Now; // todo put in state
+    ///// <summary>
+    ///// Continue game from tombstone, called after setState
+    ///// </summary>
+    //public async Task ContinueGame(GameMode mode)
+    //{
+    //    _gameMode = mode;
+    //    _startTime = DateTime.Now; // todo put in state
 
-        await InitOldLevel(CurrentLevel);
-    }
+    //    await InitOldLevel(CurrentLevel);
+    //}
 
     /// <summary>
     /// Gather state to save to tombstone
@@ -128,21 +128,21 @@ public class GameEngine : IGameEngine
         return state;
     }
 
-    /// <summary>
-    /// Restore state from tombstone, called before continueGame
-    /// </summary>
-    /// <param name="state"></param>
-    public void SetState(IGameState state)
-    {
-        CurrentLevel = state.Level;
-        _moveCount = state.MoveCount;
-        _bombCount = state.BombCount;
-        _teleportCount = state.TeleportCount;
-        Status = (GameStatus)state.GameStatus;
-        _gameMode = (GameMode)state.Mode;
+    ///// <summary>
+    ///// Restore state from tombstone, called before continueGame
+    ///// </summary>
+    ///// <param name="state"></param>
+    //public void SetState(IGameState state)
+    //{
+    //    CurrentLevel = state.Level;
+    //    _moveCount = state.MoveCount;
+    //    _bombCount = state.BombCount;
+    //    _teleportCount = state.TeleportCount;
+    //    Status = (GameStatus)state.GameStatus;
+    //    _gameMode = (GameMode)state.Mode;
 
-        SetBoard(state.TheBoard);
-    }
+    //    SetBoard(state.TheBoard);
+    //}
 
     private void SetBoard(string boardString)
     {
@@ -228,27 +228,27 @@ public class GameEngine : IGameEngine
         await Redraw(true);
     }
 
-    /// <summary>
-    /// Called from continueGame
-    /// </summary>
-    /// <param name="thisLevel"></param>
-    private async Task InitOldLevel(int thisLevel)
-    {
-        if (_board == null) // i.e. not restored from tombstone
-        {
-            _robotCount = thisLevel + 1;
-            _board = new BoardMatrix(_boardSize);
-            CreateProfessor();
-            CreateRobots(_robotCount);
-            CreateHeaps(thisLevel);
-        }
-        else
-        {
-            _robotCount = _board.GetRobotCount();
-        }
+    ///// <summary>
+    ///// Called from continueGame
+    ///// </summary>
+    ///// <param name="thisLevel"></param>
+    //private async Task InitOldLevel(int thisLevel)
+    //{
+    //    if (_board == null) // i.e. not restored from tombstone
+    //    {
+    //        _robotCount = thisLevel + 1;
+    //        _board = new BoardMatrix(_boardSize);
+    //        CreateProfessor();
+    //        CreateRobots(_robotCount);
+    //        CreateHeaps(thisLevel);
+    //    }
+    //    else
+    //    {
+    //        _robotCount = _board.GetRobotCount();
+    //    }
 
-        await Redraw(true);
-    }
+    //    await Redraw(true);
+    //}
 
     private void CreateProfessor()
     {
