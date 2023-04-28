@@ -1,5 +1,5 @@
-﻿using DahlexApp.Logic.Models;
-using DahlexApp.Logic.Services;
+﻿using DahlexApp.Logic.Interfaces;
+using DahlexApp.Logic.Models;
 
 namespace DahlexApp.Views.Board;
 
@@ -15,13 +15,15 @@ public partial class BoardPage : IBoardPage
         vm.TheAbsOverBoard = TheOverBoard;
 
         if (DeviceInfo.Current.Platform == DevicePlatform.Android)
+        {
+            // crashes on windows on dell, but not on Lenovo
             DeviceDisplay.Current.KeepScreenOn = true;
+        }
     }
 
     protected override bool OnBackButtonPressed()
     {
-        var vm = BindingContext as BoardViewModel;
-        if (vm != null)
+        if (BindingContext is BoardViewModel vm)
         {
             if (vm.AttemptBack())
             {

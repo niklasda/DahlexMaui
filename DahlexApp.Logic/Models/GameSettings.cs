@@ -51,8 +51,5 @@ public class GameSettings
     //[IgnoreDataMember]
     //public bool IsFirstRun;
     //    [IgnoreDataMember]
-    public int MaxNumberOfLevel
-    {
-        get { return (BoardSize.Width * BoardSize.Height) / 4 + 10; }
-    }
+    public int MaxNumberOfLevel => (BoardSize.Width * BoardSize.Height) / 4 + 10;
 }

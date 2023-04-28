@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DahlexApp.Logic.Interfaces;
 using DahlexApp.Logic.Models;
-using DahlexApp.Logic.Services;
 using DahlexApp.Logic.Settings;
 using JetBrains.Annotations;
 

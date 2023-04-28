@@ -1,19 +1,21 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DahlexApp.Logic.Interfaces;
 using DahlexApp.Logic.Models;
-using DahlexApp.Logic.Services;
 using DahlexApp.Views.Board;
 using DahlexApp.Views.How;
 using DahlexApp.Views.Scores;
 using DahlexApp.Views.Settings;
+using JetBrains.Annotations;
 
 namespace DahlexApp.Views.Start;
 
-public class StartViewModel : ObservableObject
+[UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+public partial class StartViewModel : ObservableObject
 {
     public StartViewModel(INavigationService navigationService)
     {
-        _title = string.Empty;
+        //  _title = string.Empty;
         Title = "Dahlex";
 
         LogoImageSource = ImageSource.FromFile("tile300.png"); // 42x42
@@ -37,11 +39,12 @@ public class StartViewModel : ObservableObject
     public IAsyncRelayCommand GotoSettingsCommand { get; }
     public IAsyncRelayCommand GotoScoresCommand { get; }
 
+    [ObservableProperty]
     private string _title;
 
-    public string Title
-    {
-        get => _title;
-        set => SetProperty(ref _title, value);
-    }
+    // public string Title
+    //   {
+    //   get => _title;
+    //   set => SetProperty(ref _title, value);
+    //}
 }

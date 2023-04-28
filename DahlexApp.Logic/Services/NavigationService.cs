@@ -1,22 +1,7 @@
-﻿using DahlexApp.Logic.Models;
+﻿using DahlexApp.Logic.Interfaces;
+using DahlexApp.Logic.Models;
 
 namespace DahlexApp.Logic.Services;
-
-public interface IBoardPage
-{
-    Task SetStartGameMode(GameMode value);
-}
-
-public interface INavigationService
-{
-    Task NavigateToPage<T>() where T : ContentPage;
-
-    Task NavigateToBoardPage<T>(GameModeModel mode) where T : ContentPage, IBoardPage;
-
-    Task NavigateBack();
-
-    INavigation Navigation { get; }
-}
 
 public class NavigationService : INavigationService
 {

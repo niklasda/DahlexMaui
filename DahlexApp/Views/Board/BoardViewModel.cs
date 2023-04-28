@@ -51,8 +51,6 @@ public partial class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
             await _ge.StartGame(GameMode.Random);
             UpdateUi(GameStatus.GameStarted, _ge.GetState(_elapsed));
-
-
         });
 
         //NextLevelCommand = new AsyncRelayCommand(async () =>
@@ -71,7 +69,6 @@ public partial class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
         //        UpdateUi(_ge.Status, _ge.GetState(_elapsed));
         //    }
         //});
-
 
         //BombCommand = new AsyncRelayCommand(async () =>
         //{
@@ -103,108 +100,109 @@ public partial class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
     [RelayCommand(AllowConcurrentExecutions = false)]
     private async Task StartNextLevel()
     {
-    //    if (_ge != null)
-      //  {
-            if (_ge.Status == GameStatus.LevelComplete)
-            {
-                //storyPanel.Resources.Clear();
+        //    if (_ge != null)
+        //  {
+        if (_ge.Status == GameStatus.LevelComplete)
+        {
+            //storyPanel.Resources.Clear();
 
-                await _ge.StartNextLevel();
+            await _ge.StartNextLevel();
 
-                _gameTimer.Start();
-            }
-
-            UpdateUi(_ge.Status, _ge.GetState(_elapsed));
+            _gameTimer?.Start();
         }
+
+        UpdateUi(_ge.Status, _ge.GetState(_elapsed));
+    }
+
     //}
     [RelayCommand(AllowConcurrentExecutions = false)]
     private async Task DoTeleport()
     {
-        if (_ge != null)
+        // if (_ge != null)
+        // {
+        string message = string.Empty;
+        if (_ge.Status == GameStatus.LevelOngoing)
         {
-            string message = string.Empty;
-            if (_ge.Status == GameStatus.LevelOngoing)
+            await _ge.MoveHeapsToTemp();
+            if ((await _ge.DoTeleport()).Ok)
             {
-                await _ge.MoveHeapsToTemp();
-                if ((await _ge.DoTeleport()).Ok)
-                {
-                    PlaySound(Sound.Teleport);
+                PlaySound(Sound.Teleport);
 
-                    await _ge.MoveRobotsToTemp();
-                    await _ge.CommitTemp();
-                    message = "Teleporting";
-                }
-                else
-                {
-                    message = AddLineToLog("No more teleports");
-                }
+                await _ge.MoveRobotsToTemp();
+                await _ge.CommitTemp();
+                message = "Teleporting";
             }
-
-            var state = _ge.GetState(_elapsed);
-            state.Message = message;
-            UpdateUi(_ge.Status, state);
+            else
+            {
+                message = AddLineToLog("No more teleports");
+            }
         }
+
+        var state = _ge.GetState(_elapsed);
+        state.Message = message;
+        UpdateUi(_ge.Status, state);
+        // }
     }
 
     [RelayCommand(AllowConcurrentExecutions = false)]
     private async Task BlowBomb()
     {
-        if (_ge != null)
+        //     if (_ge != null)
+        //   {
+        string message = string.Empty;
+        if (_ge.Status == GameStatus.LevelOngoing)
         {
-            string message = string.Empty;
-            if (_ge.Status == GameStatus.LevelOngoing)
+            await _ge.MoveHeapsToTemp();
+            var bombResult = await _ge.BlowBomb();
+            if (bombResult.Ok)
             {
-                await _ge.MoveHeapsToTemp();
-                var bombResult = await _ge.BlowBomb();
-                if (bombResult.Ok)
+                try
                 {
-                    try
-                    {
-                        // do not await
-                        DrawExplosionRadius(_ge.GetProfessorCoordinates());
-                        message = "Bombing";
-                    }
-                    catch (Exception ex)
-                    {
-                        //GameLogger.AddLineToLog(ex.Message);
-                        Debug.WriteLine(ex.ToString());
-                        // safety try, marketplace version crashes on samsung
-                        //MessageBox.Show(ex.Message);
-                    }
+                    // do not await
+                    DrawExplosionRadius(_ge.GetProfessorCoordinates());
+                    message = "Bombing";
+                }
+                catch (Exception ex)
+                {
+                    //GameLogger.AddLineToLog(ex.Message);
+                    Debug.WriteLine(ex.ToString());
+                    // safety try, marketplace version crashes on samsung
+                    //MessageBox.Show(ex.Message);
+                }
 
-                    if (Vibration.Default.IsSupported)
-                    {
-                        Vibration.Default.Vibrate();
-                    }
+                if (Vibration.Default.IsSupported)
+                {
+                    Vibration.Default.Vibrate();
+                }
 
-                    PlaySound(Sound.Bomb);
-                    if (await _ge.MoveProfessorToTemp(MoveDirection.None))
-                    {
-                        await _ge.MoveRobotsToTemp();
-                        await _ge.CommitTemp();
-                    }
+                PlaySound(Sound.Bomb);
+                if (await _ge.MoveProfessorToTemp(MoveDirection.None))
+                {
+                    await _ge.MoveRobotsToTemp();
+                    await _ge.CommitTemp();
+                }
+            }
+            else
+            {
+                if (bombResult.BombsLeft > 0)
+                {
+                    // int count = _ge.BombCount;
+                    IToast m = Toast.Make("Nothing to bomb");
+                    await m.Show();
+
+                    message = AddLineToLog("Cannot bomb");
                 }
                 else
                 {
-                    if (bombResult.BombsLeft > 0)
-                    {
-                        // int count = _ge.BombCount;
-                        IToast m = Toast.Make("Nothing to bomb");
-                        await m.Show();
-
-                        message = AddLineToLog("Cannot bomb");
-                    }
-                    else
-                    {
-                        message = AddLineToLog("No bombs left");
-                    }
+                    message = AddLineToLog("No bombs left");
                 }
             }
-
-            var state = _ge.GetState(_elapsed);
-            state.Message = message;
-            UpdateUi(_ge.Status, state);
         }
+
+        var state = _ge.GetState(_elapsed);
+        state.Message = message;
+        UpdateUi(_ge.Status, state);
+        //  }
     }
 
     private async Task DrawExplosionRadius(IntPoint pos)
@@ -295,29 +293,32 @@ public partial class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
         }
     }
 
+    [ObservableProperty]
     private bool _canBomb;
 
-    public bool CanBomb
-    {
-        get => _canBomb;
-        set => SetProperty(ref _canBomb, value);
-    }
+    //   public bool CanBomb
+    //   {
+    //       get => _canBomb;
+    //       set => SetProperty(ref _canBomb, value);
+    //   }
 
+    [ObservableProperty]
     private bool _canTele;
 
-    public bool CanTele
-    {
-        get => _canTele;
-        set => SetProperty(ref _canTele, value);
-    }
+    // public bool CanTele
+    // {
+    //     get => _canTele;
+    //     set => SetProperty(ref _canTele, value);
+    // }
 
+    [ObservableProperty]
     private bool _canStart;
 
-    public bool CanStart
-    {
-        get => _canStart;
-        set => SetProperty(ref _canStart, value);
-    }
+    //    public bool CanStart
+    //  {
+    //    get => _canStart;
+    //  set => SetProperty(ref _canStart, value);
+    //}
 
     private bool _canNext;
 
@@ -339,7 +340,7 @@ public partial class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
     //public IAsyncRelayCommand BombCommand { get; }
     //public IAsyncRelayCommand TeleCommand { get; }
-   // public IAsyncRelayCommand NextLevelCommand { get; }
+    // public IAsyncRelayCommand NextLevelCommand { get; }
     public IAsyncRelayCommand StartGameCommand { get; }
 
     private TimeSpan _elapsed = TimeSpan.Zero;
@@ -495,7 +496,7 @@ public partial class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
         //Debug.WriteLine($"Registering Weak Messenger");
 
-        WeakReferenceMessenger.Default.Register<BoardViewModel, string>(this,  (_, dir) =>
+        WeakReferenceMessenger.Default.Register<BoardViewModel, string>(this, (_, dir) =>
         {
             //Debug.WriteLine($" Weak Messenger");
 
@@ -503,8 +504,8 @@ public partial class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
             {
                 Debug.WriteLine($"Pan: {md}");
 
-                PerformRound(md);
-            //    bool moved = await PerformRound(md);
+                var i = PerformRound(md);
+                //    bool moved = await PerformRound(md);
             }
         });
 
@@ -732,16 +733,19 @@ public partial class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                 BoardPosition cp = board.GetPosition(x, y);
                 if (cp != null)
                 {
-                    string imgName;
+                    // string imgName;
                     if (cp.Type == PieceType.Heap)
                     {
-                        Image boardImage = new Image { InputTransparent = true };
+                        string imgName = cp.ImageName;
 
-                        imgName = cp.ImageName;
+                        Image boardImage = new()
+                        {
+                            InputTransparent = true,
+                            AutomationId = imgName,
+                            Source = ImageSource.FromFile("heap_02.png")
+                        };
 
-                        boardImage.AutomationId = imgName;
                         Debug.WriteLine($"{cp.Type} AutomationId set to {imgName}");
-                        boardImage.Source = ImageSource.FromFile("heap_02.png");
 
                         TheAbsOverBoard.Children.Add(boardImage);
 
@@ -757,15 +761,20 @@ public partial class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                     }
                     else if (cp.Type == PieceType.Professor)
                     {
-                        Image boardImage = new Image { InputTransparent = true };
+                        string imgName = cp.ImageName;
 
-                        imgName = cp.ImageName;
+                        Image boardImage = new()
+                        {
+                            InputTransparent = true,
+                            AutomationId = imgName,
+                            Source = ImageSource.FromFile("planet_01.png")
+                        };
+
                         // boardImage.Source = LoadImage("planet_01.png");
 
                         //boardImage.SetValue(BindablePropertyKey.FrameworkElement.NameProperty, imgName);
-                        boardImage.AutomationId = imgName;
                         Debug.WriteLine($"{cp.Type} AutomationId set to {imgName}");
-                        boardImage.Source = ImageSource.FromFile("planet_01.png");
+                        //boardImage.Source = ImageSource.FromFile("planet_01.png");
                         TheAbsOverBoard.Children.Add(boardImage);
                         //boardImage = pic;
                         //AddImage(imgName, boardImage, pt, cp);
@@ -773,12 +782,16 @@ public partial class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                     }
                     else if (cp.Type == PieceType.Robot)
                     {
-                        Image boardImage = new Image { InputTransparent = true };
-
-                        imgName = cp.ImageName;
+                        string imgName = cp.ImageName;
                         string name = Randomizer.GetRandomFromSet("robot_04.png", "robot_05.png", "robot_06.png");
-                        boardImage.Source = ImageSource.FromFile(name);
-                        boardImage.AutomationId = imgName;
+
+                        Image boardImage = new Image
+                        {
+                            InputTransparent = true,
+                            Source = ImageSource.FromFile(name),
+                            AutomationId = imgName
+                        };
+
                         Debug.WriteLine($"{cp.Type} AutomationId set to {imgName}");
                         //                         boardImage.Source = LoadImage(name);
                         TheAbsOverBoard.Children.Add(boardImage);

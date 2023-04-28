@@ -1,17 +1,19 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DahlexApp.Logic.Services;
 using System.Collections.ObjectModel;
+using DahlexApp.Logic.Interfaces;
+using JetBrains.Annotations;
 
 namespace DahlexApp.Views.How;
 
-public class HowViewModel : ObservableObject
+[UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+public partial class HowViewModel : ObservableObject
 {
     public HowViewModel(INavigationService navigationService)
     {
         CloseImage = ImageSource.FromFile("close.png");
 
-        _title = string.Empty;
+        //_title = string.Empty;
 
         Title = "How";
 
@@ -29,11 +31,12 @@ public class HowViewModel : ObservableObject
 
     public ImageSource CloseImage { get; set; }
 
+    [ObservableProperty]
     private string _title;
 
-    public string Title
-    {
-        get => _title;
-        set => SetProperty(ref _title, value);
-    }
+    //    public string Title
+    //  {
+    //    get => _title;
+    //  set => SetProperty(ref _title, value);
+    //}
 }

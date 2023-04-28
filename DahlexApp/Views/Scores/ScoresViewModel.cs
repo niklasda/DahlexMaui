@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DahlexApp.Logic.Services;
 using DahlexApp.Logic.Settings;
 using System.Collections.ObjectModel;
+using DahlexApp.Logic.Interfaces;
 using JetBrains.Annotations;
 
 namespace DahlexApp.Views.Scores;

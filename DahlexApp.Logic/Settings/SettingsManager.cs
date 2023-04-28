@@ -29,9 +29,7 @@ public class SettingsManager : ISettingsManager
 
         string lessSound = prf.LoadPreference(Key2);
 
-        bool.TryParse(lessSound, out bool less);
-
-        settings.LessSound = less;
+        settings.LessSound = bool.TryParse(lessSound, out var less) && less;
 
         return settings;
     }

@@ -116,7 +116,7 @@ public class GameEngine : IGameEngine
                     }
                     else
                     {
-                        string firstChar = tmp[x, y].Type.ToString().Substring(0, 1);
+                        var firstChar = tmp[x, y].Type.ToString().First();
                         b.Append(firstChar);
                     }
                 }
@@ -152,7 +152,7 @@ public class GameEngine : IGameEngine
         int robots = 0;
         for (int x = 0; x < _boardSize.Width; x++)
         {
-            for (int y = 0; y < _boardSize.Height; y = y + 1)
+            for (int y = 0; y < _boardSize.Height; y++)
             {
                 if (boardString[i] == 'P')
                 {
