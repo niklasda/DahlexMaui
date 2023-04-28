@@ -3,15 +3,16 @@ using CommunityToolkit.Mvvm.Input;
 using DahlexApp.Logic.Services;
 using DahlexApp.Logic.Settings;
 using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
 
 namespace DahlexApp.Views.Scores;
 
-public class ScoresViewModel : ObservableObject
+[UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+public partial class ScoresViewModel : ObservableObject
 {
     public ScoresViewModel(IHighScoreService scores, INavigationService navigationService)
     {
-        _scores = scores;
+        //_scores = scores;
 
         BackCommand = new AsyncRelayCommand(navigationService.NavigateBack);
         CloseImage = ImageSource.FromFile("close.png");
@@ -20,8 +21,8 @@ public class ScoresViewModel : ObservableObject
 
         HighScoreList.Clear();
 
-        var scoreList = _scores.LoadLocalHighScores();
-        var scoreItems = scoreList.Select(_ => new ScoreItemViewModel(_.Content));
+        var scoreList = scores.LoadLocalHighScores();
+        var scoreItems = scoreList.Select(s => new ScoreItemViewModel(s.Content));
 
         foreach (var scoreItemViewModel in scoreItems)
         {
@@ -29,20 +30,21 @@ public class ScoresViewModel : ObservableObject
         }
     }
 
-    private readonly IHighScoreService _scores;
+    //private readonly IHighScoreService _scores;
 
     public IAsyncRelayCommand BackCommand { get; set; }
 
     public ImageSource CloseImage { get; set; }
 
+    [ObservableProperty]
     private string _title;
 
-    public string Title
-    {
-        get => _title;
-        [MemberNotNull(nameof(_title))]
-        set => SetProperty(ref _title, value);
-    }
+    //public string Title
+    //{
+    //    get => _title;
+    //    [MemberNotNull(nameof(_title))]
+    //    set => SetProperty(ref _title, value);
+    //}
 
     public ObservableCollection<ScoreItemViewModel> HighScoreList { get; } = new ObservableCollection<ScoreItemViewModel>();
 }

@@ -3,10 +3,12 @@ using CommunityToolkit.Mvvm.Input;
 using DahlexApp.Logic.Models;
 using DahlexApp.Logic.Services;
 using DahlexApp.Logic.Settings;
+using JetBrains.Annotations;
 
 namespace DahlexApp.Views.Settings;
 
-public class SettingsViewModel : ObservableObject
+[UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+public partial class SettingsViewModel : ObservableObject
 {
     public SettingsViewModel(INavigationService navigationService)
     {
@@ -39,35 +41,39 @@ public class SettingsViewModel : ObservableObject
 
     public ImageSource CloseImage { get; set; }
 
-    private string _title = string.Empty;
+    [ObservableProperty]
+    private string _title;
 
-    public string Title
-    {
-        get => _title;
-        set => SetProperty(ref _title, value);
-    }
+    //public string Title
+    //{
+    //    get => _title;
+    //    set => SetProperty(ref _title, value);
+    //}
 
-    private string _profName = string.Empty;
+    [ObservableProperty]
+    private string _profName;
 
-    public string ProfName
-    {
-        get => _profName;
-        set => SetProperty(ref _profName, value);
-    }
+    //public string ProfName
+    //{
+    //    get => _profName;
+    //    set => SetProperty(ref _profName, value);
+    //}
 
-    private string _copyright = string.Empty;
+    [ObservableProperty]
+    private string _copyright;
 
-    public string Copyright
-    {
-        get => _copyright;
-        set => SetProperty(ref _copyright, value);
-    }
+    //public string Copyright
+    //{
+    //    get => _copyright;
+    //    set => SetProperty(ref _copyright, value);
+    //}
 
+    [ObservableProperty]
     private bool _isMuted;
 
-    public bool IsMuted
-    {
-        get => _isMuted;
-        set => SetProperty(ref _isMuted, value);
-    }
+    //public bool IsMuted
+    //{
+    //    get => _isMuted;
+    //    set => SetProperty(ref _isMuted, value);
+    //}
 }

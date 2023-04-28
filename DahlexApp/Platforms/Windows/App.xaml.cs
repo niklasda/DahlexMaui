@@ -23,7 +23,7 @@ public partial class App : MauiWinUIApplication
     {
         this.InitializeComponent();
 
-        UnhandledException += (sender, e) =>
+        UnhandledException += (_, e) =>
         {
             Debug.WriteLine(e.Exception.ToString());
 
@@ -41,8 +41,8 @@ public partial class App : MauiWinUIApplication
         base.OnLaunched(args);
 
         var currentWindow = Application.Windows.First().Handler!.PlatformView;
-        IntPtr _windowHandle = WindowNative.GetWindowHandle(currentWindow);
-        var windowId = Win32Interop.GetWindowIdFromWindow(_windowHandle);
+        IntPtr windowHandle = WindowNative.GetWindowHandle(currentWindow);
+        var windowId = Win32Interop.GetWindowIdFromWindow(windowHandle);
 
         AppWindow appWindow = AppWindow.GetFromWindowId(windowId);
         appWindow.Resize(new SizeInt32(600, 1080));

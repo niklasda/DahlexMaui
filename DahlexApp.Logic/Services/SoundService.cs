@@ -1,52 +1,53 @@
-﻿using Plugin.Maui.Audio;
+﻿using DahlexApp.Logic.Interfaces;
+using Plugin.Maui.Audio;
 
-namespace DahlexApp.Views.Board;
+namespace DahlexApp.Logic.Services;
 
 public class SoundService : ISoundService
 {
     public SoundService(IAudioManager audio)
     {
-        _audio = audio;
+        Audio = audio;
     }
 
     public async Task Init()
     {
         Stream bombStream = await FileSystem.OpenAppPackageFileAsync("bomb.wav");
-        _bombPlayer = _audio.CreatePlayer(bombStream);
+        BombPlayer = Audio.CreatePlayer(bombStream);
 
         var teleStream = await FileSystem.OpenAppPackageFileAsync("tele.wav");
-        _telePlayer = _audio.CreatePlayer(teleStream);
+        TelePlayer = Audio.CreatePlayer(teleStream);
 
         var crashStream = await FileSystem.OpenAppPackageFileAsync("heap.wav");
-        _crashPlayer = _audio.CreatePlayer(crashStream);
+        CrashPlayer = Audio.CreatePlayer(crashStream);
     }
 
-    private IAudioManager _audio { get; }
-    private IAudioPlayer _bombPlayer { get; set; } = null!;
-    private IAudioPlayer _telePlayer { get; set; } = null!;
-    private IAudioPlayer _crashPlayer { get; set; } = null!;
+    private IAudioManager Audio { get; }
+    private IAudioPlayer BombPlayer { get; set; } = null!;
+    private IAudioPlayer TelePlayer { get; set; } = null!;
+    private IAudioPlayer CrashPlayer { get; set; } = null!;
 
     public void PlayBomb()
     {
-        if (!_bombPlayer.IsPlaying)
+        if (!BombPlayer.IsPlaying)
         {
-            _bombPlayer.Play();
+            BombPlayer.Play();
         }
     }
 
     public void PlayTele()
     {
-        if (!_telePlayer.IsPlaying)
+        if (!TelePlayer.IsPlaying)
         {
-            _telePlayer.Play();
+            TelePlayer.Play();
         }
     }
 
     public void PlayCrash()
     {
-        if (!_crashPlayer.IsPlaying)
+        if (!CrashPlayer.IsPlaying)
         {
-            _crashPlayer.Play();
+            CrashPlayer.Play();
         }
     }
 }

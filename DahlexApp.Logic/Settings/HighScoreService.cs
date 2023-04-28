@@ -1,9 +1,11 @@
 ﻿using DahlexApp.Logic.Interfaces;
 using DahlexApp.Logic.Models;
 using System.Text.Json;
+using JetBrains.Annotations;
 
 namespace DahlexApp.Logic.Settings;
 
+[UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
 public class HighScoreService : IHighScoreService
 {
     public HighScoreService(IPreferencesService preferences)

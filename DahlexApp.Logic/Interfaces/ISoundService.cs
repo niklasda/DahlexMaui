@@ -1,4 +1,4 @@
-﻿namespace DahlexApp.Views.Board;
+﻿namespace DahlexApp.Logic.Interfaces;
 
 public interface ISoundService
 {

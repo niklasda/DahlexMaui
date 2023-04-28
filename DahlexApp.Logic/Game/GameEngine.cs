@@ -573,7 +573,7 @@ public class GameEngine : IGameEngine
             //_boardView?.DrawLines();
             await _boardView.DrawBoard(_board, _squareSize.Width, _squareSize.Height);
         }
-        _boardView?.ShowStatus(CurrentLevel, _bombCount, _teleportCount, _robotCount, _moveCount, _maxLevel);
+        _boardView.ShowStatus(CurrentLevel, _bombCount, _teleportCount, _robotCount, _moveCount, _maxLevel);
     }
 
     public async Task<(bool, int)> BlowBomb()

@@ -32,11 +32,11 @@
             <StackLayout Orientation="Horizontal" Padding="0" Spacing="7" HorizontalOptions="CenterAndExpand">
                 <Button Text="Start" Command="{Binding StartGameCommand}" Style="{StaticResource SmallButtonStyle}" IsEnabled="{Binding CanStart}" />
 
-                <Button Text="Next"  Command="{Binding NextLevelCommand}" Style="{StaticResource SmallButtonStyle}" IsEnabled="{Binding CanNext}" />
+                <Button Text="Next"  Command="{Binding StartNextLevelCommand}" Style="{StaticResource SmallButtonStyle}" IsEnabled="{Binding CanNext}" />
 
-                <Button Text="{Binding BombText}" Command="{Binding BombCommand}" Style="{StaticResource SmallButtonStyle}" IsEnabled="{Binding CanBomb}" />
+                <Button Text="{Binding BombText}" Command="{Binding BlowBombCommand}" Style="{StaticResource SmallButtonStyle}" IsEnabled="{Binding CanBomb}" />
 
-                <Button Text="{Binding TeleText}" Command="{Binding TeleCommand}" Style="{StaticResource SmallButtonStyle}" IsEnabled="{Binding CanTele}" />
+                <Button Text="{Binding TeleText}" Command="{Binding DoTeleportCommand}" Style="{StaticResource SmallButtonStyle}" IsEnabled="{Binding CanTele}" />
             </StackLayout>
 
             <StackLayout Orientation="Horizontal" Padding="0,5,0,5" Spacing="8">

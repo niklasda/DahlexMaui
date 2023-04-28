@@ -11,11 +11,13 @@ using DahlexApp.Logic.Settings;
 using DahlexApp.Logic.Utils;
 using Microsoft.Maui.Controls.Shapes;
 using Microsoft.Maui.Layouts;
-using System.Diagnostics;
+using JetBrains.Annotations;
+using Debug = System.Diagnostics.Debug;
 
 namespace DahlexApp.Views.Board;
 
-public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
+[UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+public partial class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 {
     public BoardViewModel(IHighScoreService hsm, ISoundService audio)
     {
@@ -49,52 +51,73 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
             await _ge.StartGame(GameMode.Random);
             UpdateUi(GameStatus.GameStarted, _ge.GetState(_elapsed));
+
+
         });
 
-        NextLevelCommand = new AsyncRelayCommand(async () =>
-        {
-            if (_ge != null)
-            {
-                if (_ge.Status == GameStatus.LevelComplete)
-                {
-                    //storyPanel.Resources.Clear();
+        //NextLevelCommand = new AsyncRelayCommand(async () =>
+        //{
+        //    if (_ge != null)
+        //    {
+        //        if (_ge.Status == GameStatus.LevelComplete)
+        //        {
+        //            //storyPanel.Resources.Clear();
 
-                    await _ge.StartNextLevel();
+        //            await _ge.StartNextLevel();
 
-                    _gameTimer?.Start();
-                }
+        //            _gameTimer.Start();
+        //        }
 
-                UpdateUi(_ge.Status, _ge.GetState(_elapsed));
-            }
-        });
+        //        UpdateUi(_ge.Status, _ge.GetState(_elapsed));
+        //    }
+        //});
 
-        BombCommand = new AsyncRelayCommand(async () =>
-        {
-            try
-            {
-                await BlowBomb();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Bomb failed: {ex.Message}");
-            }
-        });
 
-        TeleCommand = new AsyncRelayCommand(async () =>
-        {
-            try
-            {
-                await DoTeleport();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Teleport failed: {ex.Message}");
-            }
-        });
+        //BombCommand = new AsyncRelayCommand(async () =>
+        //{
+        //    try
+        //    {
+        //        await BlowBomb();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Debug.WriteLine($"Bomb failed: {ex.Message}");
+        //    }
+        //});
+
+        //TeleCommand = new AsyncRelayCommand(async () =>
+        //{
+        //    try
+        //    {
+        //        await DoTeleport();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Debug.WriteLine($"Teleport failed: {ex.Message}");
+        //    }
+        //});
 
         //  OnAppearing().GetAwaiter().GetResult();
     }
 
+    [RelayCommand(AllowConcurrentExecutions = false)]
+    private async Task StartNextLevel()
+    {
+    //    if (_ge != null)
+      //  {
+            if (_ge.Status == GameStatus.LevelComplete)
+            {
+                //storyPanel.Resources.Clear();
+
+                await _ge.StartNextLevel();
+
+                _gameTimer.Start();
+            }
+
+            UpdateUi(_ge.Status, _ge.GetState(_elapsed));
+        }
+    //}
+    [RelayCommand(AllowConcurrentExecutions = false)]
     private async Task DoTeleport()
     {
         if (_ge != null)
@@ -123,6 +146,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
         }
     }
 
+    [RelayCommand(AllowConcurrentExecutions = false)]
     private async Task BlowBomb()
     {
         if (_ge != null)
@@ -309,12 +333,13 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
     public async Task SetStartGameMode(GameMode value)
     {
-        StartGameMode = value;
+        //StartGameMode = value;
+        StartGameMode = await Task.FromResult(value);
     }
 
-    public IAsyncRelayCommand BombCommand { get; }
-    public IAsyncRelayCommand TeleCommand { get; }
-    public IAsyncRelayCommand NextLevelCommand { get; }
+    //public IAsyncRelayCommand BombCommand { get; }
+    //public IAsyncRelayCommand TeleCommand { get; }
+   // public IAsyncRelayCommand NextLevelCommand { get; }
     public IAsyncRelayCommand StartGameCommand { get; }
 
     private TimeSpan _elapsed = TimeSpan.Zero;
@@ -470,15 +495,16 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
 
         //Debug.WriteLine($"Registering Weak Messenger");
 
-        WeakReferenceMessenger.Default.Register<BoardViewModel, string>(this, async (a, dir) =>
+        WeakReferenceMessenger.Default.Register<BoardViewModel, string>(this,  (_, dir) =>
         {
             //Debug.WriteLine($" Weak Messenger");
 
-            if (Enum.TryParse<MoveDirection>(dir, true, out MoveDirection md))
+            if (Enum.TryParse(dir, true, out MoveDirection md))
             {
                 Debug.WriteLine($"Pan: {md}");
 
-                bool moved = await PerformRound(md);
+                PerformRound(md);
+            //    bool moved = await PerformRound(md);
             }
         });
 
@@ -499,15 +525,15 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
         Debug.WriteLine($"{DateTime.Now} - OnAppearing Done");
     }
 
-    private DateTime lastTap = DateTime.MinValue;
+    private DateTime _lastTap = DateTime.MinValue;
 
     private void Tap_Tapped(object? sender, TappedEventArgs e)
     {
-        if ((DateTime.Now - lastTap).TotalMilliseconds > AnimationDuration) // stupid workaround for double tap
+        if ((DateTime.Now - _lastTap).TotalMilliseconds > AnimationDuration) // stupid workaround for double tap
         {
-            lastTap = DateTime.Now;
+            _lastTap = DateTime.Now;
             Debug.WriteLine($"Tap: {MoveDirection.None} {DateTime.Now.ToString("HH:mm:ss.fff")}");
-            WeakReferenceMessenger.Default.Send<string>(MoveDirection.None.ToString());
+            WeakReferenceMessenger.Default.Send(MoveDirection.None.ToString());
         }
         else
         {
@@ -549,7 +575,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                 {
                     Debug.WriteLine($"PanTap: {MoveDirection.None}");
 
-                    WeakReferenceMessenger.Default.Send<string>(MoveDirection.None.ToString());
+                    WeakReferenceMessenger.Default.Send(MoveDirection.None.ToString());
 
                     //  moved = await PerformRound(MoveDirection.None);
                 }
@@ -560,7 +586,7 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
                     {
                         Debug.WriteLine($"PanIt: {direction}");
 
-                        WeakReferenceMessenger.Default.Send<string>(direction.ToString());
+                        WeakReferenceMessenger.Default.Send(direction.ToString());
 
                         //    moved = await PerformRound(direction);
                     }
@@ -581,77 +607,86 @@ public class BoardViewModel : ObservableObject, IDahlexView, IBoardPage
         _gameTimer?.Stop();
     }
 
-    private string _title = string.Empty;
+    [ObservableProperty]
+    private string _title;
 
-    public string Title
-    {
-        get => _title;
-        set => SetProperty(ref _title, value);
-    }
+    //public string Title
+    //{
+    //    get => _title;
+    //    set => SetProperty(ref _title, value);
+    //}
 
-    private string _infoText = string.Empty;
+    [ObservableProperty]
+    private string _infoText;
 
-    public string InfoText
-    {
-        get => _infoText;
-        set => SetProperty(ref _infoText, value);
-    }
+    //public string InfoText
+    //{
+    //    get => _infoText;
+    //    set => SetProperty(ref _infoText, value);
+    //}
 
-    private string _timerText = string.Empty;
+    [ObservableProperty]
+    private string _timerText;
 
-    public string TimerText
-    {
-        get => _timerText;
-        set => SetProperty(ref _timerText, value);
-    }
+    //public string TimerText
+    //{
+    //    get => _timerText;
+    //    set => SetProperty(ref _timerText, value);
+    //}
 
-    private string _infoText1 = string.Empty;
+    [ObservableProperty]
+    private string _infoText1;
 
-    public string InfoText1
-    {
-        get => _infoText1;
-        set => SetProperty(ref _infoText1, value);
-    }
+    //public string InfoText1
+    //{
+    //    get => _infoText1;
+    //    set => SetProperty(ref _infoText1, value);
+    //}
 
+    [ObservableProperty]
     private string _infoText2 = string.Empty;
 
-    public string InfoText2
-    {
-        get => _infoText2;
-        set => SetProperty(ref _infoText2, value);
-    }
+    //public string InfoText2
+    //{
+    //    get => _infoText2;
+    //    set => SetProperty(ref _infoText2, value);
+    //}
 
+    [ObservableProperty]
     private string _bombText = string.Empty;
 
-    public string BombText
-    {
-        get => _bombText;
-        set => SetProperty(ref _bombText, value);
-    }
+    //public string BombText
+    //{
+    //    get => _bombText;
+    //    set => SetProperty(ref _bombText, value);
+    //}
 
+    [ObservableProperty]
     private string _teleText = string.Empty;
 
-    public string TeleText
-    {
-        get => _teleText;
-        set => SetProperty(ref _teleText, value);
-    }
+    //public string TeleText
+    //{
+    //    get => _teleText;
+    //    set => SetProperty(ref _teleText, value);
+    //}
 
+    [ObservableProperty]
     private int _shortestDimension;
 
-    public int ShortestDimension
-    {
-        get => _shortestDimension;
-        set => SetProperty(ref _shortestDimension, value);
-    }
+    //public int ShortestDimension
+    //{
+    //    get => _shortestDimension;
+    //    set => SetProperty(ref _shortestDimension, value);
+    //}
 
+    [ObservableProperty]
     private int _heightDimension;
 
-    public int HeightDimension
-    {
-        get => _heightDimension;
-        set => SetProperty(ref _heightDimension, value);
-    }
+    //public int HeightDimension
+    //{
+    //    get => _heightDimension;
+    //    set => SetProperty(ref _heightDimension, value);
+    //}
 
     //private bool _isBusy;
     private readonly ISoundService _audio;

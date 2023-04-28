@@ -14,7 +14,8 @@ public partial class BoardPage : IBoardPage
         vm.TheAbsBoard = TheBoard;
         vm.TheAbsOverBoard = TheOverBoard;
 
-        DeviceDisplay.KeepScreenOn = true;
+        if (DeviceInfo.Current.Platform == DevicePlatform.Android)
+            DeviceDisplay.Current.KeepScreenOn = true;
     }
 
     protected override bool OnBackButtonPressed()
